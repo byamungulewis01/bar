@@ -72,7 +72,8 @@ class DisciplinaryController extends Controller
     public function show($case)
     {
         $case = Discipline::find($case);
+        $users = User::all();
         $host = Admin::find(auth()->guard('admin')->user()->id);
-        return view('cases.detail',compact('case','host'));
+        return view('cases.detail',compact('case','host','users'));
     }
 }

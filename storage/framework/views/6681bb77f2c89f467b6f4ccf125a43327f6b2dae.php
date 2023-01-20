@@ -139,7 +139,7 @@ Discipline Details
                         </li>
                        
                         <li class="text-center">
-                            <a href="javascript:;">Add new</a>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#partipant">Add new</a>
                         </li>
                     </ul>
                 </div>
@@ -149,7 +149,40 @@ Discipline Details
         </div>
     </div>
     <!--/ User Profile Content -->
+    <div class="modal fade" id="partipant" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+            <div class="modal-content p-3 p-md-5">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Add New Case</h3>
+                        <p class="text-muted">Add new card to complete payment</p>
+                    </div>
+                    <form method="POST" class="row g-3" action="<?php echo e(route('cases.store')); ?>">
+                        <?php echo csrf_field(); ?>
+                        <div class="col-12">
+                            <label class="form-label w-100" for="modalAddCard">Name</label>
+                            <div class="input-group input-group-merge">
+                                <select id="user" name="advcate_id" class="form-select">
+                                    <option value="" selected> - Select - </option>
+                                    <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option <?php if(old('user')==$user->name): ?> selected <?php endif; ?>
+                                        value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                            <button type="reset" class="btn btn-label-secondary btn-reset"
+                                data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <?php $__env->stopSection(); ?>
 

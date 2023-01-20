@@ -138,7 +138,7 @@ Discipline Details
                         </li>
                        
                         <li class="text-center">
-                            <a href="javascript:;">Add new</a>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#partipant">Add new</a>
                         </li>
                     </ul>
                 </div>
@@ -148,7 +148,40 @@ Discipline Details
         </div>
     </div>
     <!--/ User Profile Content -->
+    <div class="modal fade" id="partipant" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+            <div class="modal-content p-3 p-md-5">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Add Participant</h3>
+                        <p class="text-muted">Add new card to complete payment</p>
+                    </div>
+                    <form method="POST" class="row g-3" action="{{ route('cases.store') }}">
+                        @csrf
+                        <div class="col-12">
+                            <label class="form-label w-100" for="modalAddCard">Name</label>
+                            <div class="input-group input-group-merge">
+                                <select id="user" name="advcate_id" class="form-select">
+                                    <option value="" selected> - Select - </option>
+                                    @foreach ($users as $user)
+                                    <option @if(old('user')==$user->name) selected @endif
+                                        value="{{ $user->id }}">{{ $user->name}}</option>
+                                    @endforeach
 
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                            <button type="reset" class="btn btn-label-secondary btn-reset"
+                                data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 
