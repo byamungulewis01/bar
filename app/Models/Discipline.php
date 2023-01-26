@@ -9,22 +9,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Discipline extends Model
 {
     use HasFactory;
-    protected $table = 'table_discipline_cases';
+    protected $table = 'discipline';
     protected $fillable = [
+        'p_name',
+        'p_email',
+        'p_phone',
+        'p_advocate',
+        'd_name',
+        'd_email',
+        'd_phone',
+        'd_advocate',
         'case_number',
-        'complaint',
-        'sammary',
-        'name',
-        'email',
-        'phone',
-        'advcate_id',
-        'status',
         'case_type',
-        'createdby',
+        'sammary',
+        'complaint',
+        'case_status',
+        'authority',
+        'register',
     ];
-public function user()
+
+public function admin()
 {
-    return $this->belongsTo(User::class,'advcate_id','id');
+    return $this->belongsTo(Admin::class,'register','id');
 }
    
 }

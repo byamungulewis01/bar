@@ -233,57 +233,6 @@ class UserController extends Controller
         return back()->with('success','User updated!');
     }
 
-    public function profile(User $user)
-    {
-        $User = User::findorfail($user->id)->with('phone','address','areas');
-        $logs = User::find($user->id)->authentications;
-        $laws = $user->areas->pluck('lawscategory_id')->toArray();
-        $roles = Role::where('guard_name','web')->pluck('name')->toArray();
-        $userlaws = $user->areas->pluck('lawscategory_id')->toArray();
-        $facebook = '';
-        $instagram = '';
-        $twitter = '';
-        $whatsapp = '';
-        foreach($user->socials as $social){
-            $facebook = $social->social == 'facebook' ? $social->link : $facebook;
-            $instagram = $social->social == 'instagram' ? $social->link : $instagram;
-            $twitter = $social->social == 'twitter' ? $social->link : $twitter;
-            $whatsapp = $social->social == 'whatsapp' ? $social->link : $whatsapp;
-        }
-
-        $facebook = empty($facebook) ? ['icon'=>'ti-link','link'=>'','btn'=>'secondary', 'label'=>'link'] : ['icon'=>'ti-trash','link'=>$facebook,'btn'=>'danger', 'label'=>'unlink'] ;
-        $instagram = empty($instagram) ? ['icon'=>'ti-link','link'=>'','btn'=>'secondary', 'label'=>'link'] : ['icon'=>'ti-trash','link'=>$instagram,'btn'=>'danger', 'label'=>'unlink'];
-        $twitter = empty($twitter) ? ['icon'=>'ti-link','link'=>'','btn'=>'secondary', 'label'=>'link'] : ['icon'=>'ti-trash','link'=>$twitter,'btn'=>'danger', 'label'=>'unlink'] ;
-        $whatsapp = empty($whatsapp) ? ['icon'=>'ti-link','link'=>'','btn'=>'secondary', 'label'=>'link'] : ['icon'=>'ti-trash','link'=>$whatsapp,'btn'=>'danger', 'label'=>'unlink'] ;
-
-        return view('users.profile',compact('user','logs','roles','userlaws','facebook','instagram','twitter','whatsapp'));
-    }
-
-    public function myprofile()
-    {
-        $user = auth()->user();
-        $laws = Lawscategory::all();
-        $userlaws = $user->areas->pluck('lawscategory_id')->toArray();
-        $logs = User::find($user->id)->authentications;
-        
-        $facebook = '';
-        $instagram = '';
-        $twitter = '';
-        $whatsapp = '';
-        foreach($user->socials as $social){
-            $facebook = $social->social == 'facebook' ? $social->link : $facebook;
-            $instagram = $social->social == 'instagram' ? $social->link : $instagram;
-            $twitter = $social->social == 'twitter' ? $social->link : $twitter;
-            $whatsapp = $social->social == 'whatsapp' ? $social->link : $whatsapp;
-        }
-
-        $facebook = empty($facebook) ? ['icon'=>'ti-link','link'=>'','btn'=>'secondary', 'label'=>'link'] : ['icon'=>'ti-trash','link'=>$facebook,'btn'=>'danger', 'label'=>'unlink'] ;
-        $instagram = empty($instagram) ? ['icon'=>'ti-link','link'=>'','btn'=>'secondary', 'label'=>'link'] : ['icon'=>'ti-trash','link'=>$instagram,'btn'=>'danger', 'label'=>'unlink'];
-        $twitter = empty($twitter) ? ['icon'=>'ti-link','link'=>'','btn'=>'secondary', 'label'=>'link'] : ['icon'=>'ti-trash','link'=>$twitter,'btn'=>'danger', 'label'=>'unlink'] ;
-        $whatsapp = empty($whatsapp) ? ['icon'=>'ti-link','link'=>'','btn'=>'secondary', 'label'=>'link'] : ['icon'=>'ti-trash','link'=>$whatsapp,'btn'=>'danger', 'label'=>'unlink'] ;
-
-        return view('users.myprofile',compact('user','logs','laws','userlaws','facebook','instagram','twitter','whatsapp'));
-    }
 
     public function changeStatus(Request $request, User $user)
     {

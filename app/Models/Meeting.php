@@ -14,6 +14,8 @@ class Meeting extends Model
         'start',
         'end',
         'venue',
+        'credits',
+        'published',
         'user_id',
         'admin_id'
     ];

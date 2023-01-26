@@ -15,7 +15,7 @@ Users
               <div class="col-sm-6 col-xl-2">
                 <div class="card">
                   <div class="card-body">
-                    <div class="d-flex align-items-start justify-content-between">
+                    <div  class="d-flex align-items-start justify-content-between">
                       <div class="content-left">
                         <span>Total </span>
                         <div class="d-flex align-items-center my-1">
@@ -224,9 +224,6 @@ Users
                           <option value="">Select</option>
                           @foreach($marital as $status)
                           <option @if(old('marital')==$status->id) selected @endif value="{{ $status->id }}">{{ $status->title }}</option>
-                          <option @if(old('marital')=="Single") selected @endif value="Single">Sigle</option>
-                          <option @if(old('marital')=="Married") selected @endif value="Married">Married</option>
-                          <option @if(old('marital')=="Divorce") selected @endif value="Divorce">Divorce</option>
                           @endforeach
                         </select>
                       </div>

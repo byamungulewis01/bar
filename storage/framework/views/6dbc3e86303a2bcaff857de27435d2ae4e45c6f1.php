@@ -6,38 +6,170 @@ Pro Bono Cases
 
 <?php $__env->startSection('contents'); ?>
 <!-- Content -->
-        
+
 <div class="container-xxl flex-grow-1 container-p-y">
-            
-            
+    
+  <!-- Users List Table -->
+  <div class="card">
+    <div class="card-header border-bottom">
+      <h5 class="card-title mb-0">Pro Bono Cases
+        <a class="btn btn-dark text-white pull-left float-end" data-bs-toggle="modal" data-bs-target="#newCase"><i
+            class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">New case</span></a><a
+          class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editmeetings"></a></h5>
 
-            <!-- Users List Table -->
-            <div class="card">
-              <div class="card-header border-bottom">
-                <h5 class="card-title mb-0">Pro Bono Cases <a class="btn btn-dark text-white pull-left float-end" data-bs-toggle="modal" data-bs-target="#newCase"><i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">New Case</span></a><a class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editmeetings"></a></h5>
-                
-              </div>
-              <div class="card-datatable table-responsive">
-                <table class="datatables-probono table border-top">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Concerned</th>
-                      <th>Referrer/Category</th>
-                      <th>Case Number</th>
-                      <th>Nature</th>
-                      <th>Status</th>
-                      <th>Hearing Day</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                </table>
-              </div>
+    </div>
+  <?php echo $__env->make('layouts.flash_message', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <div class="card-datatable table-responsive">
+      <table class="datatables-probono table border-top">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Referrer</th>
+            <th>Category</th>
+            <th>Case Number</th>
+            <th>Gender</th>
+            <th>Nature</th>
+            <th>Status</th>
+            <th>Hearing Day</th>
+            <th>Manage</th>
+          </tr>
+        </thead>
+        <?php
+        $count = 1;
+    ?>
+        <?php $__empty_1 = true; $__currentLoopData = $probonos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $probono): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+       
+        <tbody>
+          <tr>
+        <td><?php echo e($count); ?></td>
+        <td><?php echo e($probono->referral_name); ?></td>
+        <td><?php echo e($probono->category); ?></td>
+        <td><?php echo e($probono->referral_case_no); ?></td>
+        <td><?php echo e($probono->referral_gender); ?></td>
+        <td><?php echo e($probono->case_nature); ?></td>
+        <td>
+         <?php if($probono->case_status == 'OPEN'): ?>
+             <span class="badge bg-label-info me-2"><?php echo e($probono->case_status); ?></span>
+         <?php else: ?>
+         <span class="badge bg-label-danger me-2"><?php echo e($probono->case_status); ?></span>
+         <?php endif; ?>
+          
+        </td>
+        <td><?php echo e($probono->hearing_date); ?></td>
+        <td><a href="<?php echo e(route('probono.show',$probono->id)); ?>" class="btn btn-sm btn-info">( = )</button></td>
+      </tr>
+      </tbody>
+      <?php
+          $count++
+      ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+            
+        <?php endif; ?>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+
+  <!-- New User Modal -->
+  <div class="modal fade" id="newCase" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+      <div class="modal-content p-3 p-md-5">
+        <div class="modal-body">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="text-center mb-4">
+            <h3 class="mb-2">New Probono Case</h3>
+        
           </div>
+          <form accept="<?php echo e(route('probono.store')); ?>" class="row g-3" method="post"  enctype="multipart/form-data">
+            <?php echo csrf_field(); ?>
 
-        </div>
-        <!-- / Content -->
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="name">First Name</label>
+              <input required type="text" id="name" name="name" class="form-control" placeholder="John" value="<?php echo e(old('fname')); ?>"/>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="email">Last name</label>
+              <input required type="text" name="lname" class="form-control" placeholder="doe"  value="<?php echo e(old('lname')); ?>"/>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="email">Referral Case No</label>
+              <input required type="text" name="referral_case_no" class="form-control" placeholder="RC 0004B77/2022/TB/009"  value="<?php echo e(old('referralcaseno')); ?>"/>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="email">Referral Case No</label>
+              <input required type="text" name="referral_case_no" class="form-control" placeholder="RC 0004B77/2022/TB/009"  value="<?php echo e(old('referralcaseno')); ?>"/>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="phone">Referral Phone Number</label>
+              <div class="input-group">
+                <span class="input-group-text">RW (+250)</span>
+                <input required type="text" id="phone" name="referral_mobile" class="form-control phone-number-mask" maxLength="10" placeholder="xxx xxx xxxx"  value="<?php echo e(old('phone')); ?>"/>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="gender">Gender</label>
+              <select required id="gender" name="referral_gender" class="form-select">
+                <option value="" selected> - Select - </option>
+                <option <?php if(old('referral_gender')=="Male"): ?> selected <?php endif; ?> value="Male">Male</option>
+                <option <?php if(old('referral_gender')=="Male"): ?> selected <?php endif; ?> value="Female">Female</option>
+              </select>
+            </div>
+         
+           
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="category">Case nature</label>
+              <select required name="case_nature" class="form-select">
+                <option value="" selected> - Select - </option>
+                <option <?php if(old('nature')=="Criminal"): ?> selected <?php endif; ?> value="Criminal">Criminal</option>
+                <option <?php if(old('nature')=="Civil"): ?> selected <?php endif; ?> value="Civil">Civil</option>
+                <option <?php if(old('nature')=="Social"): ?> selected <?php endif; ?> value="Social">Social</option>
+                <option <?php if(old('nature')=="Commercial"): ?> selected <?php endif; ?> value="Commercial">Commercial</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="flatpickr-date">Hearing Day</label>
+              <input required type="date" name="hearing_date" placeholder="Month DD, YYYY" class="form-control" />
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="status">Category</label>
+              <select required id="status" name="category" class="form-select">
+                <option value="" selected> - Select - </option>
+                <option <?php if(old('category')=="Case Agaist RBA"): ?> selected <?php endif; ?> value="Case Agaist RBA">Case Agaist RBA</option>
+                <option <?php if(old('category')=="Legal Aid to General Public"): ?> selected <?php endif; ?> value="Legal Aid to General Public">Legal Aid to General Public</option>
+                <option <?php if(old('category')=="Minors"): ?> selected <?php endif; ?> value="Minors">Minors</option>
+                <option <?php if(old('category')=="Supreme count"): ?> selected <?php endif; ?> value="Supreme count">Supreme count</option>
+                <option <?php if(old('category')=="Count"): ?> selected <?php endif; ?> value="count">Count</option>
+                <option <?php if(old('category')=="Prosecutor"): ?> selected <?php endif; ?> value="Prosecutor">Prosecutor</option>
+                <option <?php if(old('category')=="Police"): ?> selected <?php endif; ?> value="Police">Police</option>
+                <option <?php if(old('category')=="Prison"): ?> selected <?php endif; ?> value="Prison">Prison</option>
+                <option <?php if(old('category')=="Other"): ?> selected <?php endif; ?> value="Other">Other</option>
+              </select>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="practicing">Concerned</label>
+              <select required name="user" class="form-select">
+                <option value="" disabled selected> - Select - </option>
+                <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option <?php if(old('user')=="<?php echo e($user->name); ?>"): ?> selected <?php endif; ?> value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+              </select>
+            </div>
             
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+              <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ New User Modal -->
+<!-- / Content -->
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -62,176 +194,200 @@ Pro Bono Cases
 <script src="<?php echo e(asset('assets/vendor/libs/cleavejs/cleave-phone.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/vendor/libs/sweetalert2/sweetalert2.js')); ?>"></script>
 
+<?php $__env->stopSection(); ?>
 
 <script>
-"use strict";
-$(function(){  
-  let t,a,s,o;
-  s=(isDarkStyle?(t=config.colors_dark.borderColor,a=config.colors_dark.bodyBg,config.colors_dark):(t=config.colors.borderColor,a=config.colors.bodyBg,config.colors)).headingColor;
-  var e,n=$(".datatables-probono"),r="/profile/";
-  n.length&&(e=n.DataTable({
-      ajax:"/api/probono",
-      columns:[
-          {data:""},
-          {data:"seeker"},
-          {data:"referrer"},
-          {data:"number"},
-          {data:"nature"},
-          {data:"status"},
-          {data:"hearing"},
-          {data:"action"}
-      ],
-      columnDefs:[
-          {
-              className:"control",
-              searchable:!1,
-              orderable:!1,
-              responsivePriority:2,
-              targets:0,
-              render:function(e,t,a,s){
-                  return""
-              }
-          },
-          {
-              targets:1,
-              responsivePriority:4,
-              render:function(e,t,a,s){
-                  var n=a.name, i=a.email, j=a.id;
-                  return'<div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><span class="avatar-initial rounded-circle bg-label-'+["success","danger","warning","info","primary","secondary"][Math.floor(6*Math.random())]+'">'+(o=(((o=(n=a.name).match(/\b\w/g)||[]).shift()||"")+(o.pop()||"")).toUpperCase())+'</span></div></div><div class="d-flex flex-column"><a href="'+r+j+'" class="text-body text-truncate"><span class="fw-semibold">'+n+'</span></a><small class="text-muted">'+i+"</small></div></div>"
-              }
-          },
-          {
-              targets:3,
-              render:function(e,t,a,s){
-                  a=a.type;
-                  return'<span class="badge '+oo[a].class+'" text-capitalized>'+oo[a].title+"</span>"
-              }
-          },
-          {
-            targets:4,
-            render:function(e,t,a,s){
-              return'<span class="fw-semibold">'+a.phone+"</span>"
-            }
-          },
-          {
-              targets:5,
-              render:function(e,t,a,s){
-                  return'<span class="fw-semibold">'+a.address+"</span>"
-              }
-          },
-          {
-              targets:6,
-              render:function(e,t,a,s){
-                  a=a.blocked;
-                  return'<span class="badge '+oo[a].class+'" text-capitalized>'+oo[a].title+"</span>"
-              }
-          },
-          {
-              targets:-1,
-              title:"Actions",
-              searchable:!1,
-              orderable:!1,
-              render:function(e,t,a,s){
-                  return'<div class="d-flex align-items-center"><a href="javascript:;" class="text-body edit-record "><i class="ti ti-edit ti-sm me-2" data-id="'+a.id+'" data-name="'+a.name+'" data-tin="'+a.tin+'" data-phone="'+a.phone+'" data-email="'+a.email+'" data-type="'+a.type+'" data-address="'+a.address+'" data-status="'+a.blocked+'"></i></a><a href="'+r+a.id+'" class="text-body"><i class="ti ti-eye ti-sm mx-2"></i></a><a href="javascript:;" class="text-body delete-record '+a.id+'"><i class="ti ti-trash ti-sm mx-2"></i></a></div></div>'
-              }
-          }
-      ],
-      order:[
-          [1,"desc"]
-      ],
-      dom:'<"row me-2"<"col-md-2"<"me-3"l>><"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"fB>>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-      language:{
-          sLengthMenu:"_MENU_",
-          search:"",
-          searchPlaceholder:"Search.."
-      },
-      responsive:{
-          details:{
-              display:$.fn.dataTable.Responsive.display.modal({
-                  header:function(e){
-                      return"Details of "+e.data().name
-                  }
-              }),
-              type:"column",
-              renderer:function(e,t,a){
-                  a=$.map(a,function(e,t){
-                      return""!==e.name?'<tr data-dt-row="'+e.rowIndex+'" data-dt-column="'+e.columnIndex+'"><td>'+e.name+":</td> <td>"+e.data+"</td></tr>":""
-                  }).join("");
-                  return!!a&&$('<table class="table"/><tbody />').append(a)
-              }
-          }
-      },
-              
-  })),
-  $(".datatables-probono tbody").on("click",".delete-record",function(event){
-      let id = event.currentTarget.classList[2];
-      Swal.fire({
-        title:"Are you sure?",
-        text:"You won't be able to revert this!",
-        icon:"warning",
-        showCancelButton:!0,
-        confirmButtonText:"Yes, delete it!",
-        customClass:{
-          confirmButton:"btn btn-danger me-3",
-          cancelButton:"btn btn-label-secondary"
-        },
-        buttonsStyling:!1,
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          return fetch('/api/users/meetingsanization/'+id,  {
-              method: 'DELETE',
-              headers: new Headers({
-                'Accept' : 'application/json',
-                'Content-Type':'application/json; charset=UTF-8',
-                'X-CSRF-Token' : "<?php echo csrf_token() ?>"
-              })
-            })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(response.statusText)
-              }
-              return response.json()
-            })
-            .catch(error => {
-              Swal.showValidationMessage(
-                `Request failed: ${error}`
-              )
-            })
-        },
-        allowOutsideClick: () => !Swal.isLoading()
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title:'Deleted!',
-            text:'meetingsanization has been deleted.',
-            icon:'success',
-            showCancelButton:0,
-            confirmButtonText:"Close",
-            customClass:{
-              confirmButton:"btn btn-label-secondary",
-              cancelButton:"btn btn-label-secondary d-none"
+     document.addEventListener("DOMContentLoaded",function(e){
+    {
+        const o=document.querySelector("#newUserForm"),
+        p=document.querySelector("#editUserForm"),
+        t=document.querySelector("#phone");
+        t&&new Cleave(t,{
+            phone:!0,
+            phoneRegionCode:"RW"
+        });
+        const s=(o&&FormValidation.formValidation(o,{
+            fields:{
+              profile:{
+                    validators:{
+                        notEmpty:{
+                            message:"Upload profile picture"
+                        }
+                    }
+                },
+                diploma:{
+                    validators:{
+                        notEmpty:{
+                            message:"Upload diploma"
+                        }
+                    }
+                },
+                name:{
+                    validators:{
+                        notEmpty:{
+                            message:"Please enter full name"
+                        }
+                    }
+                },
+                email:{
+                    validators:{
+                        notEmpty:{
+                            message:"Please enter your email"
+                        },
+                        emailAddress:{
+                            message:"The value is not a valid email address"
+                        }
+                    }
+                },
+                phone:{
+                    validators:{
+                        notEmpty:{
+                            message:"Please enter phone number"
+                        },
+                    }
+                },
+                gender:{
+                    validators:{
+                        notEmpty:{
+                            message:"Select gender"
+                        }
+                    }
+                },
+                marital:{
+                    validators:{
+                        notEmpty:{
+                            message:"Select martial status"
+                        }
+                    }
+                },
+                district:{
+                    validators:{
+                        notEmpty:{
+                            message:"Select district"
+                        }
+                    }
+                },
+                category:{
+                    validators:{
+                        notEmpty:{
+                            message:"Select user category"
+                        }
+                    }
+                },
+                practicing:{
+                    validators:{
+                        notEmpty:{
+                            message:"Select practicing status"
+                        }
+                    }
+                },
             },
-            buttonsStyling:!1,
-          })
-          e.row($(this).parents("tr")).remove().draw()
-        }
-      })
-  }),
-  $(".datatables-probono tbody").on("click",".edit-record",function(event){
-    let a = event.target;
-    let id = a.getAttribute('data-id'),name = a.getAttribute('data-name'),email = a.getAttribute('data-email'),phone = a.getAttribute('data-phone'),tin = a.getAttribute('data-tin'),type = a.getAttribute('data-type'),status = a.getAttribute('data-status'),address = a.getAttribute('data-address'),edit=document.getElementById('edit');
-    $("#is").val(id),$("#updateName").val(name),$("#updateEmail").val(email);$("#updatePhone").val(phone);$("#updateTin").val(tin);$("#updateType").val(type);$("#updateStatus").val(status);$("#updateAddress").val(address);
-    let ee=document.getElementById("updatedAvatar");
-    let f=document.getElementById("updatedDiploma");
-    
-    edit.click();
-  }),
-  setTimeout(()=>{
-      $(".dataTables_filter .form-control").removeClass("form-control-sm"),
-      $(".dataTables_length .form-select").removeClass("form-select-sm")
-  },300)
-})
+            plugins:{
+                trigger:new FormValidation.plugins.Trigger,
+                bootstrap5:new FormValidation.plugins.Bootstrap5(
+                    {
+                        eleValidClass:"",
+                        rowSelector:".col-md-6"
+                    }
+                ),
+                submitButton:new FormValidation.plugins.SubmitButton,
+                defaultSubmit:new FormValidation.plugins.DefaultSubmit,
+                autoFocus:new FormValidation.plugins.AutoFocus
+            },
+            init:e=>{
+                e.on("plugins.message.placed",function(e){
+                    e.element.parentElement.classList.contains("input-group")&&e.element.parentElement.insertAdjacentElement("afterend",e.messageElement)
+                })
+            }
+        }));
+        const u=(p&&FormValidation.formValidation(p,{
+            fields:{
+                
+                name:{
+                    validators:{
+                        notEmpty:{
+                            message:"Please enter full name"
+                        }
+                    }
+                },
+                email:{
+                    validators:{
+                        notEmpty:{
+                            message:"Please enter your email"
+                        },
+                        emailAddress:{
+                            message:"The value is not a valid email address"
+                        }
+                    }
+                },
+                phone:{
+                    validators:{
+                        notEmpty:{
+                            message:"Please enter phone number"
+                        },
+                    }
+                },
+                gender:{
+                    validators:{
+                        notEmpty:{
+                            message:"Select gender"
+                        }
+                    }
+                },
+                marital:{
+                    validators:{
+                        notEmpty:{
+                            message:"Select martial status"
+                        }
+                    }
+                },
+                district:{
+                    validators:{
+                        notEmpty:{
+                            message:"Select district"
+                        }
+                    }
+                },
+                category:{
+                    validators:{
+                        notEmpty:{
+                            message:"Select user category"
+                        }
+                    }
+                },
+                practicing:{
+                    validators:{
+                        notEmpty:{
+                            message:"Select practicing status"
+                        }
+                    }
+                },
+            },
+            plugins:{
+                trigger:new FormValidation.plugins.Trigger,
+                bootstrap5:new FormValidation.plugins.Bootstrap5(
+                    {
+                        eleValidClass:"",
+                        rowSelector:".col-md-6"
+                    }
+                ),
+                submitButton:new FormValidation.plugins.SubmitButton,
+                defaultSubmit:new FormValidation.plugins.DefaultSubmit,
+                autoFocus:new FormValidation.plugins.AutoFocus
+            },
+            init:e=>{
+                e.on("plugins.message.placed",function(e){
+                    e.element.parentElement.classList.contains("input-group")&&e.element.parentElement.insertAdjacentElement("afterend",e.messageElement)
+                })
+            }
+        }));
+      }
+      <?php if($errors->any()): ?>
+        var myModal = new bootstrap.Modal(document.getElementById('newUser'), {
+          keyboard: false
+        })
+        myModal.show()
+      <?php endif; ?>
+    })
 </script>
-
-<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\HP\Documents\Lewis\bar\resources\views/probono/index.blade.php ENDPATH**/ ?>

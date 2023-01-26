@@ -14,26 +14,33 @@ New Meeting
       <h5 class="card-header">New Meeting</h5>
       <div class="card-body">
         <div class="row g-3">
+          <form method="POST" class="row g-3" action="<?php echo e(route('meetings.store')); ?>">
+            <?php echo csrf_field(); ?>
           <div class="col-12">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title">
+            <input required type="text" name="title" class="form-control" id="title">
           </div>
           <div class="col-md-6">
+            
             <label for="date" class="form-label">Date and Start time</label>
-            <input type="text" class="form-control" id="date" name="date" placeholder="Month DD, YYYY H:i">
+            <input required type="text" class="form-control" id="date" name="date" placeholder="Month DD, YYYY H:i">
           </div>
           <div class="col-md-6">
             <label for="end" class="form-label">End time</label>
-            <input type="text" class="form-control" id="end" name="end" placeholder="H:i">
+            <input required type="text" class="form-control" id="end" name="end" placeholder="H:i">
           </div>
-          <div class="col-12">
+          <div class="col-9">
             <label for="venue" class="form-label">Venue</label>
-            <input type="text" class="form-control" id="venue">
+            <input required type="text" name="venue" class="form-control" id="venue">
+          </div>
+          <div class="col-3">
+            <label for="venue" class="form-label">Credit</label>
+            <input required type="text" name="credits" id="credit" class="form-control">
           </div>
           <div class="col-md mb-md-0 mb-2">
             <div class="form-check custom-option custom-option-basic checked">
               <label class="form-check-label custom-option-content" for="published1">
-                <input name="published" class="form-check-input" type="radio" value="1" id="published1" checked="">
+                <input required name="published" class="form-check-input" type="radio" value="1" id="published1">
                 <span class="custom-option-header">
                   <span class="h6 mb-0">Published</span>
                   <span class="text-muted"></span>
@@ -47,7 +54,7 @@ New Meeting
           <div class="col-md">
             <div class="form-check custom-option custom-option-basic">
               <label class="form-check-label custom-option-content" for="published2">
-                <input name="published" class="form-check-input" type="radio" value="0" id="published2">
+                <input required name="published" class="form-check-input" type="radio" value="0" id="published2" checked="">
                 <span class="custom-option-header">
                   <span class="h6 mb-0">Not Published</span>
                   <span class="text-muted"></span>
@@ -59,8 +66,9 @@ New Meeting
             </div>
           </div>
           <div class="col-12 d-flex justify-content-center">
-            <button type="button" class="btn btn-primary waves-effect waves-light">Save Meeting</button>
+            <button type="submit" class="btn btn-primary waves-effect waves-light">Save Meeting</button>
           </div>
+          </form>
         </div>
       </div>
     </div>
@@ -89,6 +97,16 @@ window.Helpers.initCustomOptionCheck();
     dtt&&dtt.flatpickr({enableTime:!0, altInput:!0,altFormat:"F j, Y H:i",dateFormat:"Y-m-d H:i", minDate: 'today'})
     dte&&dte.flatpickr({enableTime:!0,noCalendar:!0})
   })
+
+  $(document).ready(function() {
+  $("#credit").on("input", function() {
+    var value = $(this).val();
+    var decimalRegex = /^[0-9.]+(\.[0-9]{1,2})?$/;
+    if(!decimalRegex.test(value)) {
+        $(this).val(value.substring(0, value.length - 1));
+    }
+  });
+});
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\HP\Documents\Lewis\bar\resources\views/meetings/create.blade.php ENDPATH**/ ?>

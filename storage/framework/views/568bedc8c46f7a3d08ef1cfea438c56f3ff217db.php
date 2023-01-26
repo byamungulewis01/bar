@@ -13,7 +13,7 @@ Users
               <div class="col-sm-6 col-xl-2">
                 <div class="card">
                   <div class="card-body">
-                    <div class="d-flex align-items-start justify-content-between">
+                    <div  class="d-flex align-items-start justify-content-between">
                       <div class="content-left">
                         <span>Total </span>
                         <div class="d-flex align-items-center my-1">
@@ -222,9 +222,6 @@ Users
                           <option value="">Select</option>
                           <?php $__currentLoopData = $marital; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $status): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                           <option <?php if(old('marital')==$status->id): ?> selected <?php endif; ?> value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
-                          <option <?php if(old('marital')=="Single"): ?> selected <?php endif; ?> value="Single">Sigle</option>
-                          <option <?php if(old('marital')=="Married"): ?> selected <?php endif; ?> value="Married">Married</option>
-                          <option <?php if(old('marital')=="Divorce"): ?> selected <?php endif; ?> value="Divorce">Divorce</option>
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                       </div>

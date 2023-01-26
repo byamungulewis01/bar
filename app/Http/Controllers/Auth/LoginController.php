@@ -13,7 +13,7 @@ use App\Models\marital;
 use Illuminate\Validation\ValidationException;
 
 
-class LoginController extends Controller
+class  LoginController extends Controller
 {
     public function __construct()
     {

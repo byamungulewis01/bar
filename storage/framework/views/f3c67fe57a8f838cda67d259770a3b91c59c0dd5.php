@@ -6,39 +6,193 @@ Meetings
 
 <?php $__env->startSection('contents'); ?>
 <!-- Content -->
-        
+
 <div class="container-xxl flex-grow-1 container-p-y">
-            
-            
 
-            <!-- Users List Table -->
-            <div class="card">
-              <div class="card-header border-bottom">
-                <h5 class="card-title mb-0">Meetings <a href="<?php echo e(route('meetings.create')); ?>" class="btn btn-dark text-white pull-left float-end"><i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">New Meeting</span></a><a class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editmeetings"></a></h5>
-                
+
+
+  <!-- Users List Table -->
+  <div class="card">
+    <div class="card-header border-bottom">
+      <h5 class="card-title mb-0">Meetings <a href="" data-bs-toggle="modal" data-bs-target="#meeting"
+          class="btn btn-dark text-white pull-left float-end"><i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span
+            class="d-none d-sm-inline-block">New Meeting</span></a></h5>
+
+    </div>
+    <div class="modal fade" id="meeting" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+        <div class="modal-content p-3 p-md-5">
+          <div class="modal-body">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="text-center mb-4">
+              <h3 class="mb-2">Add New Meeting</h3>
+            </div>
+            <form method="POST" class="row g-3" action="<?php echo e(route('meetings.store')); ?>">
+              <?php echo csrf_field(); ?>
+              <div class="col-12">
+                <label for="title" class="form-label">Title</label>
+                <input required type="text" name="title" class="form-control" id="title">
               </div>
-              <div class="card-datatable table-responsive">
-                <table class="datatables-meetings table border-top">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Meeting</th>
-                      <th>Date</th>
-                      <th>From</th>
-                      <th>To</th>
-                      <th>Venue</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                </table>
+              <div class="col-md-6">
+
+                <label for="date" class="form-label">Date and Start time</label>
+                <input required type="text" class="form-control" id="date" name="date" placeholder="Month DD, YYYY H:i">
               </div>
+              <div class="col-md-6">
+                <label for="end" class="form-label">End time</label>
+                <input required type="text" class="form-control" id="end" name="end" placeholder="H:i">
+              </div>
+              <div class="col-9">
+                <label for="venue" class="form-label">Venue</label>
+                <input required type="text" name="venue" class="form-control" id="venue">
+              </div>
+              <div class="col-3">
+                <label for="venue" class="form-label">Credit</label>
+                <input required type="text" name="credits" id="credit" class="form-control">
+              </div>
+              <div class="col-md mb-md-0 mb-2">
+                <div class="form-check custom-option custom-option-basic checked">
+                  <label class="form-check-label custom-option-content" for="published1">
+                    <input required name="published" class="form-check-input" type="radio" value="1" id="published1">
+                    <span class="custom-option-header">
+                      <span class="h6 mb-0">Published</span>
+                      <span class="text-muted"></span>
+                    </span>
+                    <span class="custom-option-body">
+                      <small>Every user will get this meeting on their meeting list</small>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md">
+                <div class="form-check custom-option custom-option-basic">
+                  <label class="form-check-label custom-option-content" for="published2">
+                    <input required name="published" class="form-check-input" type="radio" value="0" id="published2"
+                      checked="">
+                    <span class="custom-option-header">
+                      <span class="h6 mb-0">Not Published</span>
+                      <span class="text-muted"></span>
+                    </span>
+                    <span class="custom-option-body">
+                      <small>Only the invited users will get this meeting on their list</small>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-12 d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary waves-effect waves-light">Save Meeting</button>
+              </div>
+            </form>
           </div>
-
         </div>
-        <!-- / Content -->
-            
+      </div>
+    </div>
+    <?php echo $__env->make('layouts.flash_message', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Meeting</th>
+            <th>Date</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Venue</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+          <?php
+          $count = 1;
+          ?>
+          <?php $__currentLoopData = $meetings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $meeting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+          <tr>
+            <td><?php echo e($count); ?></td>
+            <td><?php echo e($meeting->title); ?> <br>
+              <span>
+                <strong>credit</strong> <span class="badge bg-label-warning me-2"><?php echo e($meeting->credits); ?></span>
+              </span>
+
+            </td>
+            <td><?php echo e(\Carbon\Carbon::parse($meeting->date)->locale('fr')->format('F j, Y')); ?></td>
+            <td>
+              <?php echo e($meeting->start); ?>
+
+            </td>
+            <td><?php echo e($meeting->end); ?></td>
+            <td><?php echo e($meeting->venue); ?></td>
+            <td>
+              <?php if($meeting->published == 1): ?>
+              <span class="badge bg-label-warning me-2">Published</span>
+
+              <?php else: ?>
+              <span class="badge bg-label-info me-2">Not Published</span>
+              <?php endif; ?>
+
+            </td>
+
+            <td>
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary">Action</button>
+                <button type="button" class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split"
+                  data-bs-toggle="dropdown"></button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="<?php echo e(route('meetings.show',$meeting->id)); ?>">Invite</a>
+                  <a class="dropdown-item" href="javascript:void(0)">Checkin</a>
+                  <a class="dropdown-item" href="javascript:void(0)">Data</a>
+                  <div class="dropdown-divider"></div>
+                  <a data-bs-toggle="modal" data-bs-target="#delete<?php echo e($meeting->id); ?>" class="dropdown-item"
+                    href="javascript:void(0)">remove</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+      
+
+          <?php
+          $count++
+          ?>
+
+          <div class="modal modal-top fade" id="delete<?php echo e($meeting->id); ?>" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+              <div class="modal-content">
+                <form action="<?php echo e(route('marital.delete')); ?>" method="POST">
+                  <?php echo csrf_field(); ?>
+                  <?php echo method_field('DELETE'); ?>
+                  <input type="hidden" name="meeting" value="<?php echo e($meeting->id); ?>" />
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Are you sure to delete? <?php echo e($meeting->id); ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-dark">Yes, Delete</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+<!-- / Content -->
+
 <?php $__env->stopSection(); ?>
+
+
 
 <?php $__env->startSection('css'); ?>
 <link rel="stylesheet" href="<?php echo e(asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')); ?>">
@@ -46,6 +200,7 @@ Meetings
 <link rel="stylesheet" href="<?php echo e(asset('assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css')); ?>">
 <link rel="stylesheet" href="<?php echo e(asset('assets/vendor/libs/formvalidation/dist/css/formValidation.min.css')); ?>" />
 <link rel="stylesheet" href="<?php echo e(asset('assets/vendor/libs/sweetalert2/sweetalert2.css')); ?>" />
+<link rel="stylesheet" href="<?php echo e(asset('assets/vendor/libs/flatpickr/flatpickr.css')); ?>" />
 
 <?php $__env->stopSection(); ?>
 
@@ -61,194 +216,57 @@ Meetings
 <script src="<?php echo e(asset('assets/vendor/libs/cleavejs/cleave.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/vendor/libs/cleavejs/cleave-phone.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/vendor/libs/sweetalert2/sweetalert2.js')); ?>"></script>
-
+<script src="<?php echo e(asset('assets/vendor/libs/flatpickr/flatpickr.js')); ?>"></script>
 
 <script>
-"use strict";
-$(function(){  
-  let t,a,s,o;
-  s=(isDarkStyle?(t=config.colors_dark.borderColor,a=config.colors_dark.bodyBg,config.colors_dark):(t=config.colors.borderColor,a=config.colors.bodyBg,config.colors)).headingColor;
-  var e,n=$(".datatables-meetings"),r="/profile/",oo={
-      "Lawfirm":{
-          title:"Lawfirm",
-          class:"bg-label-info"
-      },
-      Other:{
-          title:"Other",
-          class:"bg-label-secondary"
-      },
-      0:{
-          title:"Active",
-          class:"bg-label-success"
-      },
-      1:{
-          title:"Inactive",
-          class:"bg-label-danger"
-      }
-  };
-  n.length&&(e=n.DataTable({
-      ajax:"/api/meetings",
-      columns:[
-          {data:""},
-          {data:"name"},
-          {data:"tin"},
-          {data:"type"},
-          {data:"phone"},
-          {data:"address"},
-          {data:"blocked"},
-          {data:"action"}
-      ],
-      columnDefs:[
-          {
-              className:"control",
-              searchable:!1,
-              orderable:!1,
-              responsivePriority:2,
-              targets:0,
-              render:function(e,t,a,s){
-                  return""
-              }
-          },
-          {
-              targets:1,
-              responsivePriority:4,
-              render:function(e,t,a,s){
-                  var n=a.name, i=a.email, j=a.id;
-                  return'<div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><span class="avatar-initial rounded-circle bg-label-'+["success","danger","warning","info","primary","secondary"][Math.floor(6*Math.random())]+'">'+(o=(((o=(n=a.name).match(/\b\w/g)||[]).shift()||"")+(o.pop()||"")).toUpperCase())+'</span></div></div><div class="d-flex flex-column"><a href="'+r+j+'" class="text-body text-truncate"><span class="fw-semibold">'+n+'</span></a><small class="text-muted">'+i+"</small></div></div>"
-              }
-          },
-          {
-              targets:3,
-              render:function(e,t,a,s){
-                  a=a.type;
-                  return'<span class="badge '+oo[a].class+'" text-capitalized>'+oo[a].title+"</span>"
-              }
-          },
-          {
-            targets:4,
-            render:function(e,t,a,s){
-              return'<span class="fw-semibold">'+a.phone+"</span>"
-            }
-          },
-          {
-              targets:5,
-              render:function(e,t,a,s){
-                  return'<span class="fw-semibold">'+a.address+"</span>"
-              }
-          },
-          {
-              targets:6,
-              render:function(e,t,a,s){
-                  a=a.blocked;
-                  return'<span class="badge '+oo[a].class+'" text-capitalized>'+oo[a].title+"</span>"
-              }
-          },
-          {
-              targets:-1,
-              title:"Actions",
-              searchable:!1,
-              orderable:!1,
-              render:function(e,t,a,s){
-                  return'<div class="d-flex align-items-center"><a href="javascript:;" class="text-body edit-record "><i class="ti ti-edit ti-sm me-2" data-id="'+a.id+'" data-name="'+a.name+'" data-tin="'+a.tin+'" data-phone="'+a.phone+'" data-email="'+a.email+'" data-type="'+a.type+'" data-address="'+a.address+'" data-status="'+a.blocked+'"></i></a><a href="'+r+a.id+'" class="text-body"><i class="ti ti-eye ti-sm mx-2"></i></a><a href="javascript:;" class="text-body delete-record '+a.id+'"><i class="ti ti-trash ti-sm mx-2"></i></a></div></div>'
-              }
-          }
-      ],
-      order:[
-          [1,"desc"]
-      ],
-      dom:'<"row me-2"<"col-md-2"<"me-3"l>><"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"fB>>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-      language:{
-          sLengthMenu:"_MENU_",
-          search:"",
-          searchPlaceholder:"Search.."
-      },
-      responsive:{
-          details:{
-              display:$.fn.dataTable.Responsive.display.modal({
-                  header:function(e){
-                      return"Details of "+e.data().name
-                  }
-              }),
-              type:"column",
-              renderer:function(e,t,a){
-                  a=$.map(a,function(e,t){
-                      return""!==e.name?'<tr data-dt-row="'+e.rowIndex+'" data-dt-column="'+e.columnIndex+'"><td>'+e.name+":</td> <td>"+e.data+"</td></tr>":""
-                  }).join("");
-                  return!!a&&$('<table class="table"/><tbody />').append(a)
-              }
-          }
-      },
-              
-  })),
-  $(".datatables-meetings tbody").on("click",".delete-record",function(event){
-      let id = event.currentTarget.classList[2];
-      Swal.fire({
-        title:"Are you sure?",
-        text:"You won't be able to revert this!",
-        icon:"warning",
-        showCancelButton:!0,
-        confirmButtonText:"Yes, delete it!",
-        customClass:{
-          confirmButton:"btn btn-danger me-3",
-          cancelButton:"btn btn-label-secondary"
-        },
-        buttonsStyling:!1,
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          return fetch('/api/users/meetingsanization/'+id,  {
-              method: 'DELETE',
-              headers: new Headers({
-                'Accept' : 'application/json',
-                'Content-Type':'application/json; charset=UTF-8',
-                'X-CSRF-Token' : "<?php echo csrf_token() ?>"
-              })
-            })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(response.statusText)
-              }
-              return response.json()
-            })
-            .catch(error => {
-              Swal.showValidationMessage(
-                `Request failed: ${error}`
-              )
-            })
-        },
-        allowOutsideClick: () => !Swal.isLoading()
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title:'Deleted!',
-            text:'meetingsanization has been deleted.',
-            icon:'success',
-            showCancelButton:0,
-            confirmButtonText:"Close",
-            customClass:{
-              confirmButton:"btn btn-label-secondary",
-              cancelButton:"btn btn-label-secondary d-none"
-            },
-            buttonsStyling:!1,
-          })
-          e.row($(this).parents("tr")).remove().draw()
-        }
-      })
-  }),
-  $(".datatables-meetings tbody").on("click",".edit-record",function(event){
-    let a = event.target;
-    let id = a.getAttribute('data-id'),name = a.getAttribute('data-name'),email = a.getAttribute('data-email'),phone = a.getAttribute('data-phone'),tin = a.getAttribute('data-tin'),type = a.getAttribute('data-type'),status = a.getAttribute('data-status'),address = a.getAttribute('data-address'),edit=document.getElementById('edit');
-    $("#is").val(id),$("#updateName").val(name),$("#updateEmail").val(email);$("#updatePhone").val(phone);$("#updateTin").val(tin);$("#updateType").val(type);$("#updateStatus").val(status);$("#updateAddress").val(address);
-    let ee=document.getElementById("updatedAvatar");
-    let f=document.getElementById("updatedDiploma");
-    
-    edit.click();
-  }),
-  setTimeout(()=>{
-      $(".dataTables_filter .form-control").removeClass("form-control-sm"),
-      $(".dataTables_length .form-select").removeClass("form-select-sm")
-  },300)
-})
-</script>
+  "use strict";
+  $(function () {
+    var dtt = document.querySelector("#date"),
+      dte = document.querySelector("#end");
+    dtt && dtt.flatpickr({
+      enableTime: !0,
+      altInput: !0,
+      altFormat: "F j, Y H:i",
+      dateFormat: "Y-m-d H:i",
+      minDate: 'today'
+    })
+    dte && dte.flatpickr({
+      enableTime: !0,
+      noCalendar: !0
+    })
+  })
+  $(function () {
+    var dtt1 = document.querySelector("#date1"),
+      dte1 = document.querySelector("#end1");
+    dtt1 && dtt1.flatpickr({
+      enableTime: !0,
+      altInput: !0,
+      altFormat: "F j, Y H:i",
+      dateFormat: "Y-m-d H:i",
+      minDate: 'today'
+    })
+    dte1 && dte1.flatpickr({
+      enableTime: !0,
+      noCalendar: !0
+    })
+  })
 
+  $(document).ready(function () {
+    $("#credit").on("input", function () {
+      var value = $(this).val();
+      var decimalRegex = /^[0-9.]+(\.[0-9]{1,2})?$/;
+      if (!decimalRegex.test(value)) {
+        $(this).val(value.substring(0, value.length - 1));
+      }
+    });
+    $("#credit1").on("input", function () {
+      var value = $(this).val();
+      var decimalRegex = /^[0-9.]+(\.[0-9]{1,2})?$/;
+      if (!decimalRegex.test(value)) {
+        $(this).val(value.substring(0, value.length - 1));
+      }
+    });
+  });
+</script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\HP\Documents\Lewis\bar\resources\views/meetings/index.blade.php ENDPATH**/ ?>

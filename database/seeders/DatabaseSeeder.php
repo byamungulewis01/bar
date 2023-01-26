@@ -21,6 +21,17 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'username' => 'patrick.ishimwe'
         ]);
+        \App\Models\Admin::factory()->create([
+            'name' => 'BYAMUNGU Lewis',
+            'email' => 'byamungulewis@gmail.com',
+            'username' => 'bmglewis@gmail.com'
+        ]);
+        \App\Models\Admin::factory()->create([
+            'name' => 'NDIKUMANA Eric',
+            'email' => 'ndikumana@gmail.com',
+            'username' => 'eric.ndikumana'
+        ]);
+  
 
         $this->call([
             RolesAndPermissionSeeder::class,
