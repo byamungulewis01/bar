@@ -13,7 +13,6 @@
       <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
     </a>
   </div>
-
   <div class="menu-inner-shadow"></div>
   <ul class="menu-inner py-1">
     <!-- Apps & Pages -->
@@ -45,20 +44,33 @@
             <div data-i18n="Organizations">Organizations</div>
           </a>
         </li>
+        <li class="menu-item <?php echo e(Request::routeIs('deactivated') ? 'active' : ''); ?>">
+          <a href="<?php echo e(route('deactivated')); ?>" class="menu-link">
+            <div data-i18n="Inactive Users">Inactive Users</div>
+          </a>
+        </li>
       </ul>
     </li>
 
+    <!-- Meetings -->
+    <li class="menu-item <?php echo e(Request::routeIs('meetings.index') || Request::routeIs('meetings.create') ? 'active' : ''); ?>">
+      <a href="<?php echo e(route('meetings.index')); ?>" class="menu-link">
+        <i class="menu-icon tf-icons ti ti-brand-zoom"></i>
+        <div data-i18n="Meetings">Meetings</div>
+      </a>
+    </li>
+
     <!-- Disciplinary Cases -->
-    <li class="menu-item">
-      <a href="javascript:void(0);" class="menu-link">
+    <li class="menu-item <?php echo e(Request::routeIs('cases.index') ? 'active' : ''); ?>">
+      <a href="<?php echo e(route('cases.index')); ?>" class="menu-link">
         <i class="menu-icon tf-icons ti ti-file-dislike"></i>
         <div data-i18n="Disciplinary Cases">Disciplinary Cases</div>
       </a>
     </li>
 
     <!-- Probono Cases -->
-    <li class="menu-item">
-      <a href="javascript:void(0);" class="menu-link">
+    <li class="menu-item <?php echo e(Request::routeIs('probono.index') ? 'active' : ''); ?>">
+      <a href="<?php echo e(route('probono.index')); ?>" class="menu-link">
         <i class="menu-icon tf-icons ti ti-gavel"></i>
         <div data-i18n="Pro Bono Cases">Pro Bono Cases</div>
       </a>
@@ -77,7 +89,7 @@
       <span class="menu-header-text">Extra</span>
     </li>
     <li class="menu-item">
-      <a href="<?php echo e(route('admin.roles')); ?>" class="menu-link">
+      <a href="<?php echo e(route('roles')); ?>" class="menu-link">
         <i class='menu-icon tf-icons ti ti-settings'></i>
         <div data-i18n="Roles & Permissions">Roles & Permissions</div>
       </a>

@@ -341,7 +341,7 @@ Users
                           <div class="button-wrapper">
                             <label for="updateDiploma" class="btn btn-sm  btn-primary me-2 mb-3" tabindex="0">
                               <i class="ti ti-upload"></i>
-                              <input type="file" id="updateDiploma" name="diploma" class="user-diploma-updated" hidden accept="image/png, image/jpeg" />
+                              <input type="file" name="diploma" class="user-diploma-updated" hidden accept="image/png, image/jpeg" />
                             </label>
                             <button type="button" class="btn btn-sm btn-label-secondary updated-diploma-reset mb-3 waves-effect">
                               <i class="ti ti-refresh-dot d-block d-sm-none"></i>

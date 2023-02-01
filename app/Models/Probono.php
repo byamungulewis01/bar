@@ -8,17 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Probono extends Model
 {
     use HasFactory;
-    protected $table = 'probono';
     protected $fillable = [
-        'referral_name',
-        'referral_mobile',
-        'referral_gender',
+        'fname',
+        'lname',
+        'gender',
+        'age',
+        'phone',
         'referral_case_no',
+        'jurisdiction',
+        'court',
         'case_nature',
         'hearing_date',
         'category',
+        'referrel',
+        'status',
         'register',
-        'case_status',
     ];
-
 }

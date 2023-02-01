@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2023 at 03:20 PM
+-- Generation Time: Feb 01, 2023 at 07:47 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -62,7 +62,7 @@ CREATE TABLE `admins` (
 
 INSERT INTO `admins` (`id`, `name`, `email`, `username`, `email_verified_at`, `password`, `blocked`, `remember_token`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'Patrick ISHIMWE', 'test@example.com', 'patrick.ishimwe', '2023-01-23 04:28:18', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 0, '2Jtxenj1DA', NULL, '2023-01-23 04:28:18', '2023-01-23 04:28:18'),
-(2, 'BYAMUNGU Lewis', 'byamungulewis@gmail.com', 'bmglewis@gmail.com', '2023-01-23 04:28:18', '$2y$10$itJ9ajohR2VcLPpoIUQX1.l47LKawGoOUyA9B83FYH2PNgIOMkpvO', 0, 'wjtUJAHJHHxrPPBvR93NJHgqvfS0rrzF5jeB24ouIIWBYia47c3TduzG6LQL', NULL, '2023-01-23 04:28:18', '2023-01-23 04:47:26'),
+(2, 'BYAMUNGU Lewis', 'byamungulewis@gmail.com', 'bmglewis@gmail.com', '2023-01-23 04:28:18', '$2y$10$itJ9ajohR2VcLPpoIUQX1.l47LKawGoOUyA9B83FYH2PNgIOMkpvO', 0, 'ytouuE7xavLKjUkPa9FkdxavNNd51H8yZiUhy4UxihWMGRZMFl6c9glexWk1', NULL, '2023-01-23 04:28:18', '2023-01-23 04:47:26'),
 (3, 'NDIKUMANA Eric', 'ndikumana@gmail.com', 'eric.ndikumana', '2023-01-23 04:28:18', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 0, 'JYoa0Rb6CR', NULL, '2023-01-23 04:28:18', '2023-01-23 04:28:18');
 
 -- --------------------------------------------------------
@@ -78,6 +78,20 @@ CREATE TABLE `areas` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `areas`
+--
+
+INSERT INTO `areas` (`id`, `user_id`, `lawscategory_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '2023-01-31 07:31:12', '2023-01-31 07:31:12'),
+(2, 1, 3, '2023-01-31 07:31:12', '2023-01-31 07:31:12'),
+(3, 1, 47, '2023-01-31 07:31:12', '2023-01-31 07:31:12'),
+(4, 5, 1, '2023-01-31 10:10:08', '2023-01-31 10:10:08'),
+(5, 4, 5, '2023-01-31 11:18:32', '2023-01-31 11:18:32'),
+(6, 2, 5, '2023-01-31 11:31:51', '2023-01-31 11:31:51'),
+(7, 7, 5, '2023-01-31 15:16:46', '2023-01-31 15:16:46'),
+(8, 7, 7, '2023-01-31 15:16:46', '2023-01-31 15:16:46');
 
 -- --------------------------------------------------------
 
@@ -115,7 +129,24 @@ INSERT INTO `authentication_log` (`id`, `authenticatable_type`, `authenticatable
 (10, 'App\\Models\\User', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-25 05:55:07', 1, '2023-01-25 05:58:04', 0, NULL),
 (11, 'App\\Models\\Admin', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-25 05:58:19', 1, '2023-01-25 09:04:11', 0, NULL),
 (12, 'App\\Models\\User', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-25 09:04:23', 1, '2023-01-25 10:42:25', 0, NULL),
-(13, 'App\\Models\\Admin', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-25 10:42:39', 1, NULL, 0, NULL);
+(13, 'App\\Models\\Admin', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-25 10:42:39', 1, NULL, 0, NULL),
+(14, 'App\\Models\\Admin', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 04:04:48', 1, '2023-01-31 05:34:46', 0, NULL),
+(15, 'App\\Models\\Admin', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 05:52:12', 1, '2023-01-31 05:56:11', 0, NULL),
+(16, 'App\\Models\\User', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 06:31:18', 1, '2023-01-31 06:49:09', 0, NULL),
+(17, 'App\\Models\\Admin', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 06:49:19', 1, '2023-01-31 07:29:01', 0, NULL),
+(18, 'App\\Models\\User', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 07:29:18', 1, '2023-01-31 07:40:53', 0, NULL),
+(19, 'App\\Models\\User', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 10:09:13', 1, '2023-01-31 10:09:42', 0, NULL),
+(20, 'App\\Models\\User', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 10:09:54', 1, '2023-01-31 10:10:15', 0, NULL),
+(21, 'App\\Models\\User', 4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 11:17:37', 1, '2023-01-31 11:17:59', 0, NULL),
+(22, 'App\\Models\\User', 4, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 11:18:09', 1, '2023-01-31 11:18:51', 0, NULL),
+(23, 'App\\Models\\User', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 11:31:35', 1, '2023-01-31 11:31:58', 0, NULL),
+(24, 'App\\Models\\Admin', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 13:22:54', 1, '2023-01-31 15:09:26', 0, NULL),
+(25, 'App\\Models\\Admin', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 15:11:43', 1, '2023-01-31 15:14:08', 0, NULL),
+(26, 'App\\Models\\User', 7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 15:15:08', 1, '2023-01-31 15:15:31', 0, NULL),
+(27, 'App\\Models\\User', 7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 15:15:50', 1, '2023-01-31 15:16:50', 0, NULL),
+(28, 'App\\Models\\User', 7, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 15:18:56', 1, '2023-01-31 15:19:18', 0, NULL),
+(29, 'App\\Models\\User', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 15:19:28', 1, '2023-01-31 15:21:50', 0, NULL),
+(30, 'App\\Models\\Admin', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36', '2023-01-31 15:40:39', 1, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -483,7 +514,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (18, '2023_01_22_140817_create_discipline_table', 1),
 (19, '2023_01_22_142701_create_discipline_participants_table', 1),
 (20, '2023_01_22_142730_create_discipline_sittings_table', 1),
-(21, '2023_01_23_113656_create_invitation', 2);
+(21, '2023_01_23_113656_create_invitation', 2),
+(22, '2023_01_31_151021_create_probonos_table', 3);
 
 -- --------------------------------------------------------
 
@@ -664,35 +696,44 @@ INSERT INTO `phonenumbers` (`id`, `name`, `phone`, `user_id`, `created_at`, `upd
 (3, 'mobile', '0786655566', 2, NULL, NULL),
 (4, 'mobile', '07833555568', 1, NULL, NULL),
 (5, 'mobile', '0788766666', 5, '2023-01-24 04:55:08', '2023-01-24 04:55:08'),
-(6, 'mobile', '0777665555', 6, '2023-01-24 04:56:55', '2023-01-24 04:56:55');
+(6, 'mobile', '0777665555', 6, '2023-01-24 04:56:55', '2023-01-24 04:56:55'),
+(7, 'mobile', '0788672689', 7, '2023-01-31 15:13:24', '2023-01-31 15:13:24');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `probono`
+-- Table structure for table `probonos`
 --
 
-CREATE TABLE `probono` (
+CREATE TABLE `probonos` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `referral_name` varchar(255) NOT NULL,
-  `referral_mobile` int(11) NOT NULL,
-  `referral_gender` varchar(255) NOT NULL,
+  `fname` varchar(255) NOT NULL,
+  `lname` varchar(255) NOT NULL,
+  `gender` varchar(255) NOT NULL,
+  `age` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
   `referral_case_no` varchar(255) NOT NULL,
+  `jurisdiction` varchar(255) NOT NULL,
+  `court` varchar(255) NOT NULL,
   `case_nature` varchar(255) NOT NULL,
   `hearing_date` date NOT NULL,
   `category` varchar(255) NOT NULL,
-  `register` int(11) NOT NULL,
-  `case_status` enum('OPEN','CLOSED') NOT NULL,
+  `referrel` bigint(20) UNSIGNED NOT NULL,
+  `status` enum('OPEN','CLOSED') NOT NULL,
+  `register` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `probono`
+-- Dumping data for table `probonos`
 --
 
-INSERT INTO `probono` (`id`, `referral_name`, `referral_mobile`, `referral_gender`, `referral_case_no`, `case_nature`, `hearing_date`, `category`, `register`, `case_status`, `created_at`, `updated_at`) VALUES
-(1, 'Abimana Nuru', 7833777, 'Male', 'RC 8889999AB', 'Criminal', '2023-01-23', 'count', 2, 'OPEN', '2023-01-23 16:24:15', '2023-01-23 16:24:15');
+INSERT INTO `probonos` (`id`, `fname`, `lname`, `gender`, `age`, `phone`, `referral_case_no`, `jurisdiction`, `court`, `case_nature`, `hearing_date`, `category`, `referrel`, `status`, `register`, `created_at`, `updated_at`) VALUES
+(1, 'Eric', 'MUHOZA', 'Male', '44', '0778884444', 'RC 8889999AB', 'test1', 'Rwibanze', 'Social', '2023-02-03', 'Prosecutor', 3, 'OPEN', '2', '2023-01-31 14:43:29', '2023-01-31 14:43:29'),
+(2, 'Michel', 'Joel', 'Male', '56', '0786663333', 'RC 455PA2022A', 'test2', 'Rwibanze2', 'Civil', '2023-02-02', 'Case Agaist RBA', 1, 'OPEN', '2', '2023-01-31 14:46:42', '2023-01-31 14:46:42'),
+(3, 'Umulisa', 'Noella', 'Female', '33', '0786663355', 'RC 337Hy77', 'test3', 'Rwibanze3', 'Social', '2023-02-02', 'Supreme count', 2, 'OPEN', '2', '2023-01-31 14:48:05', '2023-01-31 14:48:05'),
+(4, 'umuhoza', 'alice', 'Female', '33', '0786663355', 'RC33334KK', 'test4', 'Rwibanze4', 'Social', '2023-02-02', 'Legal Aid to General Public', 1, 'OPEN', '2', '2023-01-31 14:49:20', '2023-01-31 14:49:20');
 
 -- --------------------------------------------------------
 
@@ -798,11 +839,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `district`, `gender`, `marital`, `photo`, `diplome`, `username`, `email_verified_at`, `regNumber`, `status`, `practicing`, `category`, `password`, `date`, `blocked`, `remember_token`, `deleted_at`, `created_at`, `updated_at`) VALUES
 (1, 'Yves SUGIRA', 'sugira@gmail.com', 'Nyabihu', 'Male', '1', '141424-1-old.jpg', '141424-1-old.jpg', NULL, NULL, '001/T/2023', '1', '2', 'Advocate', '$2y$10$9CaoQrH4CITnBe/mxJrOk.OU9alNWVRcr9tbB3C8fHVNSKewa3tKi', '2023-01-21', 0, NULL, NULL, '2023-01-21 10:14:24', '2023-01-21 11:13:32'),
-(2, 'Umutuzo Aime', 'aimeumutuzo@gmail.com', 'Muhanga', 'Female', 'Married', '141909-4.jpg', '141909-6.jpg', NULL, NULL, '002/S/2023', '2', '3', 'Advocate', '$2y$10$ZjfPNtzonCWp/J71vGeuxeNUbm3eeijiziNr8lDiIlQOhnzJzQice', '2023-01-21', 0, NULL, NULL, '2023-01-21 10:19:09', '2023-01-21 10:19:09'),
+(2, 'Umutuzo Aime', 'aimeumutuzo@gmail.com', 'Muhanga', 'Female', 'Married', '141909-4.jpg', '141909-6.jpg', NULL, NULL, '002/S/2023', '2', '3', 'Advocate', '$2y$10$ZjfPNtzonCWp/J71vGeuxeNUbm3eeijiziNr8lDiIlQOhnzJzQice', '2023-01-21', 0, NULL, NULL, '2023-01-21 10:19:09', '2023-01-28 10:19:09'),
 (3, 'NIYIGENA Clemance', 'clemmy@gmail.com', 'Kamonyi', 'Female', '4', '142034-6.jpg', '142034-6.jpg', NULL, NULL, 'RSTA/1/23', '3', '1', 'Staff', '$2y$10$SGdE4Ez4cfgvC14311WlQOTOsVknePeMoa89CiQmkcbMpI0L.cKVm', '2023-01-18', 0, NULL, NULL, '2023-01-21 10:20:34', '2023-01-21 10:20:34'),
-(4, 'NYIRAHABIMANA Chantal', 'chantal@gmail.com', 'Gicumbi', 'Female', 'Married', '142158-8.jpg', '142158-8.jpg', NULL, NULL, 'RSTA/2/23', '4', '1', 'Staff', '$2y$10$zUzCiaf6XjFJ5yPmGtHkOeBDLDTvm2PT2o.bTgmOVwgLtOkinsuA.', '2023-01-04', 0, NULL, NULL, '2023-01-21 10:21:59', '2023-01-21 10:21:59'),
-(5, 'Uwizewe jean', 'uwizewe@gmail.com', 'Kicukiro', 'Male', 'Divorce', '065507-d4.jpg', '065507-d4.jpg', NULL, NULL, '003/S/2023', '2', '3', 'Advocate', '$2y$10$FHNPmwQcp9zW/QrMDHuw..5i52rPb4OboPDe.LFHJTV9WJKM.2g1y', '2023-01-24', 0, NULL, NULL, '2023-01-24 04:55:08', '2023-01-24 04:55:08'),
-(6, 'Ndayambaje jean Paul', 'ndayambaje@gmail.com', 'Nyabihu', 'Male', 'Married', '065654-pawandeep.jpg', '065654-pawandeep.jpg', NULL, NULL, 'RSTA/3/23', '3', '1', 'Staff', '$2y$10$7cCDnyNRGNHS8i9oOgePBejhZ2MTf07jdBSQc8s1lsL6y7XPB1IVG', '2023-01-23', 0, NULL, NULL, '2023-01-24 04:56:55', '2023-01-24 04:56:55');
+(4, 'NYIRAHABIMANA Chantal', 'chantal@gmail.com', 'Gicumbi', 'Female', 'Married', '142158-8.jpg', '142158-8.jpg', NULL, NULL, 'RSTA/2/23', '4', '1', 'Staff', '$2y$10$p3tTWf4t7s4NUuPbKMrot.lxEcjrjYp3QkNg85USPI2F3cr2H9/DW', '2023-01-04', 0, NULL, NULL, '2023-01-21 10:21:59', '2023-01-31 11:17:59'),
+(5, 'Uwizewe jean', 'uwizewe@gmail.com', 'Kicukiro', 'Male', 'Divorce', '065507-d4.jpg', '065507-d4.jpg', NULL, NULL, '003/S/2023', '2', '3', 'Advocate', '$2y$10$t5z4ffWE61J5qxLLZvQy.exNAt1/zvfjA0PH/QKlR39TJUZETwORG', '2023-01-24', 0, NULL, NULL, '2023-01-24 04:55:08', '2023-01-31 10:09:42'),
+(6, 'Ndayambaje jean Paul', 'ndayambaje@gmail.com', 'Nyabihu', 'Male', 'Married', '065654-pawandeep.jpg', '065654-pawandeep.jpg', NULL, NULL, 'RSTA/3/23', '3', '1', 'Staff', '$2y$10$7cCDnyNRGNHS8i9oOgePBejhZ2MTf07jdBSQc8s1lsL6y7XPB1IVG', '2023-01-23', 0, NULL, NULL, '2023-01-24 04:56:55', '2023-01-24 04:56:55'),
+(7, 'UWIZEWE JEAN', 'uwizewe@test.com', 'Nyagatare', 'Male', '2', '171324-1-old.jpg', '171324-1-old.jpg', NULL, NULL, '004/S/2023', '2', '2', 'Advocate', '$2y$10$DpZoINko8ZPpi8wLnabX0eXIAbbejvQzH9xd/qH.jiYtYJvHazk7m', '2023-01-31', 0, NULL, NULL, '2023-01-31 15:13:24', '2023-01-31 15:15:31');
 
 --
 -- Indexes for dumped tables
@@ -942,10 +984,11 @@ ALTER TABLE `phonenumbers`
   ADD KEY `phonenumbers_user_id_foreign` (`user_id`);
 
 --
--- Indexes for table `probono`
+-- Indexes for table `probonos`
 --
-ALTER TABLE `probono`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `probonos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `probonos_referrel_foreign` (`referrel`);
 
 --
 -- Indexes for table `probono_members`
@@ -1001,13 +1044,13 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `areas`
 --
 ALTER TABLE `areas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `authentication_log`
 --
 ALTER TABLE `authentication_log`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `discipline`
@@ -1061,7 +1104,7 @@ ALTER TABLE `meetings`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `organizations`
@@ -1085,13 +1128,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `phonenumbers`
 --
 ALTER TABLE `phonenumbers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `probono`
+-- AUTO_INCREMENT for table `probonos`
 --
-ALTER TABLE `probono`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `probonos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `probono_members`
@@ -1115,7 +1158,7 @@ ALTER TABLE `socials`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -1151,6 +1194,12 @@ ALTER TABLE `model_has_roles`
 --
 ALTER TABLE `phonenumbers`
   ADD CONSTRAINT `phonenumbers_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `probonos`
+--
+ALTER TABLE `probonos`
+  ADD CONSTRAINT `probonos_referrel_foreign` FOREIGN KEY (`referrel`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `role_has_permissions`

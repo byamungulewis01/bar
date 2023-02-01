@@ -87,37 +87,48 @@ Pro Bono Cases
 
             <div class="col-12 col-md-6">
               <label class="form-label" for="name">First Name</label>
-              <input required type="text" id="name" name="name" class="form-control" placeholder="John" value="<?php echo e(old('fname')); ?>"/>
+              <input required type="text" name="fname" class="form-control" placeholder="John" value="<?php echo e(old('fname')); ?>"/>
             </div>
             <div class="col-12 col-md-6">
               <label class="form-label" for="email">Last name</label>
               <input required type="text" name="lname" class="form-control" placeholder="doe"  value="<?php echo e(old('lname')); ?>"/>
             </div>
+
             <div class="col-12 col-md-6">
-              <label class="form-label" for="email">Referral Case No</label>
-              <input required type="text" name="referral_case_no" class="form-control" placeholder="RC 0004B77/2022/TB/009"  value="<?php echo e(old('referralcaseno')); ?>"/>
+              <label class="form-label" for="gender">Gender</label>
+              <select required id="gender" name="gender" class="form-select">
+                <option value="" selected> - Select - </option>
+                <option <?php if(old('gender')=="Male"): ?> selected <?php endif; ?> value="Male">Male</option>
+                <option <?php if(old('gender')=="Male"): ?> selected <?php endif; ?> value="Female">Female</option>
+              </select>
             </div>
             <div class="col-12 col-md-6">
-              <label class="form-label" for="email">Referral Case No</label>
-              <input required type="text" name="referral_case_no" class="form-control" placeholder="RC 0004B77/2022/TB/009"  value="<?php echo e(old('referralcaseno')); ?>"/>
+              <label class="form-label" for="email">Age</label>
+              <input required type="number" min="1" name="age" class="form-control" placeholder="Age"  value="<?php echo e(old('age')); ?>"/>
             </div>
             <div class="col-12 col-md-6">
-              <label class="form-label" for="phone">Referral Phone Number</label>
+              <label class="form-label" for="phone">Phone Number</label>
               <div class="input-group">
-                <span class="input-group-text">RW (+250)</span>
-                <input required type="text" id="phone" name="referral_mobile" class="form-control phone-number-mask" maxLength="10" placeholder="xxx xxx xxxx"  value="<?php echo e(old('phone')); ?>"/>
+                <span class="input-group-text">RW (+25)</span>
+                <input required type="text"  pattern="[0-9]{10,}" title="Phone must have at least 10 Digits" name="phone" class="form-control phone-number-mask" minlength="10" maxLength="10" placeholder="xxx xxx xxxx"  value="<?php echo e(old('phone')); ?>"/>
               </div>
             </div>
             <div class="col-12 col-md-6">
-              <label class="form-label" for="gender">Gender</label>
-              <select required id="gender" name="referral_gender" class="form-select">
-                <option value="" selected> - Select - </option>
-                <option <?php if(old('referral_gender')=="Male"): ?> selected <?php endif; ?> value="Male">Male</option>
-                <option <?php if(old('referral_gender')=="Male"): ?> selected <?php endif; ?> value="Female">Female</option>
-              </select>
+              <label class="form-label" for="email">Referral Case No</label>
+              <input required type="text" name="referral_case_no" class="form-control" placeholder="RC 0004B77/2022/TB/009"  value="<?php echo e(old('referralcaseno')); ?>"/>
             </div>
-         
-           
+
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="email">Jurisdiction</label>
+              <input required type="text" name="jurisdiction" class="form-control" placeholder="Jurisdiction"  value="<?php echo e(old('referralcaseno')); ?>"/>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="phone">Court</label>
+              <div class="input-group">
+                <input required type="text" id="phone" name="court" class="form-control phone-number-mask" placeholder="Court Name"  value="<?php echo e(old('phone')); ?>"/>
+              </div>
+            </div>
+
             <div class="col-12 col-md-6">
               <label class="form-label" for="category">Case nature</label>
               <select required name="case_nature" class="form-select">
@@ -148,14 +159,23 @@ Pro Bono Cases
               </select>
             </div>
             <div class="col-12 col-md-6">
-              <label class="form-label" for="practicing">Concerned</label>
-              <select required name="user" class="form-select">
+              <label class="form-label" for="practicing">Referrel Name</label>
+              <select name="referrel" class="form-select">
                 <option value="" disabled selected> - Select - </option>
                 <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <option <?php if(old('user')=="<?php echo e($user->name); ?>"): ?> selected <?php endif; ?> value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
+                <option <?php if(old('referrel')=="<?php echo e($user->name); ?>"): ?> selected <?php endif; ?> value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
               </select>
+            </div>
+            <div class="col-12 col-md-12">
+              <div class="form-check">
+                <input class="form-check-input" name="status" type="checkbox" value="1"
+                    id="defaultCheck2" />
+                <label class="form-check-label" for="defaultCheck2">
+                  Auto Assign to Advocate ? (Uncheck if "NO")
+                </label>
+            </div>
             </div>
             
             <div class="col-12 text-center">
@@ -196,198 +216,4 @@ Pro Bono Cases
 
 <?php $__env->stopSection(); ?>
 
-<script>
-     document.addEventListener("DOMContentLoaded",function(e){
-    {
-        const o=document.querySelector("#newUserForm"),
-        p=document.querySelector("#editUserForm"),
-        t=document.querySelector("#phone");
-        t&&new Cleave(t,{
-            phone:!0,
-            phoneRegionCode:"RW"
-        });
-        const s=(o&&FormValidation.formValidation(o,{
-            fields:{
-              profile:{
-                    validators:{
-                        notEmpty:{
-                            message:"Upload profile picture"
-                        }
-                    }
-                },
-                diploma:{
-                    validators:{
-                        notEmpty:{
-                            message:"Upload diploma"
-                        }
-                    }
-                },
-                name:{
-                    validators:{
-                        notEmpty:{
-                            message:"Please enter full name"
-                        }
-                    }
-                },
-                email:{
-                    validators:{
-                        notEmpty:{
-                            message:"Please enter your email"
-                        },
-                        emailAddress:{
-                            message:"The value is not a valid email address"
-                        }
-                    }
-                },
-                phone:{
-                    validators:{
-                        notEmpty:{
-                            message:"Please enter phone number"
-                        },
-                    }
-                },
-                gender:{
-                    validators:{
-                        notEmpty:{
-                            message:"Select gender"
-                        }
-                    }
-                },
-                marital:{
-                    validators:{
-                        notEmpty:{
-                            message:"Select martial status"
-                        }
-                    }
-                },
-                district:{
-                    validators:{
-                        notEmpty:{
-                            message:"Select district"
-                        }
-                    }
-                },
-                category:{
-                    validators:{
-                        notEmpty:{
-                            message:"Select user category"
-                        }
-                    }
-                },
-                practicing:{
-                    validators:{
-                        notEmpty:{
-                            message:"Select practicing status"
-                        }
-                    }
-                },
-            },
-            plugins:{
-                trigger:new FormValidation.plugins.Trigger,
-                bootstrap5:new FormValidation.plugins.Bootstrap5(
-                    {
-                        eleValidClass:"",
-                        rowSelector:".col-md-6"
-                    }
-                ),
-                submitButton:new FormValidation.plugins.SubmitButton,
-                defaultSubmit:new FormValidation.plugins.DefaultSubmit,
-                autoFocus:new FormValidation.plugins.AutoFocus
-            },
-            init:e=>{
-                e.on("plugins.message.placed",function(e){
-                    e.element.parentElement.classList.contains("input-group")&&e.element.parentElement.insertAdjacentElement("afterend",e.messageElement)
-                })
-            }
-        }));
-        const u=(p&&FormValidation.formValidation(p,{
-            fields:{
-                
-                name:{
-                    validators:{
-                        notEmpty:{
-                            message:"Please enter full name"
-                        }
-                    }
-                },
-                email:{
-                    validators:{
-                        notEmpty:{
-                            message:"Please enter your email"
-                        },
-                        emailAddress:{
-                            message:"The value is not a valid email address"
-                        }
-                    }
-                },
-                phone:{
-                    validators:{
-                        notEmpty:{
-                            message:"Please enter phone number"
-                        },
-                    }
-                },
-                gender:{
-                    validators:{
-                        notEmpty:{
-                            message:"Select gender"
-                        }
-                    }
-                },
-                marital:{
-                    validators:{
-                        notEmpty:{
-                            message:"Select martial status"
-                        }
-                    }
-                },
-                district:{
-                    validators:{
-                        notEmpty:{
-                            message:"Select district"
-                        }
-                    }
-                },
-                category:{
-                    validators:{
-                        notEmpty:{
-                            message:"Select user category"
-                        }
-                    }
-                },
-                practicing:{
-                    validators:{
-                        notEmpty:{
-                            message:"Select practicing status"
-                        }
-                    }
-                },
-            },
-            plugins:{
-                trigger:new FormValidation.plugins.Trigger,
-                bootstrap5:new FormValidation.plugins.Bootstrap5(
-                    {
-                        eleValidClass:"",
-                        rowSelector:".col-md-6"
-                    }
-                ),
-                submitButton:new FormValidation.plugins.SubmitButton,
-                defaultSubmit:new FormValidation.plugins.DefaultSubmit,
-                autoFocus:new FormValidation.plugins.AutoFocus
-            },
-            init:e=>{
-                e.on("plugins.message.placed",function(e){
-                    e.element.parentElement.classList.contains("input-group")&&e.element.parentElement.insertAdjacentElement("afterend",e.messageElement)
-                })
-            }
-        }));
-      }
-      <?php if($errors->any()): ?>
-        var myModal = new bootstrap.Modal(document.getElementById('newUser'), {
-          keyboard: false
-        })
-        myModal.show()
-      <?php endif; ?>
-    })
-</script>
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\HP\Documents\Lewis\bar\resources\views/probono/index.blade.php ENDPATH**/ ?>

@@ -87,37 +87,48 @@ Pro Bono Cases
 
             <div class="col-12 col-md-6">
               <label class="form-label" for="name">First Name</label>
-              <input required type="text" id="name" name="name" class="form-control" placeholder="John" value="{{ old('fname') }}"/>
+              <input required type="text" name="fname" class="form-control" placeholder="John" value="{{ old('fname') }}"/>
             </div>
             <div class="col-12 col-md-6">
               <label class="form-label" for="email">Last name</label>
               <input required type="text" name="lname" class="form-control" placeholder="doe"  value="{{ old('lname') }}"/>
             </div>
+
             <div class="col-12 col-md-6">
-              <label class="form-label" for="email">Referral Case No</label>
-              <input required type="text" name="referral_case_no" class="form-control" placeholder="RC 0004B77/2022/TB/009"  value="{{ old('referralcaseno') }}"/>
+              <label class="form-label" for="gender">Gender</label>
+              <select required id="gender" name="gender" class="form-select">
+                <option value="" selected> - Select - </option>
+                <option @if(old('gender')=="Male") selected @endif value="Male">Male</option>
+                <option @if(old('gender')=="Male") selected @endif value="Female">Female</option>
+              </select>
             </div>
             <div class="col-12 col-md-6">
-              <label class="form-label" for="email">Referral Case No</label>
-              <input required type="text" name="referral_case_no" class="form-control" placeholder="RC 0004B77/2022/TB/009"  value="{{ old('referralcaseno') }}"/>
+              <label class="form-label" for="email">Age</label>
+              <input required type="number" min="1" name="age" class="form-control" placeholder="Age"  value="{{ old('age') }}"/>
             </div>
             <div class="col-12 col-md-6">
-              <label class="form-label" for="phone">Referral Phone Number</label>
+              <label class="form-label" for="phone">Phone Number</label>
               <div class="input-group">
-                <span class="input-group-text">RW (+250)</span>
-                <input required type="text" id="phone" name="referral_mobile" class="form-control phone-number-mask" maxLength="10" placeholder="xxx xxx xxxx"  value="{{ old('phone') }}"/>
+                <span class="input-group-text">RW (+25)</span>
+                <input required type="text"  pattern="[0-9]{10,}" title="Phone must have at least 10 Digits" name="phone" class="form-control phone-number-mask" minlength="10" maxLength="10" placeholder="xxx xxx xxxx"  value="{{ old('phone') }}"/>
               </div>
             </div>
             <div class="col-12 col-md-6">
-              <label class="form-label" for="gender">Gender</label>
-              <select required id="gender" name="referral_gender" class="form-select">
-                <option value="" selected> - Select - </option>
-                <option @if(old('referral_gender')=="Male") selected @endif value="Male">Male</option>
-                <option @if(old('referral_gender')=="Male") selected @endif value="Female">Female</option>
-              </select>
+              <label class="form-label" for="email">Referral Case No</label>
+              <input required type="text" name="referral_case_no" class="form-control" placeholder="RC 0004B77/2022/TB/009"  value="{{ old('referralcaseno') }}"/>
             </div>
-         
-           
+
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="email">Jurisdiction</label>
+              <input required type="text" name="jurisdiction" class="form-control" placeholder="Jurisdiction"  value="{{ old('referralcaseno') }}"/>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="phone">Court</label>
+              <div class="input-group">
+                <input required type="text" id="phone" name="court" class="form-control phone-number-mask" placeholder="Court Name"  value="{{ old('phone') }}"/>
+              </div>
+            </div>
+
             <div class="col-12 col-md-6">
               <label class="form-label" for="category">Case nature</label>
               <select required name="case_nature" class="form-select">
@@ -148,14 +159,23 @@ Pro Bono Cases
               </select>
             </div>
             <div class="col-12 col-md-6">
-              <label class="form-label" for="practicing">Concerned</label>
-              <select required name="user" class="form-select">
+              <label class="form-label" for="practicing">Referrel Name</label>
+              <select name="referrel" class="form-select">
                 <option value="" disabled selected> - Select - </option>
                 @foreach ($users as $user)
-                <option @if(old('user')=="{{ $user->name }}") selected @endif value="{{ $user->id }}">{{ $user->name }}</option>
+                <option @if(old('referrel')=="{{ $user->name }}") selected @endif value="{{ $user->id }}">{{ $user->name }}</option>
                 @endforeach
 
               </select>
+            </div>
+            <div class="col-12 col-md-12">
+              <div class="form-check">
+                <input class="form-check-input" name="status" type="checkbox" value="1"
+                    id="defaultCheck2" />
+                <label class="form-check-label" for="defaultCheck2">
+                  Auto Assign to Advocate ? (Uncheck if "NO")
+                </label>
+            </div>
             </div>
             
             <div class="col-12 text-center">

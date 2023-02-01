@@ -75,6 +75,7 @@
               <div class="input-wrapper mb-3 input-group input-group-lg rounded-pill input-group-merge align-self-center pt-4">
                 <span class="input-group-text" id="basic-addon1"><i class="ti ti-search"></i></span>
                 <input type="text" class="form-control form-control-lg prefetch border-left-0 rounded-0 rounded-end bg-white" placeholder="" aria-label="Search" aria-describedby="basic-addon1" name="search" />
+            
               </div>
               <button type="submit" class="btn btn-label-dark waves-effect mt-2">RBA Search</button>
             </div>
@@ -161,6 +162,4 @@
 
 </html>
 
-<!-- beautify ignore:end -->
-
-<?php /**PATH C:\Users\HP\Documents\Lewis\bar\resources\views/search/index.blade.php ENDPATH**/ ?>
+<!-- beautify ignore:end --><?php /**PATH C:\Users\HP\Documents\Lewis\bar\resources\views/search/index.blade.php ENDPATH**/ ?>

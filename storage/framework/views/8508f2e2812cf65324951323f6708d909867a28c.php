@@ -13,7 +13,7 @@ Users
               <div class="col-sm-6 col-xl-2">
                 <div class="card">
                   <div class="card-body">
-                    <div class="d-flex align-items-start justify-content-between">
+                    <div  class="d-flex align-items-start justify-content-between">
                       <div class="content-left">
                         <span>Total </span>
                         <div class="d-flex align-items-center my-1">
@@ -476,7 +476,6 @@ Users
 <link rel="stylesheet" href="<?php echo e(asset('assets/vendor/libs/select2/select2.css')); ?>" />
 <link rel="stylesheet" href="<?php echo e(asset('assets/vendor/libs/formvalidation/dist/css/formValidation.min.css')); ?>" />
 <link rel="stylesheet" href="<?php echo e(asset('assets/vendor/libs/sweetalert2/sweetalert2.css')); ?>" />
-<link rel="stylesheet" href="<?php echo e(asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')); ?>" />
 <link rel="stylesheet" href="<?php echo e(asset('assets/vendor/libs/flatpickr/flatpickr.css')); ?>" />
 <?php $__env->stopSection(); ?>
 
@@ -818,7 +817,12 @@ $(function(){
               showLoaderOnConfirm: true,
               preConfirm: () => {
                 return fetch('/api/users/individual/'+id,  {
-                    method: 'DELETE'
+                    method: 'DELETE',
+                    headers: new Headers({
+                      'Accept' : 'application/json',
+                      'Content-Type':'application/json; charset=UTF-8',
+                      'X-CSRF-Token' : "<?php echo csrf_token() ?>"
+                    })
                   })
                   .then(response => {
                     if (!response.ok) {
@@ -835,11 +839,18 @@ $(function(){
               allowOutsideClick: () => !Swal.isLoading()
             }).then((result) => {
               if (result.isConfirmed) {
-                Swal.fire(
-                  'Deleted!',
-                  'User has been deleted.',
-                  'success'
-                )
+                Swal.fire({
+                  title:'Deleted!',
+                  text:'User has been deleted.',
+                  icon:'success',
+                  showCancelButton:0,
+                  confirmButtonText:"Close",
+                  customClass:{
+                    confirmButton:"btn btn-label-secondary",
+                    cancelButton:"btn btn-label-secondary d-none"
+                  },
+                  buttonsStyling:!1,
+                })
                 e.row($(this).parents("tr")).remove().draw()
               }
             })

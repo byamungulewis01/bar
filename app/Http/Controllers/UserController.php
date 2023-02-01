@@ -75,7 +75,6 @@ class UserController extends Controller
             'date' => 'required',
             'category' => 'required',
             'profile' => 'required',
-            'diploma' => 'required',
             'status' => 'required',
             'practicing' => 'required',
         ]);

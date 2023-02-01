@@ -64,12 +64,18 @@
           
           <form class="d-flex flex-grow-1" method="GET">
             <div class="faq-header d-flex flex-column align-items-center rounded flex-grow-1" style="background: none">
+              <?php if(auth()->guard()->guest()): ?>
               <a href="<?php echo e(route('login')); ?>" class="btn btn-dark waves-effect align-self-end waves-light" style="z-index:10">Sign In</a>
+              <?php endif; ?>
+              <?php if(auth()->guard()->check()): ?>->user()
+              <a href="<?php echo e(route('dashboard')); ?>" class="btn btn-dark waves-effect align-self-end waves-light" style="z-index:10">Go to dashboard</a>
+              <?php endif; ?>
               <img src="<?php echo e(asset('assets/logo/bar-logo.png')); ?>" class="mt-5" alt="RBA Logo" height="140">
                 <?php echo csrf_field(); ?>
               <div class="input-wrapper mb-3 input-group input-group-lg rounded-pill input-group-merge align-self-center pt-4">
                 <span class="input-group-text" id="basic-addon1"><i class="ti ti-search"></i></span>
                 <input type="text" class="form-control form-control-lg prefetch border-left-0 rounded-0 rounded-end bg-white" placeholder="" aria-label="Search" aria-describedby="basic-addon1" name="search" />
+            
               </div>
               <button type="submit" class="btn btn-label-dark waves-effect mt-2">RBA Search</button>
             </div>
@@ -156,6 +162,4 @@
 
 </html>
 
-<!-- beautify ignore:end -->
-
-<?php /**PATH C:\xampp\htdocs\rba\resources\views/search/index.blade.php ENDPATH**/ ?>
+<!-- beautify ignore:end --><?php /**PATH C:\xampp\htdocs\rba\resources\views/search/index.blade.php ENDPATH**/ ?>

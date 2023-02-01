@@ -13,7 +13,6 @@
       <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
     </a>
   </div>
-
   <div class="menu-inner-shadow"></div>
   <ul class="menu-inner py-1">
     <!-- Apps & Pages -->

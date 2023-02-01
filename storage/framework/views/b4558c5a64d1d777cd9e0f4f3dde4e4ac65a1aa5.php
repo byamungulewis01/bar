@@ -30,6 +30,7 @@ Disciplene info
                   <th>To</th>
                   <th>Venue</th>
                   <th>Status</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody class="table-border-bottom-0">

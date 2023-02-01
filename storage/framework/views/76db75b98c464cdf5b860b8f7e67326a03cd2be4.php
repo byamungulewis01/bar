@@ -69,27 +69,7 @@ Disciplene info
                 <?php
                 $count++
                 ?>
-      
-                <div class="modal modal-top fade" id="delete<?php echo e($meeting->id); ?>" tabindex="-1" aria-hidden="true">
-                  <div class="modal-dialog modal-sm" role="document">
-                    <div class="modal-content">
-                      <form action="<?php echo e(route('marital.delete')); ?>" method="POST">
-                        <?php echo csrf_field(); ?>
-                        <?php echo method_field('DELETE'); ?>
-                        <input type="hidden" name="meeting" value="<?php echo e($meeting->id); ?>" />
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel2">Are you sure to delete? <?php echo e($meeting->id); ?></h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-dark">Yes, Delete</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-                
+    
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       
       
