@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('page_name'); ?>
 Login
 <?php $__env->stopSection(); ?>
@@ -19,6 +21,17 @@ Login
         </span>
         <?php echo e(session('status')); ?>
 
+      </div>
+      <?php endif; ?>
+      <?php if($errors->any()): ?>
+      <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <span class="alert-icon text-danger me-2">
+          <i class="ti ti-ban ti-xs"></i>
+        </span>
+        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+          <?php echo e($error); ?>
+
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </div>
       <?php endif; ?>
       <form id="formAuthentication" class="mb-3" method="POST">

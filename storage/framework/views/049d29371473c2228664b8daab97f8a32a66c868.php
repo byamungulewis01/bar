@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('page_name'); ?>
 New Password
 <?php $__env->stopSection(); ?>

@@ -61,7 +61,7 @@
   <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar  ">
   <div class="layout-container">
-    <?php if(auth()->guard('admin')->check()): ?>
+    <?php if(auth()->guard('admin')->user()): ?>
     <?php if (isset($component)) { $__componentOriginalee6f77ea8284c9edd154cd0c9b3b80eff04c2bfa = $component; } ?>
 <?php $component = App\View\Components\Sidebar::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('sidebar'); ?>
@@ -77,8 +77,7 @@
 <?php $component = $__componentOriginalee6f77ea8284c9edd154cd0c9b3b80eff04c2bfa; ?>
 <?php unset($__componentOriginalee6f77ea8284c9edd154cd0c9b3b80eff04c2bfa); ?>
 <?php endif; ?>
-    <?php endif; ?>
-    <?php if(auth()->guard()->check()): ?>
+    <?php elseif(auth()->guard('web')->user()): ?>
     <?php if (isset($component)) { $__componentOriginalc962264fccb141affa90279e6325115965d3bebf = $component; } ?>
 <?php $component = App\View\Components\UserSidebar::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('user-sidebar'); ?>
