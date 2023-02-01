@@ -78,9 +78,7 @@
               </form>
             </div>
             <div class="col-md-3 col-sm-2 text-end">
-              @guest
-              <a href="{{ route('login') }}" class="btn btn-dark waves-effect align-self-end waves-light" style="z-index:10">Sign In</a>
-              @endguest
+             
               @auth()
               <a href="{{ route('dashboard') }}" class="btn btn-dark waves-effect align-self-end waves-light" style="z-index:10">Go to dashboard</a>
               @endauth
