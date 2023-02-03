@@ -41,14 +41,14 @@ class RolesController extends Controller
             $role = Role::create(['name' => $request->get('name')]);
             $role->syncPermissions($permission);
 
-            return back()->with('success','Role created successfully');
+            return back()->with('message','Role created successfully');
         }
         else{
             $role=Role::findorfail($express);
             $role->update($request->only('name'));
             $role->syncPermissions($permission);
 
-            return back()->with('success','Role updated successfully');
+            return back()->with('message','Role updated successfully');
         }
     }
 
@@ -63,7 +63,7 @@ class RolesController extends Controller
             array_push($newRoles,$role->value);
         }
         $user->syncRoles($newRoles);
-        return back()->with('success','Role assigned successfully');
+        return back()->with('message','Role assigned successfully');
     }
 
     public function show(Role $role)
@@ -91,7 +91,7 @@ class RolesController extends Controller
         $role->update($request->only('name'));
         $role->syncPermissions($request->get('permission'));
 
-        return back()->with('success','Role updated successfully');
+        return back()->with('message','Role updated successfully');
     }
 
     public function destroy(Role $role)
@@ -101,6 +101,6 @@ class RolesController extends Controller
         ]);
         $role=Role::findorfail($express);
         $role->delete();
-        return back()->with('success','Role deleted successfully');
+        return back()->with('message','Role deleted successfully');
     }
 }

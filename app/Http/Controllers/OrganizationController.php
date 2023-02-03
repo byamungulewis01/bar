@@ -50,7 +50,7 @@ class OrganizationController extends Controller
             'password' => Hash::make($password), 'blocked' => $request->status
         ]));
        // (new NotifyController)->newOrganization($email,$password);
-        return back()->with('success','New Organization added!');
+        return back()->with('message','New Organization added!');
     }
 
     public function update(Request $request)
@@ -103,7 +103,7 @@ class OrganizationController extends Controller
             (new NotifyController)->changedEmail();
         }
 
-        return back()->with('success','Organization updated!');
+        return back()->with('message','Organization updated!');
     }
 
     public function destroy(Request $request, Organization $organization)
@@ -113,7 +113,7 @@ class OrganizationController extends Controller
         $organization->save();
         $organization->delete();
         if (! $request->expectsJson()) {
-          return back()->with('success','Organization deleted successfully!');
+          return back()->with('message','Organization deleted successfully!');
         }
         else{
             return response()->json([

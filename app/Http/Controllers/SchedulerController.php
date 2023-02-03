@@ -23,6 +23,6 @@ class SchedulerController extends Controller
            $case->case_status = 'CLOSED';
            $case->save();
          }
-         return back()->with('success','Decission Added Successfully');
+         return back()->with('message','Decission Added Successfully');
     }
 }

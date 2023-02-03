@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('page_name'); ?>
   Dashboard
 <?php $__env->stopSection(); ?>
@@ -46,7 +44,7 @@
                         <div class="d-flex align-items-center">
                           <div class="badge rounded-pill bg-label-primary me-3 p-2"><i class="ti ti-chart-pie-2 ti-sm"></i></div>
                           <div class="card-info">
-                            <h5 class="mb-0">0</h5>
+                            <h5 class="mb-0"><?php echo e($activeUsers); ?></h5>
                             <small>Active</small>
                           </div>
                         </div>
@@ -55,7 +53,7 @@
                         <div class="d-flex align-items-center">
                           <div class="badge rounded-pill bg-label-info me-3 p-2"><i class="ti ti-users ti-sm"></i></div>
                           <div class="card-info">
-                            <h5 class="mb-0">0</h5>
+                            <h5 class="mb-0"><?php echo e($inactiveUsers); ?></h5>
                             <small>Inactive</small>
                           </div>
                         </div>
@@ -64,7 +62,7 @@
                         <div class="d-flex align-items-center">
                           <div class="badge rounded-pill bg-label-danger me-3 p-2"><i class="ti ti-user ti-sm"></i></div>
                           <div class="card-info">
-                            <h5 class="mb-0">0</h5>
+                            <h5 class="mb-0"><?php echo e($suspendedUsers); ?></h5>
                             <small>Suspended</small>
                           </div>
                         </div>
@@ -73,7 +71,7 @@
                         <div class="d-flex align-items-center">
                           <div class="badge rounded-pill bg-label-success me-3 p-2"><i class="ti ti-cross ti-sm"></i></div>
                           <div class="card-info">
-                            <h5 class="mb-0">0</h5>
+                            <h5 class="mb-0"><?php echo e($deseacedUsers); ?></h5>
                             <small>Deseaced</small>
                           </div>
                         </div>

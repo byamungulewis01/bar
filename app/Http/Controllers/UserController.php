@@ -126,7 +126,7 @@ class UserController extends Controller
         Phonenumber::create([ 'user_id'=>$user->id, 'name' => 'mobile', 'phone' => $request->phone]);
         // (new NotifyController)->newAccount($email,$password);
 
-        return back()->with('success','New User added!');
+        return back()->with('message','New User added!');
     }
 
     public function update(Request $request)
@@ -229,7 +229,7 @@ class UserController extends Controller
             (new NotifyController)->newEmail($email);
             (new NotifyController)->changedEmail();
         }
-        return back()->with('success','User updated!');
+        return back()->with('message','User updated!');
     }
 
 
@@ -281,7 +281,7 @@ class UserController extends Controller
         $user->blocked = $practicing == '5' ? true : $user->blocked;
         $user->regNumber = $newId;
         $user->save();
-        return back()->with('success','User status updated!');
+        return back()->with('message','User status updated!');
     }
 
     public function activate(Request $request)
@@ -295,7 +295,7 @@ class UserController extends Controller
         $user->deleted_at = NULL;
         $user->save();
         if (!$request->expectsJson()) {
-          return back()->with('success','User activated successfully!');
+          return back()->with('message','User activated successfully!');
         }
         else{
             return response()->json([
@@ -311,7 +311,7 @@ class UserController extends Controller
         $user->save();
         $user->delete();
         if (! $request->expectsJson()) {
-          return back()->with('success','User deactivated successfully!');
+          return back()->with('message','User deactivated successfully!');
         }
         else{
             return response()->json([

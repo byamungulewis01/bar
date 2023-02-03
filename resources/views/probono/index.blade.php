@@ -18,7 +18,7 @@ Pro Bono Cases
           class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editmeetings"></a></h5>
 
     </div>
-    @include('layouts.flash_message')
+   
     <div class="card-datatable table-responsive">
       <table class="datatables-probono table border-top">
         <thead>
@@ -72,6 +72,16 @@ Pro Bono Cases
                         <h3 class="address-title mb-2">Edit Probono Case</h3>
                         <p class="text-muted address-subtitle">change New Probono case Desciption in case you make
                           mistakes </p>
+                          @if ($errors->any())
+                          <div class="alert alert-danger">
+                              <ul>
+                                  @foreach ($errors->all() as $error)
+                                      <li>{{ $error }}</li>
+                                  @endforeach
+                              </ul>
+                          </div>
+                          @endif
+                          
                       </div>
                       <form action="{{ route('probono.update') }}" class="row g-3" method="post">
                         @csrf
@@ -172,17 +182,11 @@ Pro Bono Cases
                         <div class="col-12 col-md-12">
                           <label class="form-label" for="status">Advocate</label>
                           <select required name="advocate" class="form-select">
-                            @if ($probono->advocate == NULL)
-                                <option value="NULL" selected>No Advocate </option>
-                                @foreach ($users as $user)
-                            <option value="{{ $user->id }}" > {{ $user->name }} </option>
-                            @endforeach
-                            @else
+                            <option value="">No Advocate Assigned</option>
                             @foreach ($users as $user)
-                            <option value="{{ $user->id }}" > {{ $user->name }} </option>
+                            <option value="{{ $user->id }}"  @if ($user->id == $probono->advocate) selected @endif> {{ $user->name }} </option>           
                             @endforeach
-                            @endif
-                            
+                         
                           </select>
                         </div>
                         <div class="col-12 text-center">
@@ -299,6 +303,7 @@ Pro Bono Cases
             </td>
 
           </tr>
+          
         </tbody>
 
         @php
@@ -466,8 +471,9 @@ Pro Bono Cases
 <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
-
 <script>
+
+
   "use strict";
   $(function () {
     var dtt = document.querySelector("#date"),
@@ -517,4 +523,5 @@ Pro Bono Cases
     });
   });
 </script>
+
 @endsection

@@ -84,7 +84,7 @@ class ProbonoController extends Controller
             'register' => auth()->guard('admin')->user()->id,
         ]);
 
-         return back()->with('success','Probono registered!');
+         return back()->with('message','Probono registered!');
     }
     public function show($id)
     {
@@ -119,7 +119,7 @@ class ProbonoController extends Controller
         }
         $count = ProbonoFile::where('probono_id', $request->probono_id)->count();
          if ($count >= 5) {
-         return back()->with('success','Maximum Number 5 files');
+         return back()->with('warning','Maximum Number 5 files');
          } else {
             ProbonoFile::create([
                 'case_title' => $request->case_title,
@@ -129,7 +129,7 @@ class ProbonoController extends Controller
                 'register' => auth()->guard('admin')->user()->id,
             ]);
     
-             return back()->with('success','Case '.$count + 1 .' File uploaded');
+             return redirect()->back()->with('message','Case '.$count + 1 .' File uploaded');
          }
          
         
@@ -147,10 +147,11 @@ class ProbonoController extends Controller
             'jurisdiction' => 'required',
             'court' => 'required',
             'case_nature' => 'required',
-            'hearing_date' => 'required|date|after:'.Carbon::today()->toDateString(),
+            'hearing_date' => 'required|date',
             'category' => 'required',
             'referrel' => 'required',
         ]);
+        $advocate = ($request->advocate == '') ? null : $request->advocate;
 
             $probono = Probono::findorfail($request->id);
             $probono->fname = $request->fname;
@@ -165,11 +166,11 @@ class ProbonoController extends Controller
             $probono->hearing_date = $request->hearing_date;
             $probono->category = $request->category;
             $probono->referrel = $request->referrel;
-            $probono->advocate = $request->advocate;
+            $probono->advocate = $advocate;
             $probono->register = auth()->guard('admin')->user()->id;
             $probono->save();
 
-            return back()->with('success','Probono update Successfully');
+            return back()->with('message','Probono update Successfully');
     }
 
     public function api(Request $request)

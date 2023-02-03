@@ -38,12 +38,12 @@ class MeetingController extends Controller
         foreach ($check as $value) {
             $data = User::findorfail($value->user_id);
             $name = $data->name;
-         return back()->with('success',$name . ' Arleady invited choose others');
+         return back()->with('warning',$name . ' Arleady invited choose others');
         }
       Invitations::create(['user_id' => $key, 'meeting_id' => $request->meeting, 'status' => 1]);
 
        }
-       return back()->with('success','new Advocate invited');
+       return back()->with('message','new Advocate invited');
 
     }
     public function api(Request $request)
@@ -95,7 +95,7 @@ class MeetingController extends Controller
         ]);
         }
 
-        return redirect()->route('meetings.index')->with('success','New meeting registared');   
+        return redirect()->route('meetings.index')->with('message','New meeting registared');   
 
     }
 
@@ -103,7 +103,7 @@ class MeetingController extends Controller
     {
         $invitor = Invitations::findorfail($request->id);
         $invitor->delete();
-        return back()->with('success', 'remove Successfully');
+        return back()->with('message', 'remove Successfully');
     }
 
 }

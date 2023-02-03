@@ -32,7 +32,7 @@ class LawscategoryController extends Controller
             'description'=>$request->description
         ]);
 
-        return back()->with('success','Law category status added!');
+        return back()->with('message','Law category status added!');
     }
 
     public function update(Request $request)
@@ -45,7 +45,7 @@ class LawscategoryController extends Controller
         $lawcat->title = $request->title;
         $lawcat->description = $request->description;
         $lawcat->save();
-        return back()->with('success','Law category updates');
+        return back()->with('message','Law category updates');
     }
 
     public function destroy(Request $request)
@@ -55,6 +55,6 @@ class LawscategoryController extends Controller
         ]);
         $lawcat = Lawscategory::findorfail($request->token);
         $lawcat->delete();
-        return back()->with('success','Law category Deleted');
+        return back()->with('message','Law category Deleted');
     }
 }

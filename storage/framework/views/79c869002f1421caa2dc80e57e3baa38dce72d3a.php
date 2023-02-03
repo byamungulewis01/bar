@@ -18,7 +18,7 @@ Pro Bono Cases
           class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editmeetings"></a></h5>
 
     </div>
-    <?php echo $__env->make('layouts.flash_message', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+   
     <div class="card-datatable table-responsive">
       <table class="datatables-probono table border-top">
         <thead>
@@ -75,6 +75,16 @@ Pro Bono Cases
                         <h3 class="address-title mb-2">Edit Probono Case</h3>
                         <p class="text-muted address-subtitle">change New Probono case Desciption in case you make
                           mistakes </p>
+                          <?php if($errors->any()): ?>
+                          <div class="alert alert-danger">
+                              <ul>
+                                  <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                      <li><?php echo e($error); ?></li>
+                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                              </ul>
+                          </div>
+                          <?php endif; ?>
+                          
                       </div>
                       <form action="<?php echo e(route('probono.update')); ?>" class="row g-3" method="post">
                         <?php echo csrf_field(); ?>
@@ -175,17 +185,11 @@ Pro Bono Cases
                         <div class="col-12 col-md-12">
                           <label class="form-label" for="status">Advocate</label>
                           <select required name="advocate" class="form-select">
-                            <?php if($probono->advocate == NULL): ?>
-                                <option value="NULL" selected>No Advocate </option>
-                                <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($user->id); ?>" > <?php echo e($user->name); ?> </option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php else: ?>
+                            <option value="">No Advocate Assigned</option>
                             <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($user->id); ?>" > <?php echo e($user->name); ?> </option>
+                            <option value="<?php echo e($user->id); ?>"  <?php if($user->id == $probono->advocate): ?> selected <?php endif; ?>> <?php echo e($user->name); ?> </option>           
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php endif; ?>
-                            
+                         
                           </select>
                         </div>
                         <div class="col-12 text-center">
@@ -326,6 +330,7 @@ unset($__errorArgs, $__bag); ?>
             </td>
 
           </tr>
+          
         </tbody>
 
         <?php
@@ -493,8 +498,9 @@ unset($__errorArgs, $__bag); ?>
 <script src="<?php echo e(asset('assets/vendor/libs/cleavejs/cleave-phone.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/vendor/libs/sweetalert2/sweetalert2.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/vendor/libs/flatpickr/flatpickr.js')); ?>"></script>
-
 <script>
+
+
   "use strict";
   $(function () {
     var dtt = document.querySelector("#date"),
@@ -544,5 +550,7 @@ unset($__errorArgs, $__bag); ?>
     });
   });
 </script>
+
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\rba\resources\views/probono/index.blade.php ENDPATH**/ ?>

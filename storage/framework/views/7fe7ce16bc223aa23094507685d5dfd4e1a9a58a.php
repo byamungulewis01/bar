@@ -46,6 +46,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
     <script src="<?php echo e(asset('assets/vendor/js/template-customizer.js')); ?>"></script>
+    <link rel="stylesheet" href="<?php echo e(asset('assets/toast/css/jquery.toast.css')); ?>">
 
     <?php echo $__env->yieldContent('css'); ?>
 
@@ -176,6 +177,9 @@
 
   <!-- Main JS -->
   <script src="<?php echo e(asset('assets/js/main.js')); ?>"></script>
+  <script src="<?php echo e(asset('assets/toast/js/jquery.toast.js')); ?>"></script>
+
+  <?php echo $__env->make('layouts.flash_message', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
  
   <?php echo $__env->yieldContent('js'); ?>
 

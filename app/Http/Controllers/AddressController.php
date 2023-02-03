@@ -18,7 +18,7 @@ class AddressController extends Controller
 
         Address::create([ 'user_id'=>$user->id, 'title' => $request->title, 'address' => $request->address]);
 
-        return back()->with('success','Address added!');
+        return back()->with('message','Address added!');
     }
 
     public function destroy(Address $address)
@@ -26,6 +26,6 @@ class AddressController extends Controller
         $address = Address::findorfail($address->id);
         $address->delete();
         
-        return back()->with('success','Address deleted successfully!');
+        return back()->with('message','Address deleted successfully!');
     }
 }

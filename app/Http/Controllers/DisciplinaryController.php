@@ -87,7 +87,7 @@ class DisciplinaryController extends Controller
         if ($request->case_type == 3) {
             if ($request->plaintiff == $request->defendant) {
 
-                return back()->with('success', 'Please Select difference Advocate');
+                return back()->with('warning', 'Please Select difference Advocate');
             } else {
 
                 $plaintiff = User::find($request->plaintiff);
@@ -130,7 +130,7 @@ class DisciplinaryController extends Controller
 
         }
 
-        return back()->with('success', 'Discipline case Added Successfully !!');
+        return back()->with('message', 'Discipline case Added Successfully !!');
     }
     public function update(Request $request)
     {
@@ -185,7 +185,7 @@ class DisciplinaryController extends Controller
         if ($request->case_type == 3) {
             if ($request->plaintiff == $request->defendant) {
 
-                return back()->with('success', 'Please Select difference Advocate');
+                return back()->with('warning', 'Please Select difference Advocate');
             } else {
 
                 $plaintiff = User::find($request->plaintiff);
@@ -224,7 +224,7 @@ class DisciplinaryController extends Controller
             }
 
         }
-        return back()->with('success', 'Discipline Case Updated Successfully');
+        return back()->with('message', 'Discipline Case Updated Successfully');
     }
 
     public function addmember(Request $request)
@@ -236,7 +236,7 @@ class DisciplinaryController extends Controller
             'role' => $request->role,
         ]);
 
-        return back()->with('success', 'Participant Added Successfully');
+        return back()->with('message', 'Participant Added Successfully');
     }
     public function deleteparticipant(Request $request)
     {
@@ -244,7 +244,7 @@ class DisciplinaryController extends Controller
         $participant = DisciplineParticipant::where('table_id', $request->id);
         $participant->delete();
 
-        return back()->with('success', 'Participant remove Successfully');
+        return back()->with('message', 'Participant remove Successfully');
     }
     public function sitting(Request $request)
     {
@@ -272,7 +272,7 @@ class DisciplinaryController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Next sitting Setted');
+        return back()->with('message', 'Next sitting Setted');
     }
     public function case_status(Request $request)
     {
@@ -287,7 +287,7 @@ class DisciplinaryController extends Controller
         $discipline = Discipline::findorfail($request->case_id);
         $discipline->status = $status;
         $discipline->save();
-        return back()->with('success', 'Status updates');
+        return back()->with('message', 'Status updates');
 
     }
 

@@ -18,7 +18,7 @@ class PhonenumberController extends Controller
 
         Phonenumber::create([ 'user_id'=>$user->id, 'name' => $request->name, 'phone' => $request->phone]);
 
-        return back()->with('success','Phone number added!');
+        return back()->with('message','Phone number added!');
     }
 
     public function destroy(Phonenumber $phonenumber)
@@ -26,6 +26,6 @@ class PhonenumberController extends Controller
         $phonenumber = Phonenumber::findorfail($phonenumber->id);
         $phonenumber->delete();
         
-        return back()->with('success','Phone deleted successfully!');
+        return back()->with('message','Phone deleted successfully!');
     }
 }

@@ -24,7 +24,7 @@ class MaritalController extends Controller
             'title'=>$request->title
         ]);
 
-        return back()->with('success','Marital status added!');
+        return back()->with('message','Marital status added!');
     }
 
     public function update(Request $request)
@@ -36,7 +36,7 @@ class MaritalController extends Controller
         $marital = marital::findorfail($request->token);
         $marital->title = $request->title;
         $marital->save();
-        return back()->with('success','Status updates');
+        return back()->with('message','Status updates');
     }
 
     public function destroy(Request $request)
@@ -46,6 +46,6 @@ class MaritalController extends Controller
         ]);
         $marital = marital::findorfail($request->token);
         $marital->delete();
-        return back()->with('success','Status Deleted');
+        return back()->with('message','Status Deleted');
     }
 }
