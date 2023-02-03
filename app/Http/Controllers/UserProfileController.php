@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Meeting;
+use App\Models\Probono;
 use App\Models\Discipline;
 use App\Models\Lawscategory;
 use Illuminate\Http\Request;
@@ -12,6 +13,10 @@ use App\Models\DisciplineParticipant;
 
 class UserProfileController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
     
     public function myprofile()
     {
@@ -66,6 +71,12 @@ class UserProfileController extends Controller
         ->orderby('date')->get();
 
         return view('myprofile.meeting',compact('meetings'));
+    }
+    public function probono()
+    {   
+        $user = auth()->user()->id;
+        $probonos = Probono::where('advocate',$user)->get();
+        return view('myprofile.probono',compact('probonos'));
     }
 
 }

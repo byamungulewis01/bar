@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Probono;
+use App\Models\ProbonoFile;
 use Illuminate\Http\Request;
 use App\Models\ProbonoMember;
 use Illuminate\Support\Carbon;
@@ -34,27 +35,37 @@ class ProbonoController extends Controller
             'case_nature' => 'required',
             'hearing_date' => 'required|date|after:'.Carbon::today()->toDateString(),
             'category' => 'required',
+            'referrel' => 'required',
         ]);
-        $ActiveAdv = Probono::all();
-        if ($ActiveAdv->count() == 0) {
-            $users = User::orderBy('created_at', 'DESC')
-            ->get();
-             foreach ($users as $user) {
-                 $id = $user->id;
-             }
-        }
-        else {
-           foreach ($ActiveAdv as $Active) {
-           $users = User::where('id' ,'!=', $Active->referrel)
-           ->orderBy('created_at', 'DESC')
-           ->get();
-            foreach ($users as $user) {
-                $id = $user->id;
+        if ($request->status == 1) {
+           
+            $ActiveAdv = Probono::latest()->first();
+            if ($ActiveAdv == null) {
+                $user = User::latest('created_at')->first();
+             $advocate = $user->id;
             }
-        }  
-        }    
-
-       $referrel = ($request->status == 1) ? $id : $request->referrel;
+            else {
+                 if ($ActiveAdv->advocate == NULL) {
+                    $count = Probono::count();
+                    if ($count == 1) {
+                        $user = User::latest('created_at')->first();
+                        $advocate = $user->id;
+                    } else {
+                        $ids = Probono::where('advocate','!=',NULL)->pluck('advocate')->toArray();
+                    $user = User::whereNotIn('id', $ids)->latest('created_at')->first();
+                    $advocate = $user->id;
+                    }
+                
+                 } else {
+                    $ids = Probono::where('advocate','!=',NULL)->pluck('advocate')->toArray();
+                    $user = User::whereNotIn('id', $ids)->latest('created_at')->first();
+                    $advocate = $user->id;
+                 }            
+               
+            } 
+        } else {
+            $advocate = null;
+        }
 
          Probono::create([
             'fname' => $request->fname,
@@ -68,14 +79,10 @@ class ProbonoController extends Controller
             'case_nature' => $request->case_nature,
             'hearing_date' => $request->hearing_date,
             'category' => $request->category,
-            'referrel' => $referrel,
+            'referrel' => $request->referrel,
+            'advocate' => $advocate,
             'register' => auth()->guard('admin')->user()->id,
         ]);
-
-        // ProbonoMember::create([
-        //     'advocate' => $request->user,
-        //     'probono' => $probono->id,
-        // ]);
 
          return back()->with('success','Probono registered!');
     }
@@ -96,15 +103,73 @@ class ProbonoController extends Controller
 
         // return view('probono.details', compact('probono','host','members','users'));
     }
-    public function addmember(Request $request)
+    public function file_store(Request $request)
     {
+        $this->validate($request,[
+            'case_title' => 'required',
+            'case_type' => 'required',
+            'case_file' => 'required|mimes:pdf',
+        ]);
+        if($request->hasFile('case_file')){
+            $file      = $request->file('case_file');
+            $filename  = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $case_file   = date('His').'-'.$filename;
+            $file->move(public_path('assets/img/files'), $case_file);
+        }
+        $count = ProbonoFile::where('probono_id', $request->probono_id)->count();
+         if ($count >= 5) {
+         return back()->with('success','Maximum Number 5 files');
+         } else {
+            ProbonoFile::create([
+                'case_title' => $request->case_title,
+                'case_type' => $request->case_type,
+                'case_file' => $case_file,
+                'probono_id' => $request->probono_id,
+                'register' => auth()->guard('admin')->user()->id,
+            ]);
+    
+             return back()->with('success','Case '.$count + 1 .' File uploaded');
+         }
+         
+        
+    }
 
-        // ProbonoMember::create([
-        //  'probono' => $request->probono,
-        //  'advocate' => $request->advcate_id,
-        //     ]);
+    public function update(Request $request)
+    {
+        $this->validate($request,[
+            'fname' => 'required',
+            'lname' => 'required',
+            'gender' => 'required',
+            'age' => 'required|numeric',
+            'phone' => 'required|numeric',
+            'referral_case_no' => 'required',
+            'jurisdiction' => 'required',
+            'court' => 'required',
+            'case_nature' => 'required',
+            'hearing_date' => 'required|date|after:'.Carbon::today()->toDateString(),
+            'category' => 'required',
+            'referrel' => 'required',
+        ]);
 
-        //  return back()->with('success','Member Added Successfully');
+            $probono = Probono::findorfail($request->id);
+            $probono->fname = $request->fname;
+            $probono->lname = $request->lname;
+            $probono->gender = $request->gender;
+            $probono->age = $request->age;
+            $probono->phone = $request->phone;
+            $probono->referral_case_no = $request->referral_case_no;
+            $probono->jurisdiction = $request->jurisdiction;
+            $probono->court = $request->court;
+            $probono->case_nature = $request->case_nature;
+            $probono->hearing_date = $request->hearing_date;
+            $probono->category = $request->category;
+            $probono->referrel = $request->referrel;
+            $probono->advocate = $request->advocate;
+            $probono->register = auth()->guard('admin')->user()->id;
+            $probono->save();
+
+            return back()->with('success','Probono update Successfully');
     }
 
     public function api(Request $request)

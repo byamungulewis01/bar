@@ -13,10 +13,8 @@
       <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
     </a>
   </div>
-
   <div class="menu-inner-shadow"></div>
   <ul class="menu-inner py-1">
-    <!-- Apps & Pages -->
     <li class="menu-header small text-uppercase">
       <span class="menu-header-text">Pages</span>
     </li>
@@ -29,14 +27,14 @@
     </li>
 
     <!-- Users -->
-    <li class="menu-item <?php echo e(Request::routeIs('users.ind') ? 'open' : (Request::routeIs('users.org') ? 'open' : '')); ?>">
+    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view-users')): ?><li class="menu-item <?php echo e(Request::routeIs('users') ? 'open' : (Request::routeIs('users.org') ? 'open' : '')); ?>">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons ti ti-users"></i>
         <div data-i18n="Users">Users</div>
       </a>
       <ul class="menu-sub">
-        <li class="menu-item <?php echo e(Request::routeIs('users.ind') ? 'active' : ''); ?>">
-          <a href="<?php echo e(route('users.ind')); ?>" class="menu-link">
+        <li class="menu-item <?php echo e(Request::routeIs('users') ? 'active' : ''); ?>">
+          <a href="<?php echo e(route('users')); ?>" class="menu-link">
             <div data-i18n="Individuals">Individuals</div>
           </a>
         </li>
@@ -45,9 +43,14 @@
             <div data-i18n="Organizations">Organizations</div>
           </a>
         </li>
+        <li class="menu-item <?php echo e(Request::routeIs('deactivated') ? 'active' : ''); ?>">
+          <a href="<?php echo e(route('deactivated')); ?>" class="menu-link">
+            <div data-i18n="Inactive Users">Inactive Users</div>
+          </a>
+        </li>
       </ul>
     </li>
-
+    <?php endif; ?>
     <!-- Disciplinary Cases -->
     <li class="menu-item">
       <a href="javascript:void(0);" class="menu-link">

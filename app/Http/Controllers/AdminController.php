@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Meeting;
+use App\Models\Probono;
 use App\Models\Discipline;
 use Illuminate\Http\Request;
 use App\Models\DisciplineMember;
@@ -70,5 +71,12 @@ class AdminController extends Controller
         $user = User::findorfail($user);
         $user_id = $user->id;
         return view('profile.meeting',compact('meetings','user_id'));
+    }
+      public function probono($user)
+    {
+        $probonos = Probono::where('advocate',$user)->get();
+        $user = User::findorfail($user);
+        $user_id = $user->id;
+        return view('profile.probono',compact('probonos','user_id'));
     }
 }

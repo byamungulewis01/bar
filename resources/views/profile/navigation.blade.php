@@ -6,7 +6,7 @@
         <li class="nav-item"><a class="nav-link {{ Request::routeIs('user.discipline')  ? 'active' : '' }}" href="{{ route('user.discipline' ,$user_id) }}"><i class='ti-xs ti ti-users me-1'></i> Disciplinary Records</a></li>
         <li class="nav-item"><a class="nav-link {{ Request::routeIs('user.meeting-view')  ? 'active' : '' }}" href="{{ route('user.meeting-view' ,$user_id) }}"><i class='ti-xs ti ti-layout-grid me-1'></i> R.B.A Meetings</a></li>
         <li class="nav-item"><a class="nav-link" href="#"><i class='ti-xs ti ti-link me-1'></i> Legal Education</a></li>
-        <li class="nav-item"><a class="nav-link" href="pages-profile-connections.html"><i class='ti-xs ti ti-gavel me-1'></i> Pro Bono Publico</a></li>
+        <li class="nav-item"><a class="nav-link {{ Request::routeIs('user.probono-view')  ? 'active' : '' }}" href="{{ route('user.probono-view' ,$user_id) }}"><i class='ti-xs ti ti-gavel me-1'></i> Pro Bono Publico</a></li>
       </ul>
     </div>
   </div>

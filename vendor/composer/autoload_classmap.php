@@ -63,6 +63,7 @@ return array(
     'App\\Models\\Organization' => $baseDir . '/app/Models/Organization.php',
     'App\\Models\\Phonenumber' => $baseDir . '/app/Models/Phonenumber.php',
     'App\\Models\\Probono' => $baseDir . '/app/Models/Probono.php',
+    'App\\Models\\ProbonoFile' => $baseDir . '/app/Models/ProbonoFile.php',
     'App\\Models\\Social' => $baseDir . '/app/Models/Social.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\marital' => $baseDir . '/app/Models/marital.php',

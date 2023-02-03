@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/newPassword', [LoginController::class, 'userPwd'])->name('newPassword');
     Route::post('/newPassword', [LoginController::class, 'storeUserPwd']);
 
-    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('/my-discipline/{user}', [DisciplinaryController::class, 'mydiscipline'])->name('mydiscipline');
     Route::get('/phones', [PhonenumberController::class, 'index'])->name('phone');
     Route::post('/phones', [PhonenumberController::class, 'store']);
@@ -81,10 +81,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-    Route::get('/my-profile', [UserProfileController::class, 'myprofile'])->name('myProfile');
+    Route::get('/dashboard', [UserProfileController::class, 'myprofile'])->name('dashboard');
     Route::get('/discipline-me', [UserProfileController::class, 'mydiscipline'])->name('mydiscipline');
     Route::get('/discipline-me/{case}', [UserProfileController::class, 'discipline_delails'])->name('discipline_delails');
     Route::get('/meeting-me', [UserProfileController::class, 'mymeeting'])->name('mymeetings');
+    Route::get('/probono-me', [UserProfileController::class, 'probono'])->name('myprobono');
 
 
 });
@@ -110,9 +111,7 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::get('/discipline-datails/{user}/{case}', [AdminController::class, 'discipline_delails'])->name('user.discipline_details');
 
     Route::get('/meeting-view/{user}', [AdminController::class, 'meeting'])->name('user.meeting-view');
- 
-
-
+    Route::get('/probono-view/{user}', [AdminController::class, 'probono'])->name('user.probono-view');
 
 
     Route::post('/profile/{user}', [UserController::class, 'changeStatus']);
@@ -141,6 +140,8 @@ Route::group(['middleware' => 'adminauth'], function(){
 
     Route::get('/probono', [ProbonoController::class, 'index'])->name('probono.index');
     Route::post('/probono', [ProbonoController::class, 'store'])->name('probono.store');
+    Route::put('/probono-update', [ProbonoController::class, 'update'])->name('probono.update');
+    Route::post('/probono-file', [ProbonoController::class, 'file_store'])->name('probono.file_store');
     Route::get('/probono/{id}', [ProbonoController::class, 'show'])->name('probono.show');
     Route::post('/probonomember', [ProbonoController::class, 'addmember'])->name('probono.addmember');
 

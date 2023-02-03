@@ -650,6 +650,7 @@ class ComposerStaticInitfde62bb9dde75ef19883153f606e5b1d
         'App\\Models\\Organization' => __DIR__ . '/../..' . '/app/Models/Organization.php',
         'App\\Models\\Phonenumber' => __DIR__ . '/../..' . '/app/Models/Phonenumber.php',
         'App\\Models\\Probono' => __DIR__ . '/../..' . '/app/Models/Probono.php',
+        'App\\Models\\ProbonoFile' => __DIR__ . '/../..' . '/app/Models/ProbonoFile.php',
         'App\\Models\\Social' => __DIR__ . '/../..' . '/app/Models/Social.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\marital' => __DIR__ . '/../..' . '/app/Models/marital.php',

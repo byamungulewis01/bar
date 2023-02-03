@@ -22,6 +22,11 @@ class Probono extends Model
         'category',
         'referrel',
         'status',
+        'advocate',
         'register',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class,'advocate');
+    }
 }

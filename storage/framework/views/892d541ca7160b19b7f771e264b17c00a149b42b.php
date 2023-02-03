@@ -78,9 +78,7 @@
               </form>
             </div>
             <div class="col-md-3 col-sm-2 text-end">
-              <?php if(auth()->guard()->guest()): ?>
-              <a href="<?php echo e(route('login')); ?>" class="btn btn-dark waves-effect align-self-end waves-light" style="z-index:10">Sign In</a>
-              <?php endif; ?>
+             
               <?php if(auth()->guard()->check()): ?>
               <a href="<?php echo e(route('dashboard')); ?>" class="btn btn-dark waves-effect align-self-end waves-light" style="z-index:10">Go to dashboard</a>
               <?php endif; ?>

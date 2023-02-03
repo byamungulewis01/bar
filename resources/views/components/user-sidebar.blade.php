@@ -13,21 +13,8 @@
       <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
     </a>
   </div>
-
   <div class="menu-inner-shadow"></div>
   <ul class="menu-inner py-1">
-    <!-- Apps & Pages -->
-    <li class="menu-header small text-uppercase">
-      <span class="menu-header-text">My Data</span>
-    </li>
-    <!-- Dashboard -->
-    <li class="menu-item {{ Request::routeIs('myProfile') ? 'active' : '' }}">
-      <a href="{{ route('myProfile') }}" class="menu-link">
-        <i class="menu-icon tf-icons ti ti-smart-home"></i>
-        <div data-i18n="My Profile">My Profile</div>
-      </a>
-    </li>
-    <!-- Apps & Pages -->
     <li class="menu-header small text-uppercase">
       <span class="menu-header-text">Pages</span>
     </li>
