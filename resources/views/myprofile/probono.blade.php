@@ -30,6 +30,7 @@ Disciplene info
                     <th>Case Nature</th>
                     <th>Case Status</th>
                     <th>Hearing Day</th>
+                    <th></th>
                  </tr>
                 </thead>
               </thead>
@@ -60,7 +61,7 @@ Disciplene info
                     <td>
                       {{ \Carbon\Carbon::parse($probono->hearing_date)->locale('fr')->format('F j, Y') }}
                     </td>
-        
+                    <td><a href="" class="btn btn-sm btn-primary">Details</a></td>
                   </tr>
                 </tbody>
                 @php

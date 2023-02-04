@@ -36,7 +36,7 @@ class UserController extends Controller
 
     public function api(Request $request)
     {
-      $data = User::latest()->with(['phone'])->get();
+      $data = User::with(['phone'])->orderBy('name', 'asc')->get();
       if (! $request->expectsJson()) {
           return $data;
       }

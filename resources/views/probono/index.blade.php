@@ -150,7 +150,7 @@ Pro Bono Cases
                         </div>
                         <div class="col-12 col-md-6">
                           <label class="form-label" for="flatpickr-date">Hearing Day</label>
-                          <input required type="text" class="form-control" id="date" name="hearing_date"
+                          <input required type="text" class="form-control" id="date1" name="hearing_date"
                             class="form-control" value="{{ $probono->hearing_date }}" />
                         </div>
                         <div class="col-12 col-md-6">
@@ -240,7 +240,8 @@ Pro Bono Cases
                           </div>
                         </div>
                         <div class="col-12">
-                          <label class="form-label w-100" for="type">File Type</label>
+                          <label class="form-label w-100" for="type">File Type <span class="text-danger">
+                            Upload  Only PDF File </span></label>
                           <div class="input-group input-group-merge">
                             <select required name="case_type" class="form-select">
                               <option value="" selected> - Select - </option>
@@ -398,7 +399,7 @@ Pro Bono Cases
           <div class="col-12 col-md-6">
             <label class="form-label" for="flatpickr-date">Hearing Day</label>
             <input required type="text" class="form-control" id="date" name="hearing_date"
-              placeholder="Month DD, YYYY H:i" class="form-control" />
+              placeholder="Month DD, YYYY" class="form-control" />
           </div>
           <div class="col-12 col-md-6">
             <label class="form-label" for="status">Category</label>
@@ -479,10 +480,10 @@ Pro Bono Cases
     var dtt = document.querySelector("#date"),
       dte = document.querySelector("#end");
     dtt && dtt.flatpickr({
-      enableTime: !0,
+      enableTime: false,
       altInput: !0,
-      altFormat: "F j, Y H:i",
-      dateFormat: "Y-m-d H:i",
+      altFormat: "F j, Y",
+      dateFormat: "Y-m-d",
       minDate: 'today'
     })
     dte && dte.flatpickr({
@@ -494,10 +495,10 @@ Pro Bono Cases
     var dtt1 = document.querySelector("#date1"),
       dte1 = document.querySelector("#end1");
     dtt1 && dtt1.flatpickr({
-      enableTime: !0,
+      enableTime: false,
       altInput: !0,
-      altFormat: "F j, Y H:i",
-      dateFormat: "Y-m-d H:i",
+      altFormat: "F j, Y",
+      dateFormat: "Y-m-d",
       minDate: 'today'
     })
     dte1 && dte1.flatpickr({
