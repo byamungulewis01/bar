@@ -94,6 +94,10 @@ class UserController extends Controller
             $diploma   = date('His').'-'.$filename;
             $file->move(public_path('assets/img/diploma'), $diploma);
         }
+        else
+        {
+            $diploma = null; 
+        }
 
         $email = $request->email;
         // $password = Str::random(10);
@@ -225,10 +229,10 @@ class UserController extends Controller
         }
         
         Phonenumber::create([ 'user_id'=>$user->id, 'name' => 'mobile', 'phone' => $request->phone]);
-        if($exEmail !== $request->email){
-            (new NotifyController)->newEmail($email);
-            (new NotifyController)->changedEmail();
-        }
+        // if($exEmail !== $request->email){
+        //     (new NotifyController)->newEmail($email);
+        //     (new NotifyController)->changedEmail();
+        // }
         return back()->with('message','User updated!');
     }
 

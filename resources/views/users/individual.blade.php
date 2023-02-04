@@ -975,13 +975,13 @@ $(function(){
                         }
                     }
                 },
-                diploma:{
-                    validators:{
-                        notEmpty:{
-                            message:"Upload diploma"
-                        }
-                    }
-                },
+                // diploma:{
+                //     validators:{
+                //         notEmpty:{
+                //             message:"Upload diploma"
+                //         }
+                //     }
+                // },
                 name:{
                     validators:{
                         notEmpty:{
