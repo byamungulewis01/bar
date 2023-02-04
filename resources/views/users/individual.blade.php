@@ -710,22 +710,22 @@ $(function(){
                     },
                     
                 ],
-                responsive:{
-                    details:{
-                        display:$.fn.dataTable.Responsive.display.modal({
-                            header:function(e){
-                                return"Details of "+e.data().name
-                            }
-                        }),
-                        type:"column",
-                        renderer:function(e,t,a){
-                            a=$.map(a,function(e,t){
-                                return""!==e.title?'<tr data-dt-row="'+e.rowIndex+'" data-dt-column="'+e.columnIndex+'"><td>'+e.title+":</td> <td>"+e.data+"</td></tr>":""
-                            }).join("");
-                            return!!a&&$('<table class="table"/><tbody />').append(a)
-                        }
-                    }
-                },
+                // responsive:{
+                //     details:{
+                //         display:$.fn.dataTable.Responsive.display.modal({
+                //             header:function(e){
+                //                 return"Details of "+e.data().name
+                //             }
+                //         }),
+                //         type:"column",
+                //         renderer:function(e,t,a){
+                //             a=$.map(a,function(e,t){
+                //                 return""!==e.title?'<tr data-dt-row="'+e.rowIndex+'" data-dt-column="'+e.columnIndex+'"><td>'+e.title+":</td> <td>"+e.data+"</td></tr>":""
+                //             }).join("");
+                //             return!!a&&$('<table class="table"/><tbody />').append(a)
+                //         }
+                //     }
+                // },
                 initComplete:function(){
                   this.api().columns(2).every(function(){
                     var t=this,
