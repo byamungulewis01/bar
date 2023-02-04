@@ -244,7 +244,6 @@ class UserController extends Controller
             'date' => 'required',
             'practicing' => 'required',
         ]);
-
         $user = User::findorfail($user->id);
 
         $date = strtotime($request->date);
