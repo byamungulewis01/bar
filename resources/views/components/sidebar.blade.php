@@ -44,11 +44,11 @@
             <div data-i18n="Organizations">Organizations</div>
           </a>
         </li>
-        {{-- <li class="menu-item {{ Request::routeIs('deactivated') ? 'active' : '' }}">
+        <li class="menu-item {{ Request::routeIs('deactivated') ? 'active' : '' }}">
           <a href="{{ route('deactivated') }}" class="menu-link">
-            <div data-i18n="Inactive Users">Inactive Users</div>
+            <div data-i18n="Deactivated Users">Deactivated Users</div>
           </a>
-        </li> --}}
+        </li>
       </ul>
     </li>
 

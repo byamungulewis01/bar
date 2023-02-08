@@ -33,11 +33,14 @@ Users
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex align-items-start justify-content-between">
+                      <a href="<?php echo e(route('activepage')); ?>">
                       <div class="content-left">
                         <span>Active </span>
                         <div class="d-flex align-items-center my-1">
-                          <h4 class="mb-0 me-2"><?php echo e($activeUsers); ?></h4>
+                        
+                            <h4 class="mb-0 me-2"><?php echo e($activeUsers); ?></h4>   
                         </div>
+                      </a>
                       </div>
                       <span class="badge bg-label-success rounded p-2">
                         <i class="ti ti-user-check ti-sm"></i>
@@ -50,12 +53,14 @@ Users
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex align-items-start justify-content-between">
+                      <a href="<?php echo e(route('inactivepage')); ?>">
                       <div class="content-left">
                         <span>Inactive </span>
                         <div class="d-flex align-items-center my-1">
                           <h4 class="mb-0 me-2"><?php echo e($inactiveUsers); ?></h4>
                         </div>
                       </div>
+                      </a>
                       <span class="badge bg-label-primary rounded p-2">
                         <i class="ti ti-user-minus ti-sm"></i>
                       </span>
@@ -67,12 +72,14 @@ Users
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex align-items-start justify-content-between">
+                      <a href="<?php echo e(route('suspendedpage')); ?>">
                       <div class="content-left">
                         <span>Suspended&nbsp;</span>
                         <div class="d-flex align-items-center my-1">
                           <h4 class="mb-0 me-2"><?php echo e($suspendedUsers); ?></h4>
                         </div>
                       </div>
+                      </a>
                       <span class="badge bg-label-warning rounded p-2">
                         <i class="ti ti-user-exclamation ti-sm"></i>
                       </span>
@@ -84,12 +91,14 @@ Users
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex align-items-start justify-content-between">
+                      <a href="<?php echo e(route('struckOffpage')); ?>">
                       <div class="content-left">
                         <span>Struck&nbsp;Off&nbsp;</span>
                         <div class="d-flex align-items-center my-1">
                           <h4 class="mb-0 me-2"><?php echo e($struckoffUsers); ?></h4>
                         </div>
                       </div>
+                      </a>
                       <span class="badge bg-label-danger rounded p-2">
                         <i class="ti ti-user-x ti-sm"></i>
                       </span>
@@ -102,12 +111,14 @@ Users
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex align-items-start justify-content-between">
+                      <a href="<?php echo e(route('deseacedpage')); ?>">
                       <div class="content-left">
                         <span>Deseaced&nbsp;</span>
                         <div class="d-flex align-items-center my-1">
                           <h4 class="mb-0 me-2"><?php echo e($deseacedUsers); ?></h4>
                         </div>
                       </div>
+                      </a>
                       <span class="badge bg-label-secondary rounded p-2">
                         <i class="ti ti-user-off ti-sm"></i>
                       </span>
@@ -119,7 +130,9 @@ Users
             <!-- Users List Table -->
             <div class="card">
               <div class="card-header border-bottom">
-                <h5 class="card-title mb-0">Users <a class="btn btn-dark text-white pull-left float-end" data-bs-toggle="modal" data-bs-target="#newUser"><i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New User</span></a><a class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editUser"></a></h5>
+                <h5 class="card-title mb-0">Users <a class="btn btn-dark text-white pull-left float-end" data-bs-toggle="modal" data-bs-target="#newUser"><i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New User</span></a><a class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editUser"></a>
+                  
+                </h5>
                 
               </div>
               <div class="card-datatable table-responsive">
@@ -968,13 +981,13 @@ $(function(){
         });
         const s=(o&&FormValidation.formValidation(o,{
             fields:{
-              profile:{
-                    validators:{
-                        notEmpty:{
-                            message:"Upload profile picture"
-                        }
-                    }
-                },
+              // profile:{
+              //       validators:{
+              //           notEmpty:{
+              //               message:"Upload profile picture"
+              //           }
+              //       }
+              //   },
                 // diploma:{
                 //     validators:{
                 //         notEmpty:{

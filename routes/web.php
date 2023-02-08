@@ -123,7 +123,23 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::get('/organizations', [OrganizationController::class, 'index'])->name('users.org');
     Route::post('/organizations', [OrganizationController::class, 'store']);
     Route::put('/organizations', [OrganizationController::class, 'update']);
-    Route::get('/inactive', [UserController::class, 'deactivated'])->name('deactivated');
+    // View Users Accoudingly to their Status
+    Route::get('/active', [UserController::class, 'activepage'])->name('activepage');
+    Route::put('/active', [UserController::class, 'update']);
+
+    Route::get('/inactive', [UserController::class, 'inactivepage'])->name('inactivepage');
+    Route::put('/inactive', [UserController::class, 'update']);
+
+    Route::get('/suspended', [UserController::class, 'suspendedpage'])->name('suspendedpage');
+    Route::put('/suspended', [UserController::class, 'update']);
+
+    Route::get('/struckOff', [UserController::class, 'struckOffpage'])->name('struckOffpage');
+    Route::put('/struckOff', [UserController::class, 'update']);
+
+    Route::get('/deseaced', [UserController::class, 'deseacedpage'])->name('deseacedpage');
+    Route::put('/deseaced', [UserController::class, 'update']);
+     // End of View Users Accoudingly to their Status
+    Route::get('/deactivated', [UserController::class, 'deactivated'])->name('deactivated');
     Route::post('/inactive', [UserController::class, 'activate']);
     Route::get('/users', [UserController::class, 'index'])->name('users.ind');
     Route::post('/users', [UserController::class, 'store']);

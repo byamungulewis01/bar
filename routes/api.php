@@ -32,8 +32,15 @@ Route::group([
     Route::get('/search-vertical', [SearchController::class, 'searchVertical']);
     Route::get('/search', [SearchController::class, 'searchApi']);
     Route::get('/lawcat', [LawscategoryController::class, 'index']);
-    Route::get('/users/inactive', [UserController::class, 'inactive']);
+
+
+    Route::get('/users/deseacedApi', [UserController::class, 'deseacedApi']);
+    Route::get('/users/struckOffApi', [UserController::class, 'struckOffApi']);
+    Route::get('/users/suspendedApi', [UserController::class, 'suspendedApi']);
+    Route::get('/users/inactiveApi', [UserController::class, 'inactiveApi']);
+    Route::get('/users/active', [UserController::class, 'active']);
     Route::get('/users/individual', [UserController::class, 'api']);
+
     Route::get('/meetings', [MeetingController::class, 'api']);
     Route::get('/cases', [DisciplinaryController::class, 'api']);
     Route::get('/probono', [ProbonoController::class, 'api']);

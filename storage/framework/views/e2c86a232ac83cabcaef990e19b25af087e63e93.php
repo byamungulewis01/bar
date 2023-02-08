@@ -45,37 +45,45 @@
                       <div class="col-md-3 col-6">
                         <div class="d-flex align-items-center">
                           <div class="badge rounded-pill bg-label-primary me-3 p-2"><i class="ti ti-chart-pie-2 ti-sm"></i></div>
+                          <a href="<?php echo e(route('activepage')); ?>">
                           <div class="card-info">
                             <h5 class="mb-0"><?php echo e($activeUsers); ?></h5>
                             <small>Active</small>
                           </div>
+                          </a>
                         </div>
                       </div>
                       <div class="col-md-3 col-6">
                         <div class="d-flex align-items-center">
                           <div class="badge rounded-pill bg-label-info me-3 p-2"><i class="ti ti-users ti-sm"></i></div>
+                          <a href="<?php echo e(route('inactivepage')); ?>">
                           <div class="card-info">
                             <h5 class="mb-0"><?php echo e($inactiveUsers); ?></h5>
                             <small>Inactive</small>
                           </div>
+                          </a>
                         </div>
                       </div>
                       <div class="col-md-3 col-6">
                         <div class="d-flex align-items-center">
                           <div class="badge rounded-pill bg-label-danger me-3 p-2"><i class="ti ti-user ti-sm"></i></div>
+                          <a href="<?php echo e(route('suspendedpage')); ?>">
                           <div class="card-info">
                             <h5 class="mb-0"><?php echo e($suspendedUsers); ?></h5>
                             <small>Suspended</small>
                           </div>
+                          </a>
                         </div>
                       </div>
                       <div class="col-md-3 col-6">
                         <div class="d-flex align-items-center">
                           <div class="badge rounded-pill bg-label-success me-3 p-2"><i class="ti ti-cross ti-sm"></i></div>
+                          <a href="<?php echo e(route('deseacedpage')); ?>">
                           <div class="card-info">
                             <h5 class="mb-0"><?php echo e($deseacedUsers); ?></h5>
                             <small>Deseaced</small>
                           </div>
+                          </a>
                         </div>
                       </div>
                     </div>

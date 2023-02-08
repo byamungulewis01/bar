@@ -44,7 +44,11 @@
             <div data-i18n="Organizations">Organizations</div>
           </a>
         </li>
-        
+        <li class="menu-item <?php echo e(Request::routeIs('deactivated') ? 'active' : ''); ?>">
+          <a href="<?php echo e(route('deactivated')); ?>" class="menu-link">
+            <div data-i18n="Deactivated Users">Deactivated Users</div>
+          </a>
+        </li>
       </ul>
     </li>
 

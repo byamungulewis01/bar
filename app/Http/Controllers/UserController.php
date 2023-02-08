@@ -28,12 +28,6 @@ class UserController extends Controller
         $deseacedUsers = User::where('practicing',6)->count();
         return view('users.individual',compact('marital','allUsers','activeUsers','inactiveUsers','suspendedUsers','struckoffUsers','deseacedUsers'));
     }
-
-    public function deactivated()
-    {
-        return view('users.inactive');
-    }
-
     public function api(Request $request)
     {
       $data = User::with(['phone'])->orderBy('name', 'asc')->get();
@@ -48,9 +42,137 @@ class UserController extends Controller
       }
     }
 
-    public function inactive(Request $request)
+    public function deactivated()
+    {
+        return view('users.deactive');
+    }
+    public function deactiveApi(Request $request)
     {
       $data = User::onlyTrashed()->with(['phone'])->get();
+      if (! $request->expectsJson()) {
+          return $data;
+      }
+      else{
+          return response()->json([
+              'success' => true,
+              'data' => $data
+          ]);
+      }
+    }
+
+  
+
+   
+    public function deseacedpage()
+    {
+        $marital = marital::all();
+        $allUsers = User::all()->count();
+        $activeUsers = User::where('practicing','<=',2)->count();
+        $inactiveUsers = User::where('practicing',3)->count();
+        $suspendedUsers = User::where('practicing',4)->count();
+        $struckoffUsers = User::where('practicing',5)->count();
+        $deseacedUsers = User::where('practicing',6)->count();
+        return view('users.deseaced',compact('marital','allUsers','activeUsers','inactiveUsers','suspendedUsers','struckoffUsers','deseacedUsers'));
+    }
+    public function deseacedApi(Request $request)
+    {
+      $data = User::where('practicing' , 6)->with(['phone'])->get();
+      if (! $request->expectsJson()) {
+          return $data;
+      }
+      else{
+          return response()->json([
+              'success' => true,
+              'data' => $data
+          ]);
+      }
+    }
+    public function struckOffpage()
+    {
+        $marital = marital::all();
+        $allUsers = User::all()->count();
+        $activeUsers = User::where('practicing','<=',2)->count();
+        $inactiveUsers = User::where('practicing',3)->count();
+        $suspendedUsers = User::where('practicing',4)->count();
+        $struckoffUsers = User::where('practicing',5)->count();
+        $deseacedUsers = User::where('practicing',6)->count();
+        return view('users.struckOff',compact('marital','allUsers','activeUsers','inactiveUsers','suspendedUsers','struckoffUsers','deseacedUsers'));
+    }
+    public function struckOffApi(Request $request)
+    {
+      $data = User::where('practicing' , 5)->with(['phone'])->get();
+      if (! $request->expectsJson()) {
+          return $data;
+      }
+      else{
+          return response()->json([
+              'success' => true,
+              'data' => $data
+          ]);
+      }
+    }
+    public function suspendedpage()
+    {
+        $marital = marital::all();
+        $allUsers = User::all()->count();
+        $activeUsers = User::where('practicing','<=',2)->count();
+        $inactiveUsers = User::where('practicing',3)->count();
+        $suspendedUsers = User::where('practicing',4)->count();
+        $struckoffUsers = User::where('practicing',5)->count();
+        $deseacedUsers = User::where('practicing',6)->count();
+        return view('users.suspended',compact('marital','allUsers','activeUsers','inactiveUsers','suspendedUsers','struckoffUsers','deseacedUsers'));
+    }
+    public function suspendedApi(Request $request)
+    {
+      $data = User::where('practicing' , 4)->with(['phone'])->get();
+      if (! $request->expectsJson()) {
+          return $data;
+      }
+      else{
+          return response()->json([
+              'success' => true,
+              'data' => $data
+          ]);
+      }
+    }
+    public function inactivepage()
+    {
+        $marital = marital::all();
+        $allUsers = User::all()->count();
+        $activeUsers = User::where('practicing','<=',2)->count();
+        $inactiveUsers = User::where('practicing',3)->count();
+        $suspendedUsers = User::where('practicing',4)->count();
+        $struckoffUsers = User::where('practicing',5)->count();
+        $deseacedUsers = User::where('practicing',6)->count();
+        return view('users.inactive',compact('marital','allUsers','activeUsers','inactiveUsers','suspendedUsers','struckoffUsers','deseacedUsers'));
+    }
+    public function inactiveApi(Request $request)
+    {
+      $data = User::where('practicing' , 3)->with(['phone'])->get();
+      if (! $request->expectsJson()) {
+          return $data;
+      }
+      else{
+          return response()->json([
+              'success' => true,
+              'data' => $data
+          ]);
+      }
+    }
+    public function activepage()
+    {
+        $marital = marital::all();
+        $allUsers = User::all()->count();
+        $activeUsers = User::where('practicing','<=',2)->count();
+        $inactiveUsers = User::where('practicing',3)->count();
+        $suspendedUsers = User::where('practicing',4)->count();
+        $struckoffUsers = User::where('practicing',5)->count();
+        $deseacedUsers = User::where('practicing',6)->count();
+        return view('users.active',compact('marital','allUsers','activeUsers','inactiveUsers','suspendedUsers','struckoffUsers','deseacedUsers'));
+    }
+    public function active(Request $request)
+    {
+      $data = User::where('practicing' , 2)->with(['phone'])->get();
       if (! $request->expectsJson()) {
           return $data;
       }
@@ -74,7 +196,6 @@ class UserController extends Controller
             'marital' => 'required',
             'date' => 'required',
             'category' => 'required',
-            'profile' => 'required',
             'status' => 'required',
             'practicing' => 'required',
         ]);
@@ -85,6 +206,10 @@ class UserController extends Controller
             $extension = $file->getClientOriginalExtension();
             $profile   = date('His').'-'.$filename;
             $file->move(public_path('assets/img/avatars'), $profile);
+        }
+        else
+        {
+            $profile = null; 
         }
 
         if($request->hasFile('diploma')){
