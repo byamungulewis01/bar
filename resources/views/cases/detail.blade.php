@@ -411,7 +411,26 @@ Discipline Details
                                         data-bs-target="#deleteStatus{{ $member->table_id }}" class="text-danger"><i
                                             class="ti ti-trash"></i></a> 
                                         @endif
-                                     
+                                        <div class="modal modal-top fade" id="deleteStatus{{ $member->table_id }}" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog modal-md" role="document">
+                                              <div class="modal-content">
+                                                <form action="{{ route('participant.delete') }}" method="POST">
+                                                  @csrf
+                                                  @method('DELETE')
+                                                  <input type="hidden" name="id" value="{{ $member->table_id  }}" />
+                                                  <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel2">Are you sure to delete <strong>{{ $member->user->name }}</strong></h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                                  </div>
+                                                </form>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          
                                     </td>
 
                                 </tr>

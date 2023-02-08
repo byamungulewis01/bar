@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Meeting;
 use App\Models\Probono;
+use App\Models\Probono_dev;
 use App\Models\Discipline;
 use App\Models\Lawscategory;
 use Illuminate\Http\Request;
@@ -49,7 +50,11 @@ class UserProfileController extends Controller
         $user = auth()->user();
         $user_id = $user->id;
 
-        $cases = Discipline::where('p_advocate',$user_id)->orWhere('d_advocate',$user_id)->get();
+        $part = DisciplineParticipant::where('advocate',$user_id)->get();
+
+        $ids = DisciplineParticipant::where('advocate',$user_id)->pluck('discipline_case')->toArray();
+      
+        $cases = Discipline::whereIn('id',$ids)->get();
 
         return view('myprofile.discipline',compact('user','cases'));
     }
@@ -78,5 +83,32 @@ class UserProfileController extends Controller
         $probonos = Probono::where('advocate',$user)->get();
         return view('myprofile.probono',compact('probonos'));
     }
+    public function probono_details($case)
+    {   
+        $probono = Probono::findorfail($case);
+        $probono_devs = Probono_dev::where('probono_id' , $case)->get();
+        return view('myprofile.probono_delails',compact('probono','probono_devs'));
+    }
+    public function probono_dev(Request $request)
+    {   
+        $this->validate($request,[
+            'status' => 'required',
+            'title' => 'required',
+            'narration' => 'required',
+        ]);
+
+        $probono = Probono::findorfail($request->probono);
+        $probono->status = $request->status;
+        $probono->save();
+
+        Probono_dev::create([
+            'status' => $request->status,
+            'title' => $request->title,
+            'narration' => $request->narration,
+            'probono_id' => $request->probono,
+       ]);
+        return back()->with('message','New Development');
+    }
+
 
 }

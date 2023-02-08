@@ -12,7 +12,7 @@ Meetings
 
 
   <!-- Users List Table -->
-  <div class="card">
+  <div class="card h-100">
     <div class="card-header border-bottom">
       <h5 class="card-title mb-0">Meetings <a href="" data-bs-toggle="modal" data-bs-target="#meeting"
           class="btn btn-dark text-white pull-left float-end"><i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span
@@ -87,8 +87,6 @@ Meetings
         </div>
       </div>
     </div>
-    <?php echo $__env->make('layouts.flash_message', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
     <div class="table-responsive text-nowrap">
       <table class="table">
         <thead>
@@ -141,11 +139,99 @@ Meetings
                   data-bs-toggle="dropdown"></button>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="<?php echo e(route('meetings.show',$meeting->id)); ?>">Invite</a>
-                  <a class="dropdown-item" href="javascript:void(0)">Checkin</a>
-                  <a class="dropdown-item" href="javascript:void(0)">Data</a>
+                  
                   <div class="dropdown-divider"></div>
+                  <a data-bs-toggle="modal" data-bs-toggle="modal" data-bs-target="#edit<?php echo e($meeting->id); ?>" class="dropdown-item"
+                    href="javascript:void(0)">Edit</a>
+                
+                    
                   <a data-bs-toggle="modal" data-bs-target="#delete<?php echo e($meeting->id); ?>" class="dropdown-item"
-                    href="javascript:void(0)">remove</a>
+                    href="javascript:void(0)">Remove</a>
+                </div>
+              </div>
+              <div class="modal fade" id="edit<?php echo e($meeting->id); ?>" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                  <div class="modal-content p-3 p-md-5">
+                    <div class="modal-body">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <div class="text-center mb-4">
+                        <h3 class="mb-2">Edit Meeting</h3>
+                      </div>
+                      <form method="POST" class="row g-3" action="<?php echo e(route('meetings.update')); ?>">
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('PUT'); ?>
+                        <div class="col-12">
+                          <label for="title" class="form-label">Title</label>
+                          <input type="hidden" name="meeting" value="<?php echo e($meeting->id); ?>">
+                          <input required type="text" name="title" class="form-control" id="title" value="<?php echo e($meeting->title); ?>">
+                        </div>
+                        <div class="col-md-6">
+          
+                          <label for="date" class="form-label">Date and Start time</label>
+                          <input required type="text" class="form-control" id="date1" name="date" value="<?php echo e($meeting->date); ?>">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="end" class="form-label">End time</label>
+                          <input required type="text" class="form-control" id="end1" name="end" value="<?php echo e($meeting->end); ?>">
+                        </div>
+                        <div class="col-9">
+                          <label for="venue" class="form-label">Venue</label>
+                          <input required type="text" name="venue" class="form-control" id="venue1" value="<?php echo e($meeting->venue); ?>">
+                        </div>
+                        <div class="col-3">
+                          <label for="venue" class="form-label">Credit</label>
+                          <input required type="text" name="credits" id="credit1" class="form-control" value="<?php echo e($meeting->credits); ?>"> 
+                        </div>
+                        <?php
+                            if($meeting->published == 0)
+                            {
+                                $check = 'checked';
+                            } 
+                            if($meeting->published == 1)
+                            {
+                                $check = 'checked';
+                            } 
+                        ?>
+                        <div class="col-md mb-md-0 mb-2">
+                          <div class="form-check custom-option custom-option-basic checked">
+                            <label class="form-check-label custom-option-content" for="published1">
+                              <input required name="published" class="form-check-input" type="radio" value="1" id="published1" 
+                              <?php if($meeting->published == 1): ?>
+                              checked=""
+                              <?php endif; ?>>
+                              <span class="custom-option-header">
+                                <span class="h6 mb-0">Published</span>
+                                <span class="text-muted"></span>
+                              </span>
+                              <span class="custom-option-body">
+                                <small>Every user will get this meeting on their meeting list</small>
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-md">
+                          <div class="form-check custom-option custom-option-basic">
+                            <label class="form-check-label custom-option-content" for="published2">
+                              <input required name="published" class="form-check-input" type="radio" value="0" id="published2"
+                              <?php if($meeting->published == 0): ?>
+                                  checked=""
+                              <?php endif; ?>>
+                              <span class="custom-option-header">
+                                <span class="h6 mb-0">Not Published</span>
+                                <span class="text-muted"></span>
+                              </span>
+                              <span class="custom-option-body">
+                                <small>Only the invited users will get this meeting on their list</small>
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center">
+                          <button type="submit" class="btn btn-primary waves-effect waves-light">Save Meeting</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div>
             </td>
@@ -156,20 +242,21 @@ Meetings
           $count++
           ?>
 
+
           <div class="modal modal-top fade" id="delete<?php echo e($meeting->id); ?>" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-dialog modal-md" role="document">
               <div class="modal-content">
-                <form action="<?php echo e(route('marital.delete')); ?>" method="POST">
+                <form action="<?php echo e(route('meeting.delete')); ?>" method="POST">
                   <?php echo csrf_field(); ?>
                   <?php echo method_field('DELETE'); ?>
                   <input type="hidden" name="meeting" value="<?php echo e($meeting->id); ?>" />
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel2">Are you sure to delete? <?php echo e($meeting->id); ?></h5>
+                    <h5 class="modal-title" id="exampleModalLabel2">Are you sure to delete <strong><?php echo e($meeting->title); ?></strong>  Meeting?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-dark">Yes, Delete</button>
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
                   </div>
                 </form>
               </div>

@@ -12,6 +12,7 @@ use App\Http\Controllers\MaritalController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\ProbonoController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\Auth\ForgetPassword;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SchedulerController;
@@ -86,6 +87,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/discipline-me/{case}', [UserProfileController::class, 'discipline_delails'])->name('discipline_delails');
     Route::get('/meeting-me', [UserProfileController::class, 'mymeeting'])->name('mymeetings');
     Route::get('/probono-me', [UserProfileController::class, 'probono'])->name('myprobono');
+    Route::get('/probono-me/{case}', [UserProfileController::class, 'probono_details'])->name('probono-details');
+    Route::post('/probono-dev', [UserProfileController::class, 'probono_dev'])->name('probono_dev');
 
 
 });
@@ -112,6 +115,7 @@ Route::group(['middleware' => 'adminauth'], function(){
 
     Route::get('/meeting-view/{user}', [AdminController::class, 'meeting'])->name('user.meeting-view');
     Route::get('/probono-view/{user}', [AdminController::class, 'probono'])->name('user.probono-view');
+    Route::get('/training-view/{user}', [AdminController::class, 'training'])->name('user.training-view');
 
 
     Route::post('/profile/{user}', [UserController::class, 'changeStatus']);
@@ -151,10 +155,17 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::get('/meetings/{meeting}', [MeetingController::class, 'show'])->name('meetings.show');
     Route::get('/meetings/create', [MeetingController::class, 'create'])->name('meetings.create');
     Route::post('/meetings/create', [MeetingController::class, 'store'])->name('meetings.store');
-    Route::get('/meetings/update', [MeetingController::class, 'update'])->name('meetings.update');
-    Route::put('/meetings/update', [MeetingController::class, 'save'])->name('meetings.save');
+    Route::put('/meetings/update', [MeetingController::class, 'update'])->name('meetings.update');
+    Route::delete('/meetings/delete', [MeetingController::class, 'delete'])->name('meeting.delete');
     Route::post('/meetings/invite', [MeetingController::class, 'invite'])->name('meetings.invite');
     Route::delete('/meetings/remove', [MeetingController::class, 'removeInviter'])->name('meetings.removeInviter');
+
+
+
+    Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
+    Route::get('/trainings/{details}', [TrainingController::class, 'details'])->name('trainings.details');
+    Route::post('/trainings', [TrainingController::class, 'store'])->name('trainings.store');
+    Route::put('/trainings-update', [TrainingController::class, 'update'])->name('trainings.update');
 
 
     Route::get('/roles', [RolesController::class, 'index'])->name('roles');

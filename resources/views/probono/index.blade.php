@@ -50,11 +50,19 @@ Pro Bono Cases
             <td>{{ $probono->referral_case_no }}</td>
             <td>{{ $probono->case_nature }}</td>
             <td>
-              @if ($probono->status == 'OPEN')
-              <span class="badge bg-label-info me-2">{{ $probono->status }}</span>
-              @else
+              @switch($probono->status)
+              @case('OPEN')
+              <span class="badge bg-label-primary me-2">{{ $probono->status }}</span>
+                  @break
+              @case('WON')
+              <span class="badge bg-label-success me-2">{{ $probono->status }}</span>
+                  @break
+              @case('LOST')
+              <span class="badge bg-label-warning me-2">{{ $probono->status }}</span>
+                  @break
+              @default
               <span class="badge bg-label-danger me-2">{{ $probono->status }}</span>
-              @endif
+          @endswitch
 
             </td>
             <td>
@@ -298,6 +306,7 @@ Pro Bono Cases
               <h6 class="text-primary">
                 Case assigned to <a href="{{ route('profile',$probono->advocate) }}" class="text-dark">{{ $probono->user->name }}</a>
                 <a href="javascript:" class="btn btn-dark btn-sm"> Notify </a>
+            {{-- <span class="pull-left float-end">Reported Events <span class="badge bg-label-dark ">{{ $reportEvent }}</span></span> --}}
               </h6>
               @endif
 

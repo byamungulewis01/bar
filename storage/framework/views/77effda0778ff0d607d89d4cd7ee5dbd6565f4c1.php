@@ -71,6 +71,14 @@
         <div data-i18n="Pro Bono Cases">Pro Bono Cases</div>
       </a>
     </li>
+    <!-- Probono Cases -->
+    <li class="menu-item <?php echo e(Request::routeIs('trainings.index') ? 'active' : ''); ?>">
+      <a href="<?php echo e(route('trainings.index')); ?>" class="menu-link">
+        <i class="menu-icon tf-icons ti ti-link"></i>
+        <div data-i18n="Legal Education">Legal Education</div>
+      </a>
+    </li>
+    
 
     <!-- Finance -->
     <li class="menu-item">

@@ -29,7 +29,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $.toast({
         heading: 'Message',
-        text: '{{ session()->get('message') }}',
+        text: '{{ session()->get('warning') }}',
         showHideTransition: 'fade',
         icon: 'warning',
         position : 'top-right' 

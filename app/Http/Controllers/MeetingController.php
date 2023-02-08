@@ -43,6 +43,10 @@ class MeetingController extends Controller
       Invitations::create(['user_id' => $key, 'meeting_id' => $request->meeting, 'status' => 1]);
 
        }
+        $publish = Meeting::findorfail($request->meeting);
+        $publish->published = 1;
+        $publish->save();
+        
        return back()->with('message','new Advocate invited');
 
     }
@@ -97,6 +101,49 @@ class MeetingController extends Controller
 
         return redirect()->route('meetings.index')->with('message','New meeting registared');   
 
+    }
+    public function update(Request $request)
+    {
+        $datetime = $request->date;
+        $date = date("Y-m-d", strtotime($datetime));
+        $time = date("H:i:s", strtotime($datetime));
+
+        $meeting = Meeting::findorfail($request->meeting);
+     
+        if ($request->published == 1) {
+            $meeting->title = $request->title;
+            $meeting->date =  $date;
+            $meeting->start = $time;
+            $meeting->end = $request->end;
+            $meeting->venue = $request->venue;
+            $meeting->credits = $request->credits;
+            $meeting->published = 1;
+            $meeting->save();
+        }
+        else {
+            $meeting->title = $request->title;
+            $meeting->date =  $date;
+            $meeting->start = $time;
+            $meeting->end = $request->end;
+            $meeting->venue = $request->venue;
+            $meeting->credits = $request->credits;
+            $meeting->published = 0;
+            $meeting->save();
+           
+            Invitations::where('meeting_id', $request->meeting)->delete();
+        }
+
+        return redirect()->route('meetings.index')->with('message','New meeting registared');   
+
+    }
+
+    public function delete(Request $request)
+    {
+        $meeting = Meeting::findorfail($request->meeting);
+        $meeting->delete();
+        Invitations::where('meeting_id', $request->meeting)->delete();
+
+        return back()->with('message', 'Meeting remove successfully');
     }
 
     public function removeInviter(Request $request)

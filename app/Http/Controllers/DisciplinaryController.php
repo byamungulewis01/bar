@@ -155,7 +155,6 @@ class DisciplinaryController extends Controller
                 ->orderBy('created_at')->take(1)->update([
                 'advocate' => $request->advocate,
                 'updated_at' => date('Y/m/d'),
-
             ]);
         }
         if ($request->case_type == 2) {
@@ -229,14 +228,21 @@ class DisciplinaryController extends Controller
 
     public function addmember(Request $request)
     {
-
-        DisciplineParticipant::create([
-            'advocate' => $request->advcate_id,
-            'discipline_case' => $request->case_id,
-            'role' => $request->role,
-        ]);
-
+        $check = DisciplineParticipant::where('advocate',$request->advcate_id)->count();
+        if($check == 0){
+            DisciplineParticipant::create([
+                'advocate' => $request->advcate_id,
+                'discipline_case' => $request->case_id,
+                'role' => $request->role,
+            ]);
+            
         return back()->with('message', 'Participant Added Successfully');
+        }
+        else{       
+        return back()->with('warning', 'Participant is Already on List');
+        }
+      
+
     }
     public function deleteparticipant(Request $request)
     {

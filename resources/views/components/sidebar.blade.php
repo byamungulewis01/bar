@@ -75,6 +75,14 @@
         <div data-i18n="Pro Bono Cases">Pro Bono Cases</div>
       </a>
     </li>
+    <!-- Probono Cases -->
+    <li class="menu-item {{ Request::routeIs('trainings.index') ? 'active' : '' }}">
+      <a href="{{ route('trainings.index') }}" class="menu-link">
+        <i class="menu-icon tf-icons ti ti-link"></i>
+        <div data-i18n="Legal Education">Legal Education</div>
+      </a>
+    </li>
+    {{-- <i class='ti-xs ti ti-link me-1'></i>  --}}
 
     <!-- Finance -->
     <li class="menu-item">

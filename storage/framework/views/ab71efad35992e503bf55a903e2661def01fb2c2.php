@@ -52,11 +52,19 @@ Pro Bono Cases
             <td><?php echo e($probono->referral_case_no); ?></td>
             <td><?php echo e($probono->case_nature); ?></td>
             <td>
-              <?php if($probono->status == 'OPEN'): ?>
-              <span class="badge bg-label-info me-2"><?php echo e($probono->status); ?></span>
-              <?php else: ?>
+              <?php switch($probono->status):
+              case ('OPEN'): ?>
+              <span class="badge bg-label-primary me-2"><?php echo e($probono->status); ?></span>
+                  <?php break; ?>
+              <?php case ('WON'): ?>
+              <span class="badge bg-label-success me-2"><?php echo e($probono->status); ?></span>
+                  <?php break; ?>
+              <?php case ('LOST'): ?>
+              <span class="badge bg-label-warning me-2"><?php echo e($probono->status); ?></span>
+                  <?php break; ?>
+              <?php default: ?>
               <span class="badge bg-label-danger me-2"><?php echo e($probono->status); ?></span>
-              <?php endif; ?>
+          <?php endswitch; ?>
 
             </td>
             <td>
@@ -325,6 +333,7 @@ unset($__errorArgs, $__bag); ?>
               <h6 class="text-primary">
                 Case assigned to <a href="<?php echo e(route('profile',$probono->advocate)); ?>" class="text-dark"><?php echo e($probono->user->name); ?></a>
                 <a href="javascript:" class="btn btn-dark btn-sm"> Notify </a>
+            
               </h6>
               <?php endif; ?>
 

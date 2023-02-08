@@ -9,7 +9,7 @@ Disciplene info
 
 <div class="container-xxl flex-grow-1 container-p-y">
 
-    <h4 class="fw-bold py-3 mb-5">
+    <h4 class="fw-bold py-3 mb-2">
         <span class="text-muted fw-light">Disciplinary case /</span> Profile
     </h4>
 

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->timestamp('hearing_date');
             $table->string('category');
             $table->string('referrel');
-            $table->enum('status',['OPEN' , 'CLOSED']);
+            $table->enum('status',['OPEN' , 'WON', 'LOST', 'TRANSACTED']);
             $table->UnsignedBigInteger('advocate')->nullable();
             $table->UnsignedBigInteger('register');
             $table->foreign('advocate')->references('id')->on('users')->constrained()->onDelete('set null');

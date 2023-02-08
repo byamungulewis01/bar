@@ -9,7 +9,7 @@ Disciplene info
 
 <div class="container-xxl flex-grow-1 container-p-y">
 
-    <h4 class="fw-bold py-3 mb-5">
+    <h4 class="fw-bold py-3 mb-2">
         <span class="text-muted fw-light">Disciplinary case /</span> Profile
     </h4>
 
@@ -51,17 +51,25 @@ Disciplene info
                     <td>{{ $probono->referral_case_no }}</td>
                     <td>{{ $probono->case_nature }}</td>
                     <td>
-                      @if ($probono->status == 'OPEN')
-                      <span class="badge bg-label-info me-2">{{ $probono->status }}</span>
-                      @else
+                      @switch($probono->status)
+                      @case('OPEN')
+                      <span class="badge bg-label-primary me-2">{{ $probono->status }}</span>
+                          @break
+                      @case('WON')
+                      <span class="badge bg-label-success me-2">{{ $probono->status }}</span>
+                          @break
+                      @case('LOST')
+                      <span class="badge bg-label-warning me-2">{{ $probono->status }}</span>
+                          @break
+                      @default
                       <span class="badge bg-label-danger me-2">{{ $probono->status }}</span>
-                      @endif
+                  @endswitch
         
                     </td>
                     <td>
                       {{ \Carbon\Carbon::parse($probono->hearing_date)->locale('fr')->format('F j, Y') }}
                     </td>
-                    <td><a href="" class="btn btn-sm btn-primary">Details</a></td>
+                    <td><a href="{{ route('probono-details',$probono->id) }}" class="btn btn-sm btn-primary">Details</a></td>
                   </tr>
                 </tbody>
                 @php

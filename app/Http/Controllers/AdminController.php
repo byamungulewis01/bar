@@ -79,4 +79,11 @@ class AdminController extends Controller
         $user_id = $user->id;
         return view('profile.probono',compact('probonos','user_id'));
     }
+      public function training($user)
+    {
+        $probonos = Probono::where('advocate',$user)->get();
+        $user = User::findorfail($user);
+        $user_id = $user->id;
+        return view('profile.training',compact('probonos','user_id'));
+    }
 }
