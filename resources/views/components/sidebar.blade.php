@@ -28,17 +28,68 @@
     </li>
 
     <!-- Users -->
-    <li class="menu-item {{ Request::routeIs('users.ind') ? 'open' : (Request::routeIs('users.org') ? 'open' : '') }}">
+    <li class="menu-item 
+        {{ Request::routeIs('users.ind') ? 'open' : (Request::routeIs('users.org') ? 'open' : '')}}
+        {{ Request::routeIs('activepage') ? 'open' : (Request::routeIs('users.org') ? 'open' : '') }}
+        {{ Request::routeIs('inactivepage') ? 'open' : (Request::routeIs('users.org') ? 'open' : '') }}
+        {{ Request::routeIs('suspendedpage') ? 'open' : (Request::routeIs('users.org') ? 'open' : '') }}
+        {{ Request::routeIs('struckOffpage') ? 'open' : (Request::routeIs('users.org') ? 'open' : '') }}
+        {{ Request::routeIs('deseacedpage') ? 'open' : (Request::routeIs('users.org') ? 'open' : '') }}
+    ">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons ti ti-users"></i>
         <div data-i18n="Users">Users</div>
       </a>
       <ul class="menu-sub">
-        <li class="menu-item {{ Request::routeIs('users.ind') ? 'active' : '' }}">
+        <li class="menu-item 
+        {{ Request::routeIs('users.ind') ? 'open' : '' }}
+        {{ Request::routeIs('activepage') ? 'open' : '' }}
+        {{ Request::routeIs('inactivepage') ? 'open' : '' }}
+        {{ Request::routeIs('suspendedpage') ? 'open' : '' }}
+        {{ Request::routeIs('struckOffpage') ? 'open' : '' }}
+        {{ Request::routeIs('deseacedpage') ? 'open' : '' }}
+        ">
+          <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <div data-i18n="Individuals">Individuals Users</div>
+          </a>
+          <ul class="menu-sub">
+            <li class="menu-item {{ Request::routeIs('') ? 'active' : '' }}">
+              <a href="{{ route('activepage') }}" class="menu-link">
+                <div data-i18n="Active">Active</div>
+              </a>
+            </li>
+            <li class="menu-item {{ Request::routeIs('inactivepage') ? 'active' : '' }}">
+              <a href="{{ route('inactivepage') }}" class="menu-link">
+                <div data-i18n="Inactive">Inactive</div>
+              </a>
+            </li>
+            <li class="menu-item {{ Request::routeIs('suspendedpage') ? 'active' : '' }}">
+              <a href="{{ route('suspendedpage') }}" class="menu-link">
+                <div data-i18n="Suspended">Suspended</div>
+              </a>
+            </li>
+            <li class="menu-item {{ Request::routeIs('struckOffpage') ? 'active' : '' }}">
+              <a href="{{ route('struckOffpage') }}" class="menu-link">
+                <div data-i18n="Struck Off">Struck Off</div>
+              </a>
+            </li>
+            <li class="menu-item {{ Request::routeIs('deseacedpage') ? 'active' : '' }}">
+              <a href="{{ route('deseacedpage') }}" class="menu-link">
+                <div data-i18n="Deseaced">Deseaced</div>
+              </a>
+            </li>
+            <li class="menu-item {{ Request::routeIs('users.ind') ? 'active' : '' }}">
+              <a href="{{ route('users.ind') }}" class="menu-link">
+                <div data-i18n="All Users">All Users</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        {{-- <li class="menu-item {{ Request::routeIs('users.ind') ? 'active' : '' }}">
           <a href="{{ route('users.ind') }}" class="menu-link">
             <div data-i18n="Individuals">Individuals</div>
           </a>
-        </li>
+        </li> --}}
         <li class="menu-item {{ Request::routeIs('users.org') ? 'active' : '' }}">
           <a href="{{ route('users.org') }}" class="menu-link">
             <div data-i18n="Organizations">Organizations</div>

@@ -51,3 +51,25 @@ $(document).ready(function() {
 </script>
 @endif
 
+           {{-- @if($errors->any())
+           @foreach ($errors->all() as $error)
+         
+         @endforeach
+           @php
+               $data = 'Error Accurs';
+           @endphp
+           <script>
+            $(document).ready(function() {
+                $.toast({
+                    heading: 'Error',
+                    text:'{{ $error }}' ,
+                    showHideTransition: 'fade',
+                    icon: 'error',
+                    position : 'top-right',
+                    hideAfter: 5000,
+                });
+            });
+            </script>
+            @endif --}}
+                    
+

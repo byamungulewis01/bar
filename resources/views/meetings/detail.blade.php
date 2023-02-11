@@ -21,18 +21,22 @@ Meetings
 
                         <div>
                             <h4 class="fw-semibold mb-2">{{ $meeting->title }}</h4>
-                            <p>It has Credit: {{ $meeting->credits }}. Date: {{ \Carbon\Carbon::parse($meeting->date)->locale('fr')->format('F j, Y') }}, Venue: <strong>{{ $meeting->venue }}</strong>, Starting at {{ $meeting->start }} to End at {{ $meeting->end }}</p>
-                     
+                            <p>It has Credit: {{ $meeting->credits }}. Date:
+                                {{ \Carbon\Carbon::parse($meeting->date)->locale('fr')->format('F j, Y') }}, Venue:
+                                <strong>{{ $meeting->venue }}</strong>, Starting at {{ $meeting->start }} to End at
+                                {{ $meeting->end }}</p>
+
                         </div>
                     </div>
-                    
+
 
                 </div>
                 <hr class="my-0" />
                 <div class="card-header border-bottom">
                     <h5 class="card-title mb-0">Meetings <a href="" data-bs-toggle="modal" data-bs-target="#invite"
                             class="btn btn-dark text-white pull-left float-end"><i
-                                class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Invite new</span></a></h5>
+                                class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Invite
+                                new</span></a></h5>
 
                 </div>
                 <div class="row p-4">
@@ -47,64 +51,106 @@ Meetings
                                 </tr>
                             </thead>
                             @php
-                                $count = 1;
+                            $count = 1;
                             @endphp
-                            <tbody> 
+                            <tbody>
                                 @forelse ($invitations as $invitation)
-                                   <tr>
+                                <tr>
                                     <td>{{ $count }}</td>
                                     <td>{{ $invitation->user->name }}</td>
                                     <td>
                                         @if ($invitation->status == 1)
-                                     
+
                                         <span class="badge bg-label-warning"><i class="fa-solid fa-xmark"></i></span>
                                         @else
                                         <span class="badge bg-label-info"><i class="fa-solid fa-check"></i></span>
                                         @endif
                                     </td>
-                                    <td><a href="#"
-                                        class="btn btn-success btn-sm text-white"><i
-                                            class="ti ti-check me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Accept power of Attomey</span></a>
-                                    <a data-bs-toggle="modal" data-bs-target="#delete{{ $invitation->id }}" href="" class="btn btn-danger btn-sm text-white"><i
-                                            class="ti ti-trash me-0 me-sm-1 ti-xs"></i></a>
-                                        </td>
-                                </tr> 
-                                <div class="modal modal-top fade" id="delete{{ $invitation->id }}" tabindex="-1" aria-hidden="true">
+                                    <td><a href="#" class="btn btn-success btn-sm text-white"><i
+                                                class="ti ti-check me-0 me-sm-1 ti-xs"></i><span
+                                                class="d-none d-sm-inline-block">Accept power of Attomey</span></a>
+                                        <a data-bs-toggle="modal" data-bs-target="#delete{{ $invitation->id }}" href=""
+                                            class="btn btn-danger btn-sm text-white"><i
+                                                class="ti ti-trash me-0 me-sm-1 ti-xs"></i></a>
+                                    </td>
+                                </tr>
+                                <div class="modal modal-top fade" id="delete{{ $invitation->id }}" tabindex="-1"
+                                    aria-hidden="true">
                                     <div class="modal-dialog modal-sm" role="document">
-                                      <div class="modal-content">
-                                        <form action="{{ route('meetings.removeInviter') }}" method="POST">
-                                          @csrf
-                                          @method('DELETE')
-                                          <input type="hidden" name="id" value="{{ $invitation->id }}" />
-                                          <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel2">Are you sure to delete?</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-danger">Yes, Delete</button>
-                                          </div>
-                                        </form>
-                                      </div>
+                                        <div class="modal-content">
+                                            <form action="{{ route('meetings.removeInviter') }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" name="id" value="{{ $invitation->id }}" />
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel2">Are you sure to
+                                                        delete?</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-label-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-                                  </div>
+                                </div>
                                 @php
                                 $count++;
-                            @endphp
+                                @endphp
                                 @empty
                                 <tr>
                                     <td></td>
-                                    <td><h4>No invitation <a href="" data-bs-toggle="modal" data-bs-target="#invite">invite</a></h4></td>
+                                    <td>
+                                        <h4>No invitation <a href="" data-bs-toggle="modal"
+                                                data-bs-target="#invite">invite</a></h4>
+                                    </td>
                                     <td></td>
                                     <td></td>
-                                </tr>   
-                              
+                                </tr>
+
                                 @endforelse
                             </tbody>
                         </table>
+                        <div class="col-lg-4">
+                       
+                            <div class="demo-inline-spacing">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination pagination-sm">
+                                        <li class="page-item prev">
+                                            <a class="page-link" href="javascript:void(0);"><i
+                                                    class="tf-icon fs-6 ti ti-chevrons-left"></i></a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0);">1</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0);">2</a>
+                                        </li>
+                                        <li class="page-item active">
+                                            <a class="page-link" href="javascript:void(0);">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0);">4</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="javascript:void(0);">5</a>
+                                        </li>
+                                        <li class="page-item next">
+                                            <a class="page-link" href="javascript:void(0);"><i
+                                                    class="tf-icon fs-6 ti ti-chevrons-right"></i></a>
+                                        </li>
+                                    </ul>
+                                </nav>
+    
+                            </div>
+                        </div>
                     </div>
+                   
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -121,15 +167,15 @@ Meetings
                         @csrf
                         <div class="col-12">
                             <label for="exampleFormControlSelect2" class="form-label">Example multiple select</label>
-                           <input type="hidden" name="meeting" value="{{ $meeting->id }}">
+                            <input type="hidden" name="meeting" value="{{ $meeting->id }}">
                             <select required name="user[]" multiple class="form-select" id="exampleFormControlSelect2"
-                            aria-label="Multiple select example">
-                            @foreach ($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach
-                        </select> 
-                            
-                           
+                                aria-label="Multiple select example">
+                                @foreach ($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+
+
                         </div>
 
                         <div class="col-12 d-flex justify-content-center">

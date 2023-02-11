@@ -32,13 +32,11 @@
                     <li class="list-inline-item">
                       <i class='ti ti-map-pin'></i> DISTRICT: <span class="fw-bold">{{$user->district}}</span>
                     </li>
-                    <li class="list-inline-item">
-                      <i class='ti ti-sitemap'></i> CATEGORY: <span class="fw-bold">{{$user->category}}</span></li>
+                    <li class="list-inline-item text-uppercase">
+                      <i class='ti ti-sitemap'></i> Administration Status: <span class="fw-bold">{{$user->category}}</span></li>
                   </ul>
                 </div>
-                <a href="javascript:void(0)" class="btn btn-{{ badge($user->practicing) }}">
-                  {{ userStatus($user->practicing) }} <i class="ti ti-{{ icon($user->practicing) }} ps-2"></i>
-                </a>
+                <span class="badge bg-label-{{ badge($user->practicing) }}">{{ userStatus($user->practicing) }}</span>
               </div>
             </div>
           </div>

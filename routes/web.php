@@ -89,6 +89,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/probono-me', [UserProfileController::class, 'probono'])->name('myprobono');
     Route::get('/probono-me/{case}', [UserProfileController::class, 'probono_details'])->name('probono-details');
     Route::post('/probono-dev', [UserProfileController::class, 'probono_dev'])->name('probono_dev');
+    Route::get('/mytraings', [UserProfileController::class, 'mytraings'])->name('mytraings');
+    Route::post('/booking-training', [UserProfileController::class, 'training_book'])->name('training_book');
+    Route::delete('/booking-remove', [UserProfileController::class, 'book_remove'])->name('book_remove');
+    Route::put('/booking-pay', [UserProfileController::class, 'paytraining'])->name('paytraining');
+    Route::get('/mytraings-detail/{training}', [UserProfileController::class, 'mytraings_detail'])->name('mytraings_detail');
+    Route::get('/Download/{file}', [TrainingController::class, 'download'])->name('userDownload');
 
 
 });
@@ -140,7 +146,8 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::put('/deseaced', [UserController::class, 'update']);
      // End of View Users Accoudingly to their Status
     Route::get('/deactivated', [UserController::class, 'deactivated'])->name('deactivated');
-    Route::post('/inactive', [UserController::class, 'activate']);
+    Route::post('/deactivated', [UserController::class, 'activate']);
+   // Route::post('/inactive', [UserController::class, 'activate']);
     Route::get('/users', [UserController::class, 'index'])->name('users.ind');
     Route::post('/users', [UserController::class, 'store']);
     Route::put('/users', [UserController::class, 'update']);
@@ -180,8 +187,15 @@ Route::group(['middleware' => 'adminauth'], function(){
 
     Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
     Route::get('/trainings/{details}', [TrainingController::class, 'details'])->name('trainings.details');
+    Route::get('/trainings/{id}/booked', [TrainingController::class, 'booked'])->name('trainings.booked');
+    Route::get('/trainings/{id}/confirmed', [TrainingController::class, 'confirmed'])->name('trainings.confirmed');
     Route::post('/trainings', [TrainingController::class, 'store'])->name('trainings.store');
     Route::put('/trainings-update', [TrainingController::class, 'update'])->name('trainings.update');
+    Route::post('/trainings-topic', [TrainingController::class, 'addTopic'])->name('trainings.addTopic');
+    Route::delete('/topic-delete', [TrainingController::class, 'topicDelete'])->name('topicDelete');
+    Route::post('/addMaterial', [TrainingController::class, 'addMaterial'])->name('addMaterial');
+    Route::get('/Download-material/{file}', [TrainingController::class, 'download'])->name('download');
+    Route::delete('/material-delete', [TrainingController::class, 'materialDelete'])->name('materialDelete');
 
 
     Route::get('/roles', [RolesController::class, 'index'])->name('roles');
