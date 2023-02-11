@@ -9,7 +9,7 @@ Disciplene info
 
 <div class="container-xxl flex-grow-1 container-p-y">
 
-    <h4 class="fw-bold py-3 mb-5">
+    <h4 class="fw-bold py-3 mb-2">
         <span class="text-muted fw-light">Disciplinary case /</span> Profile
     </h4>
 
@@ -30,6 +30,7 @@ Disciplene info
                     <th>Case Nature</th>
                     <th>Case Status</th>
                     <th>Hearing Day</th>
+                    <th></th>
                  </tr>
                 </thead>
               </thead>
@@ -52,18 +53,26 @@ Disciplene info
                     <td><?php echo e($probono->referral_case_no); ?></td>
                     <td><?php echo e($probono->case_nature); ?></td>
                     <td>
-                      <?php if($probono->status == 'OPEN'): ?>
-                      <span class="badge bg-label-info me-2"><?php echo e($probono->status); ?></span>
-                      <?php else: ?>
+                      <?php switch($probono->status):
+                      case ('OPEN'): ?>
+                      <span class="badge bg-label-primary me-2"><?php echo e($probono->status); ?></span>
+                          <?php break; ?>
+                      <?php case ('WON'): ?>
+                      <span class="badge bg-label-success me-2"><?php echo e($probono->status); ?></span>
+                          <?php break; ?>
+                      <?php case ('LOST'): ?>
+                      <span class="badge bg-label-warning me-2"><?php echo e($probono->status); ?></span>
+                          <?php break; ?>
+                      <?php default: ?>
                       <span class="badge bg-label-danger me-2"><?php echo e($probono->status); ?></span>
-                      <?php endif; ?>
+                  <?php endswitch; ?>
         
                     </td>
                     <td>
                       <?php echo e(\Carbon\Carbon::parse($probono->hearing_date)->locale('fr')->format('F j, Y')); ?>
 
                     </td>
-        
+                    <td><a href="<?php echo e(route('probono-details',$probono->id)); ?>" class="btn btn-sm btn-primary">Details</a></td>
                   </tr>
                 </tbody>
                 <?php

@@ -52,11 +52,19 @@ Pro Bono Cases
             <td><?php echo e($probono->referral_case_no); ?></td>
             <td><?php echo e($probono->case_nature); ?></td>
             <td>
-              <?php if($probono->status == 'OPEN'): ?>
-              <span class="badge bg-label-info me-2"><?php echo e($probono->status); ?></span>
-              <?php else: ?>
+              <?php switch($probono->status):
+              case ('OPEN'): ?>
+              <span class="badge bg-label-primary me-2"><?php echo e($probono->status); ?></span>
+                  <?php break; ?>
+              <?php case ('WON'): ?>
+              <span class="badge bg-label-success me-2"><?php echo e($probono->status); ?></span>
+                  <?php break; ?>
+              <?php case ('LOST'): ?>
+              <span class="badge bg-label-warning me-2"><?php echo e($probono->status); ?></span>
+                  <?php break; ?>
+              <?php default: ?>
               <span class="badge bg-label-danger me-2"><?php echo e($probono->status); ?></span>
-              <?php endif; ?>
+          <?php endswitch; ?>
 
             </td>
             <td>
@@ -153,7 +161,7 @@ Pro Bono Cases
                         </div>
                         <div class="col-12 col-md-6">
                           <label class="form-label" for="flatpickr-date">Hearing Day</label>
-                          <input required type="text" class="form-control" id="date" name="hearing_date"
+                          <input required type="text" class="form-control" id="date1" name="hearing_date"
                             class="form-control" value="<?php echo e($probono->hearing_date); ?>" />
                         </div>
                         <div class="col-12 col-md-6">
@@ -251,7 +259,8 @@ unset($__errorArgs, $__bag); ?>
                           </div>
                         </div>
                         <div class="col-12">
-                          <label class="form-label w-100" for="type">File Type</label>
+                          <label class="form-label w-100" for="type">File Type <span class="text-danger">
+                            Upload  Only PDF File </span></label>
                           <div class="input-group input-group-merge">
                             <select required name="case_type" class="form-select">
                               <option value="" selected> - Select - </option>
@@ -324,6 +333,7 @@ unset($__errorArgs, $__bag); ?>
               <h6 class="text-primary">
                 Case assigned to <a href="<?php echo e(route('profile',$probono->advocate)); ?>" class="text-dark"><?php echo e($probono->user->name); ?></a>
                 <a href="javascript:" class="btn btn-dark btn-sm"> Notify </a>
+            
               </h6>
               <?php endif; ?>
 
@@ -425,7 +435,7 @@ unset($__errorArgs, $__bag); ?>
           <div class="col-12 col-md-6">
             <label class="form-label" for="flatpickr-date">Hearing Day</label>
             <input required type="text" class="form-control" id="date" name="hearing_date"
-              placeholder="Month DD, YYYY H:i" class="form-control" />
+              placeholder="Month DD, YYYY" class="form-control" />
           </div>
           <div class="col-12 col-md-6">
             <label class="form-label" for="status">Category</label>
@@ -506,10 +516,10 @@ unset($__errorArgs, $__bag); ?>
     var dtt = document.querySelector("#date"),
       dte = document.querySelector("#end");
     dtt && dtt.flatpickr({
-      enableTime: !0,
+      enableTime: false,
       altInput: !0,
-      altFormat: "F j, Y H:i",
-      dateFormat: "Y-m-d H:i",
+      altFormat: "F j, Y",
+      dateFormat: "Y-m-d",
       minDate: 'today'
     })
     dte && dte.flatpickr({
@@ -521,10 +531,10 @@ unset($__errorArgs, $__bag); ?>
     var dtt1 = document.querySelector("#date1"),
       dte1 = document.querySelector("#end1");
     dtt1 && dtt1.flatpickr({
-      enableTime: !0,
+      enableTime: false,
       altInput: !0,
-      altFormat: "F j, Y H:i",
-      dateFormat: "Y-m-d H:i",
+      altFormat: "F j, Y",
+      dateFormat: "Y-m-d",
       minDate: 'today'
     })
     dte1 && dte1.flatpickr({

@@ -415,7 +415,26 @@ Discipline Details
                                         data-bs-target="#deleteStatus<?php echo e($member->table_id); ?>" class="text-danger"><i
                                             class="ti ti-trash"></i></a> 
                                         <?php endif; ?>
-                                     
+                                        <div class="modal modal-top fade" id="deleteStatus<?php echo e($member->table_id); ?>" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog modal-md" role="document">
+                                              <div class="modal-content">
+                                                <form action="<?php echo e(route('participant.delete')); ?>" method="POST">
+                                                  <?php echo csrf_field(); ?>
+                                                  <?php echo method_field('DELETE'); ?>
+                                                  <input type="hidden" name="id" value="<?php echo e($member->table_id); ?>" />
+                                                  <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel2">Are you sure to delete <strong><?php echo e($member->user->name); ?></strong></h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                                  </div>
+                                                </form>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          
                                     </td>
 
                                 </tr>

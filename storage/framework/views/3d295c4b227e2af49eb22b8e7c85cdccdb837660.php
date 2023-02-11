@@ -17,7 +17,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $.toast({
         heading: 'Message',
-        text: '<?php echo e(session()->get('message')); ?>',
+        text: '<?php echo e(session()->get('warning')); ?>',
         showHideTransition: 'fade',
         icon: 'warning',
         position : 'top-right' 
