@@ -65,7 +65,7 @@ class OrganizationController extends Controller
             'status' => 'required',
             'express' => 'required'
         ]);
-
+      
         $organization = Organization::findorfail($request->express);
 
         $count = Organization::where('email',$request->email)->where('id','<>',$organization->id)->first();

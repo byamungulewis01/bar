@@ -70,6 +70,6 @@ $(document).ready(function() {
                 });
             });
             </script>
-            @endif --}}
+            @endif  --}}
                     
 
