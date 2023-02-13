@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Booking;
 use App\Models\Meeting;
 use App\Models\Probono;
-use App\Models\Probono_dev;
+use App\Models\Training;
 use App\Models\Discipline;
+use App\Models\Probono_dev;
 use App\Models\Lawscategory;
 use Illuminate\Http\Request;
+use App\Models\TrainingTopic;
+use App\Models\TrainingMaterial;
 use App\Models\DisciplineSitting;
 use App\Models\DisciplineParticipant;
 
@@ -83,6 +87,7 @@ class UserProfileController extends Controller
         $probonos = Probono::where('advocate',$user)->get();
         return view('myprofile.probono',compact('probonos'));
     }
+ 
     public function probono_details($case)
     {   
         $probono = Probono::findorfail($case);
@@ -108,7 +113,72 @@ class UserProfileController extends Controller
             'probono_id' => $request->probono,
        ]);
         return back()->with('message','New Development');
+    }   
+    public function mytraings()
+    {   
+        $advocate = auth()->user()->id;
+        $trainings = Training::where('publish' , 2)->get();
+        $bookings = Booking::where('advocate' , $advocate)->get();
+        $booked = Booking::where('advocate',$advocate)->pluck('training')->toArray();
+        return view('myprofile.trainings',compact('trainings','bookings','booked'));
     }
+    public function training_book(Request $request)
+    {   
+        $advocate = auth()->user()->id;
+        $training = Training::findorfail($request->training);
+        $booked = $training->booking;
+        $training->booking = $booked + 1;
+        $training->save();
+
+        Booking::create(['training' => $request->training, 'advocate' => $advocate]);
+
+        return back()->with('message',$training->title .'Booked');
+    }
+    public function book_remove(Request $request)
+    {   
+        $booking = Booking::findorfail($request->id);
+        $train = $booking->training;
+
+        $training = Training::findorfail($train);
+        $booked = $training->booking;
+        $training->booking = $booked - 1;
+        $training->save();
+
+        $booking->delete();
+        return back()->with('warning', 'Training Removed on List');
+    }
+    public function paytraining(Request $request)
+    {   
+        $booking = Booking::findorfail($request->id);
+        $booking->confirm = true;
+        $train = $booking->training;
+        $booking->save();
+
+        $training = Training::findorfail($train);
+        $confirm = $training->confirm;
+        $training->confirm = $confirm + 1;
+        $training->save();
+
+        return back()->with('message', 'Training Payeed Successfully');
+    }
+
+    public function mytraings_detail($id)
+    {
+        $training = Training::findorfail($id);
+        $topics = TrainingTopic::where('training_id',$id)->get();
+        $materials = TrainingMaterial::where('training_id',$id)->get();
+
+        $advocate = auth()->user()->id;
+        $trainings = Training::where('publish' , 2)->get();
+        $bookings = Booking::where('advocate' , $advocate)->get();
+        $booked = Booking::where('advocate',$advocate)->pluck('training')->toArray();
+
+        
+
+        return view('myprofile.trainings-details',compact('trainings','bookings','booked','training','topics','materials'));
+    }
+
+
 
 
 }

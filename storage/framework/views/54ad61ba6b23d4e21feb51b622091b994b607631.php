@@ -8,9 +8,7 @@ Users
 <!-- Content -->
         
 <div class="container-xxl flex-grow-1 container-p-y">
-            
-            
-
+          
             <div class="row g-4 mb-4">
               <div class="col-sm-6 col-xl-2">
                 <div class="card">
@@ -277,7 +275,7 @@ Users
                         </select>
                       </div>
                       <div class="col-12 col-md-6">
-                        <label class="form-label" for="category">User Category</label>
+                        <label class="form-label" for="category">Administration Status</label>
                         <select id="category" name="category" class="form-select">
                           <option value="" selected> - Select - </option>
                           <option <?php if(old('category')=="Advocate"): ?> selected <?php endif; ?> value="Advocate">Advocate</option>
@@ -328,11 +326,21 @@ Users
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="text-center mb-4">
                       <h3 class="mb-2">Update User Information</h3>
+                      <?php if($errors->any()): ?>
+                      <div class="alert alert-danger">
+                        <p><strong>Opps Something went wrong</strong></p>
+                        <ul>
+                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <li>* <?php echo e($error); ?></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </ul>
+                      </div>
+                        <?php endif; ?>
                     </div>
                     <form id="editUserForm" class="row g-3 needs-validation <?php if($errors->any()): ?> validated <?php endif; ?>" novalidate="" method="post"  enctype="multipart/form-data">
                       <?php echo csrf_field(); ?>
                       <?php echo method_field('PUT'); ?>
-                      <input type="hidden" id="is" name="express"/>
+                      <input type="hidden" id="is" name="express" value="<?php echo e(old('express')); ?>"/>
                       <div class="col-12 col-md-6">
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                           <img src="<?php echo e(asset('assets/img/avatars/placeholder.jpg')); ?>" alt="user-avatar" class="d-block w-px-100 h-px-100 rounded" id="updatedAvatar" />
@@ -365,7 +373,7 @@ Users
                             <div class="text-muted">Diploma</div>
                             <div class="text-muted d-none">Allowed JPG, GIF or PNG. Max size of 800K</div>
                           </div>
-                        </div>
+                        </div> 
                       </div>
 
                       <div class="col-12 col-md-6">
@@ -399,6 +407,7 @@ Users
                           <option <?php if(old('marital')==$status->id): ?> selected <?php endif; ?> value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
+                     
                       </div>
                       <div class="col-12 col-md-6">
                         <label class="form-label" for="updateDistrict">District</label>
@@ -437,25 +446,25 @@ Users
                         </select>
                       </div>
                       <div class="col-12 col-md-6">
-                        <label class="form-label" for="updateStatus">User Category</label>
+                        <label class="form-label" for="updateStatus">Administration Status</label>
                         <select id="updateStatus" name="category" class="form-select">
                           <option value="" selected> - Select - </option>
-                          <option <?php if(old('status')=="Advocate"): ?> selected <?php endif; ?> value="Advocate">Advocate</option>
-                          <option <?php if(old('status')=="Staff"): ?> selected <?php endif; ?> value="Staff">Staff</option>
+                          <option <?php if(old('category')=="Advocate"): ?> selected <?php endif; ?> value="Advocate">Advocate</option>
+                          <option <?php if(old('category')=="Staff"): ?> selected <?php endif; ?> value="Staff">Staff</option>
                         </select>
                       </div>
                       <div class="col-12 col-md-6">
                         <label class="form-label" for="flatpickr-date-up">Admission Date</label>
-                        <input type="text" id="flatpickr-date-up" name="date" placeholder="Month DD, YYYY" class="form-control" />
+                        <input type="text" id="flatpickr-date-up" name="date" value="<?php echo e(old('date')); ?>" placeholder="Month DD, YYYY" class="form-control" />
                       </div>
                       <div class="col-12 col-md-6">
                         <label class="form-label" for="updateCategory">Admission Status</label>
                         <select id="updateCategory" name="status" class="form-select">
                           <option value="" selected> - Select - </option>
-                          <option <?php if(old('category')=="1"): ?> selected <?php endif; ?> value="1">Advocate</option>
-                          <option <?php if(old('category')=="2"): ?> selected <?php endif; ?> value="2">Intern Advocate</option>
-                          <option <?php if(old('category')=="3"): ?> selected <?php endif; ?> value="3">Support Staff</option>
-                          <option <?php if(old('category')=="4"): ?> selected <?php endif; ?> value="4">Technical Staff</option>
+                          <option <?php if(old('status')=="1"): ?> selected <?php endif; ?> value="1">Advocate</option>
+                          <option <?php if(old('status')=="2"): ?> selected <?php endif; ?> value="2">Intern Advocate</option>
+                          <option <?php if(old('status')=="3"): ?> selected <?php endif; ?> value="3">Support Staff</option>
+                          <option <?php if(old('status')=="4"): ?> selected <?php endif; ?> value="4">Technical Staff</option>
                         </select>
                       </div>
                       <div class="col-12 col-md-6">
@@ -1155,13 +1164,25 @@ $(function(){
             }
         }));
       }
-      <?php if($errors->any()): ?>
-        var myModal = new bootstrap.Modal(document.getElementById('newUser'), {
-          keyboard: false
-        })
-        myModal.show()
-      <?php endif; ?>
+     <?php if(old('express')): ?> 
+          <?php if($errors->any()): ?>
+            var myModal = new bootstrap.Modal(document.getElementById('editUser'), {
+              keyboard: false
+            })
+            myModal.show()
+          <?php endif; ?>
+      <?php else: ?>
+            <?php if($errors->any()): ?>
+              var myModal = new bootstrap.Modal(document.getElementById('newUser'), {
+                keyboard: false
+              })
+              myModal.show()
+            <?php endif; ?>
+       <?php endif; ?>
+    
     })
+
+    
    
     
     

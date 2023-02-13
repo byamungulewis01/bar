@@ -28,23 +28,86 @@
     </li>
 
     <!-- Users -->
-    <li class="menu-item <?php echo e(Request::routeIs('users.ind') ? 'open' : (Request::routeIs('users.org') ? 'open' : '')); ?>">
+    <li class="menu-item 
+        <?php echo e(Request::routeIs('users.ind') ? 'open' : (Request::routeIs('users.org') ? 'open' : '')); ?>
+
+        <?php echo e(Request::routeIs('activepage') ? 'open' : (Request::routeIs('users.org') ? 'open' : '')); ?>
+
+        <?php echo e(Request::routeIs('inactivepage') ? 'open' : (Request::routeIs('users.org') ? 'open' : '')); ?>
+
+        <?php echo e(Request::routeIs('suspendedpage') ? 'open' : (Request::routeIs('users.org') ? 'open' : '')); ?>
+
+        <?php echo e(Request::routeIs('struckOffpage') ? 'open' : (Request::routeIs('users.org') ? 'open' : '')); ?>
+
+        <?php echo e(Request::routeIs('deseacedpage') ? 'open' : (Request::routeIs('users.org') ? 'open' : '')); ?>
+
+    ">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons ti ti-users"></i>
         <div data-i18n="Users">Users</div>
       </a>
       <ul class="menu-sub">
-        <li class="menu-item <?php echo e(Request::routeIs('users.ind') ? 'active' : ''); ?>">
-          <a href="<?php echo e(route('users.ind')); ?>" class="menu-link">
-            <div data-i18n="Individuals">Individuals</div>
+        <li class="menu-item 
+        <?php echo e(Request::routeIs('users.ind') ? 'open' : ''); ?>
+
+        <?php echo e(Request::routeIs('activepage') ? 'open' : ''); ?>
+
+        <?php echo e(Request::routeIs('inactivepage') ? 'open' : ''); ?>
+
+        <?php echo e(Request::routeIs('suspendedpage') ? 'open' : ''); ?>
+
+        <?php echo e(Request::routeIs('struckOffpage') ? 'open' : ''); ?>
+
+        <?php echo e(Request::routeIs('deseacedpage') ? 'open' : ''); ?>
+
+        ">
+          <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <div data-i18n="Individuals">Individuals Users</div>
           </a>
+          <ul class="menu-sub">
+            <li class="menu-item <?php echo e(Request::routeIs('') ? 'active' : ''); ?>">
+              <a href="<?php echo e(route('activepage')); ?>" class="menu-link">
+                <div data-i18n="Active">Active</div>
+              </a>
+            </li>
+            <li class="menu-item <?php echo e(Request::routeIs('inactivepage') ? 'active' : ''); ?>">
+              <a href="<?php echo e(route('inactivepage')); ?>" class="menu-link">
+                <div data-i18n="Inactive">Inactive</div>
+              </a>
+            </li>
+            <li class="menu-item <?php echo e(Request::routeIs('suspendedpage') ? 'active' : ''); ?>">
+              <a href="<?php echo e(route('suspendedpage')); ?>" class="menu-link">
+                <div data-i18n="Suspended">Suspended</div>
+              </a>
+            </li>
+            <li class="menu-item <?php echo e(Request::routeIs('struckOffpage') ? 'active' : ''); ?>">
+              <a href="<?php echo e(route('struckOffpage')); ?>" class="menu-link">
+                <div data-i18n="Struck Off">Struck Off</div>
+              </a>
+            </li>
+            <li class="menu-item <?php echo e(Request::routeIs('deseacedpage') ? 'active' : ''); ?>">
+              <a href="<?php echo e(route('deseacedpage')); ?>" class="menu-link">
+                <div data-i18n="Deseaced">Deseaced</div>
+              </a>
+            </li>
+            <li class="menu-item <?php echo e(Request::routeIs('users.ind') ? 'active' : ''); ?>">
+              <a href="<?php echo e(route('users.ind')); ?>" class="menu-link">
+                <div data-i18n="All Users">All Users</div>
+              </a>
+            </li>
+          </ul>
         </li>
+        
         <li class="menu-item <?php echo e(Request::routeIs('users.org') ? 'active' : ''); ?>">
           <a href="<?php echo e(route('users.org')); ?>" class="menu-link">
             <div data-i18n="Organizations">Organizations</div>
           </a>
         </li>
-        
+        <li class="menu-item <?php echo e(Request::routeIs('deactivated') ? 'active' : ''); ?>">
+          <a href="<?php echo e(route('deactivated')); ?>" class="menu-link">
+            <div data-i18n="Deactivated Users">Deactivated Users</div>
+          </a>
+        </li>
       </ul>
     </li>
 

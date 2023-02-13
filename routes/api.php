@@ -38,6 +38,7 @@ Route::group([
     Route::get('/users/struckOffApi', [UserController::class, 'struckOffApi']);
     Route::get('/users/suspendedApi', [UserController::class, 'suspendedApi']);
     Route::get('/users/inactiveApi', [UserController::class, 'inactiveApi']);
+    Route::get('/users/deactiveApi', [UserController::class, 'deactiveApi']);
     Route::get('/users/active', [UserController::class, 'active']);
     Route::get('/users/individual', [UserController::class, 'api']);
 

@@ -260,10 +260,9 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-
         $this->validate($request,[
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email,'.$request->express,
             'phone' => 'required|min:10|max:10',
             'district' => 'required',
             'gender' => 'required',
@@ -277,12 +276,12 @@ class UserController extends Controller
 
         $user = User::findorfail($request->express);
 
-        $count = User::where('email',$request->email)->where('id','<>',$user->id)->first();
-        if($count){
-            throw ValidationException::withMessages([
-                'email' => 'The email has already been taken.'
-            ]);
-        }
+        // $count = User::where('email',$request->email)->where('id','<>',$user->id)->first();
+        // if($count){
+        //     throw ValidationException::withMessages([
+        //         'email' => 'The email has already been taken.'
+        //     ]);
+        // }
         
         if($request->hasFile('profile')){
             $file      = $request->file('profile');

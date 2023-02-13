@@ -39,4 +39,7 @@ $(document).ready(function() {
 </script>
 <?php endif; ?>
 
+           
+                    
+
 <?php /**PATH C:\xampp\htdocs\rba\resources\views/layouts/flash_message.blade.php ENDPATH**/ ?>

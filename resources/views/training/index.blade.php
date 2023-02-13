@@ -81,7 +81,7 @@ Legal Edication
                                 <div class="col-md-6">
                                     <label for="late_deadline" class="form-label">Late Registration Deadline</label>
                                     <input required type="text" class="form-control" id="late_deadline"
-                                        name="late_deadline" placeholder="Month DD, YYYY">
+                                        name="late_deadline" placeholder="Month DD, YYYY H:i">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="rate" class="form-label">Late Registration Rate</label>
@@ -142,8 +142,8 @@ Legal Edication
                 <td>{{ $training->starton }}</td>
                 <td>{{ $training->endon }}</td>
                 <td>{{ $training->venue }}</td>
-                <td>{{ $training->booking }} <a href="" ><i class="ti ti-eye ti-sm mx-2"></i></a></td>
-                <td>{{ $training->confirm }} / {{ $training->seats }} <a href="" ><i class="ti ti-eye ti-sm mx-2"></i></td>
+                <td>{{ $training->booking }} <a href="{{ route('trainings.booked' , $training->id) }}" ><i class="ti ti-eye ti-sm mx-2"></i></a></td>
+                <td>{{ $training->confirm }} / {{ $training->seats }} <a href="{{ route('trainings.confirmed' , $training->id) }}" ><i class="ti ti-eye ti-sm mx-2"></i></td>
                 <td> <a href="{{ route('trainings.details' , $training->id) }}" class="btn btn-primary btn-sm text-white"><i class="ti ti-pencil me-0 me-sm-1 ti-xs"></i><span
                         class="d-none d-sm-inline-block">Details</span></a></td>
                 </tr>
@@ -234,10 +234,10 @@ Legal Edication
     $(function () {
         var dtt = document.querySelector("#late_deadline");
         dtt && dtt.flatpickr({
-            enableTime: false,
+            enableTime: !0,
             altInput: !0,
-            altFormat: "F j, Y",
-            dateFormat: "Y-m-d",
+            altFormat: "F j, Y H:i",
+            dateFormat: "Y-m-d H:i",
         })
     });
 

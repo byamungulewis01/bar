@@ -38,6 +38,16 @@ Suspended user
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="text-center mb-4">
                       <h3 class="mb-2">Update User Information</h3>
+                      <?php if($errors->any()): ?>
+                      <div class="alert alert-danger">
+                        <p><strong>Opps Something went wrong</strong></p>
+                        <ul>
+                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <li>* <?php echo e($error); ?></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </ul>
+                      </div>
+                        <?php endif; ?>
                     </div>
                     <form id="editUserForm" class="row g-3 needs-validation <?php if($errors->any()): ?> validated <?php endif; ?>" novalidate="" method="post"  enctype="multipart/form-data">
                       <?php echo csrf_field(); ?>
@@ -147,7 +157,7 @@ Suspended user
                         </select>
                       </div>
                       <div class="col-12 col-md-6">
-                        <label class="form-label" for="updateStatus">User Category</label>
+                        <label class="form-label" for="updateStatus">Administration Status</label>
                         <select id="updateStatus" name="category" class="form-select">
                           <option value="" selected> - Select - </option>
                           <option <?php if(old('status')=="Advocate"): ?> selected <?php endif; ?> value="Advocate">Advocate</option>
@@ -866,7 +876,7 @@ $(function(){
         }));
       }
       <?php if($errors->any()): ?>
-        var myModal = new bootstrap.Modal(document.getElementById('newUser'), {
+        var myModal = new bootstrap.Modal(document.getElementById('editUser'), {
           keyboard: false
         })
         myModal.show()

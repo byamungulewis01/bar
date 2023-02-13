@@ -15,8 +15,7 @@ Legal Edication
             <h5 class="card-title mb-0">Legal Edication
                 <a class="btn btn-dark text-white pull-left float-end" data-bs-toggle="modal"
                     data-bs-target="#training"><i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span
-                        class="d-none d-sm-inline-block">New Training</span></a><a class="d-none" id="edit"
-                    data-bs-toggle="modal" data-bs-target="#editmeetings"></a></h5>
+                        class="d-none d-sm-inline-block">New Training</span></a></h5>
 
             <div class="modal fade" id="training" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
@@ -82,7 +81,7 @@ Legal Edication
                                 <div class="col-md-6">
                                     <label for="late_deadline" class="form-label">Late Registration Deadline</label>
                                     <input required type="text" class="form-control" id="late_deadline"
-                                        name="late_deadline" placeholder="Month DD, YYYY">
+                                        name="late_deadline" placeholder="Month DD, YYYY H:i">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="rate" class="form-label">Late Registration Rate</label>
@@ -144,8 +143,8 @@ Legal Edication
                 <td><?php echo e($training->starton); ?></td>
                 <td><?php echo e($training->endon); ?></td>
                 <td><?php echo e($training->venue); ?></td>
-                <td><?php echo e($training->booking); ?> <a href="" ><i class="ti ti-eye ti-sm mx-2"></i></a></td>
-                <td><?php echo e($training->confirm); ?> / <?php echo e($training->seats); ?> <a href="" ><i class="ti ti-eye ti-sm mx-2"></i></td>
+                <td><?php echo e($training->booking); ?> <a href="<?php echo e(route('trainings.booked' , $training->id)); ?>" ><i class="ti ti-eye ti-sm mx-2"></i></a></td>
+                <td><?php echo e($training->confirm); ?> / <?php echo e($training->seats); ?> <a href="<?php echo e(route('trainings.confirmed' , $training->id)); ?>" ><i class="ti ti-eye ti-sm mx-2"></i></td>
                 <td> <a href="<?php echo e(route('trainings.details' , $training->id)); ?>" class="btn btn-primary btn-sm text-white"><i class="ti ti-pencil me-0 me-sm-1 ti-xs"></i><span
                         class="d-none d-sm-inline-block">Details</span></a></td>
                 </tr>
@@ -236,10 +235,10 @@ Legal Edication
     $(function () {
         var dtt = document.querySelector("#late_deadline");
         dtt && dtt.flatpickr({
-            enableTime: false,
+            enableTime: !0,
             altInput: !0,
-            altFormat: "F j, Y",
-            dateFormat: "Y-m-d",
+            altFormat: "F j, Y H:i",
+            dateFormat: "Y-m-d H:i",
         })
     });
 

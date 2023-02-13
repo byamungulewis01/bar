@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Training;
 use Illuminate\Http\Request;
+use App\Models\TrainingTopic;
+use App\Models\TrainingMaterial;
+use App\Http\Controllers\Controller;
+use App\Models\Booking;
 
 class TrainingController extends Controller
 {
@@ -52,7 +55,22 @@ class TrainingController extends Controller
     public function details($details)
     {
         $training = Training::findorfail($details);
-        return view('training.details' ,compact('training'));
+        $topics = TrainingTopic::where('training_id',$details)->get();
+        $materials = TrainingMaterial::where('training_id',$details)->get();
+        return view('training.details' ,compact('training','topics','materials'));
+    }
+    public function booked($details)
+    {
+        $training = Training::findorfail($details);
+        $bookings = Booking::where('training' , $details)->get();
+
+        return view('training.booked' ,compact('training','bookings'));
+    }
+    public function confirmed($details)
+    {
+        $training = Training::findorfail($details);
+        $bookings = Booking::where('training' , $details)->where('confirm', true)->get();
+        return view('training.confirmed' ,compact('training','bookings'));
     }
     public function update(Request $request)
     {
@@ -89,4 +107,60 @@ class TrainingController extends Controller
 
          return back()->with('message','Training Updated!');
     }
+   public function addTopic(Request $request)
+    {
+        $formDate = $request->validate([
+            'topic' => 'required',
+            'startAt' => 'required',
+            'endAt' => 'required',
+            'trainer' => 'required',
+        ]);
+        $formDate['training_id'] =  $request->id;
+        $formDate['register'] =  auth()->guard('admin')->user()->id;
+        TrainingTopic::create($formDate);
+        return back()->with('message','Training Topic Added');
+    }
+  
+   public function topicDelete(Request $request)
+    {
+        
+      $topic = TrainingTopic::find($request->topic_id);
+      $topic->delete();
+     return back()->with('warning','Training Topic Deleted');
+    } 
+    public function addMaterial(Request $request)
+    {
+        $formDate = $request->validate([
+            'title' => 'required',
+            'file_name' => 'required',
+        ]);
+
+        if($request->hasFile('file_name')){
+            $file      = $request->file('file_name');
+            $filename  = $file->getClientOriginalName();
+            $material   = date('His').'-'.$filename;
+           $file->move(public_path('assets/img/materials'), $material);
+        }
+        $formDate['training_id'] = $request->id;
+        $formDate['file'] = $material;
+        $formDate['register'] = auth()->guard('admin')->user()->id;
+        TrainingMaterial::create($formDate);
+        return back()->with('message','Training Material Added');
+    }
+    public function download($file)
+    { 
+        $pathToFile = public_path('assets/img/materials/'.$file);
+     return response()->download($pathToFile);
+    }
+    public function materialDelete(Request $request)
+    {
+        
+      $material = TrainingMaterial::find($request->id);
+      $pathToFile = public_path('assets/img/materials/');
+      $filename = $material->file;
+      unlink($pathToFile .$filename);
+      $material->delete();
+     return back()->with('warning','Training Material Deleted');
+    } 
+    
 }
