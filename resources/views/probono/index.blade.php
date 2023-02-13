@@ -214,10 +214,18 @@ Pro Bono Cases
             <td>
               <i class="menu-icon tf-icons ti ti-gavel"></i>
             </td>
-            <td colspan="6">
+            <td colspan="3">
               <h6 class="text-warning">
                 You can upload defferent documents regarding this case for advocate
+                
               </h6>
+             
+            </td>
+            <td colspan="3">
+              <a href="{{ route('probono.show' , $probono->id) }}" type="button" class="btn btn-sm btn-label-secondary text-nowrap d-inline-block">
+                Upload files
+                <span class="badge bg-danger text-white badge-notifications">{{ $probono->probono_files }}</span>
+              </a>
             </td>
             <td>
               <a href="javascript:" data-bs-toggle="modal" data-bs-target="#addNewCCModal{{ $probono->id }}"
@@ -248,8 +256,7 @@ Pro Bono Cases
                           </div>
                         </div>
                         <div class="col-12">
-                          <label class="form-label w-100" for="type">File Type <span class="text-danger">
-                            Upload  Only PDF File </span></label>
+                          <label class="form-label w-100" for="type">File Type</label>
                           <div class="input-group input-group-merge">
                             <select required name="case_type" class="form-select">
                               <option value="" selected> - Select - </option>
@@ -270,7 +277,8 @@ Pro Bono Cases
                           </div>
                         </div>
                         <div class="col-12">
-                          <label class="form-label w-100" for="title">Case File</label>
+                          <label class="form-label w-100" for="title">Case File  <span class="text-danger">
+                            Upload  Only PDF File </span></label>
                           <div class="input-group input-group-merge">
                             <input accept=".pdf" name="case_file" class="form-control" type="file" />
                             @error('case_file')<span class="text-danger">
@@ -297,7 +305,7 @@ Pro Bono Cases
             <td>
               <i class="menu-icon tf-icons ti ti-gavel"></i>
             </td>
-            <td colspan="7">
+            <td colspan="6">
               @if ($probono->advocate == NULL)
               <h6 class="text-danger">
                 Please assign this case to an advocate via Edit
@@ -311,6 +319,12 @@ Pro Bono Cases
               @endif
 
             </td>
+            <td>
+              <a href="{{ route('probono.show_devs' , $probono->id) }}" type="button" class="btn btn-sm btn-label-secondary text-nowrap d-inline-block">
+                Reported Events
+                <span class="badge bg-danger text-white badge-notifications">{{ $probono->probono_devs }}</span>
+              </a>
+            </td>
 
           </tr>
           
@@ -320,7 +334,20 @@ Pro Bono Cases
         $count++
         @endphp
         @empty
-
+        <tbody>
+          <tr>
+           
+            <td colspan="3">
+              <h6 class="text-warning">
+                Empy No Probono Founds Case
+                
+              </h6>
+             
+            </td>
+        
+          </tr>
+    
+        </tbody>
         @endforelse
 
       </table>

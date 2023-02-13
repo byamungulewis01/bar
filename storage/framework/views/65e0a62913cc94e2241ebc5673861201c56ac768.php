@@ -12,7 +12,6 @@ Discipline Details
     <!-- User Profile Content -->
     <div class="row">
         <div class="col-xl-6 col-lg-5 col-md-5">
-            <?php echo $__env->make('layouts.flash_message', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <!-- About User -->
             <div class="card mb-4">
                 <div class="card-body">

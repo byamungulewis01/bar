@@ -9,6 +9,7 @@ use App\Models\Probono;
 use App\Models\Training;
 use App\Models\Discipline;
 use App\Models\Probono_dev;
+use App\Models\ProbonoFile;
 use App\Models\Lawscategory;
 use Illuminate\Http\Request;
 use App\Models\TrainingTopic;
@@ -92,7 +93,8 @@ class UserProfileController extends Controller
     {   
         $probono = Probono::findorfail($case);
         $probono_devs = Probono_dev::where('probono_id' , $case)->get();
-        return view('myprofile.probono_delails',compact('probono','probono_devs'));
+        $files = ProbonoFile::where('probono_id' , $case)->get();
+        return view('myprofile.probono_delails',compact('probono','probono_devs','files'));
     }
     public function probono_dev(Request $request)
     {   
@@ -112,6 +114,11 @@ class UserProfileController extends Controller
             'narration' => $request->narration,
             'probono_id' => $request->probono,
        ]);
+
+       $probono = Probono::findorfail($request->probono);
+       $probono->probono_devs = $probono->probono_devs + 1;
+       $probono->save();
+
         return back()->with('message','New Development');
     }   
     public function mytraings()

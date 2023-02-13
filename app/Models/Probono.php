@@ -18,6 +18,8 @@ class Probono extends Model
         'jurisdiction',
         'court',
         'case_nature',
+        'probono_files',
+        'probono_devs',
         'hearing_date',
         'category',
         'referrel',
