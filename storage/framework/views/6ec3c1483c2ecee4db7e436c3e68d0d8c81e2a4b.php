@@ -18,7 +18,7 @@ Disciplene info
 
      <!-- User Profile Content -->
      <div class="row">
-        <div class="col-xl-12 col-lg-5 col-md-5">
+        <div class="col-xl-7 col-lg-5 col-md-5">
                 <div class="alert alert-info">
                     <h5>Case : <?php echo e($probono->referral_case_no); ?> Status :   <?php switch($probono->status):
                         case ('OPEN'): ?>
@@ -84,7 +84,7 @@ Disciplene info
                 </div>
           <div class="row">
             <?php $__currentLoopData = $probono_devs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $probono_dev): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card">
                     <h6 class="card-header">
                         <span class="badge bg-label-dark">Title:</span>
@@ -107,6 +107,50 @@ Disciplene info
          
           </div>
            
+        </div>
+        <div class="col-xl-5 col-lg-5 col-md-5">
+            <div class="card card-action mb-4">
+                <div class="card-header align-items-center">
+                    <h5 class="card-action-title mb-0">Probono Case Files</h5>
+
+                </div>
+                <div class="card-body">
+
+                    <div class="table-responsive text-nowrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                    <th>File</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                <?php
+                                $count = 1;
+                                ?>
+                                <?php $__empty_1 = true; $__currentLoopData = $files; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $file): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                <tr>
+                                    <td><?php echo e($count); ?></td>
+                                    <td><?php echo e($file->case_title); ?></td>
+                                    <td><?php echo e($file->case_type); ?></td>
+                                    <td><a href="<?php echo e(route('userDownload-files',$file->case_file)); ?>">Download</a></td>
+                                </tr> 
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                <tr><td>No file uploaded</td></tr> 
+                                <?php
+                                $count++
+                                ?>
+                                <?php endif; ?>
+                           
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!--/ Teams -->
+            </div>
         </div>
        
     </div>

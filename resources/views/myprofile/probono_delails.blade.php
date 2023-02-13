@@ -18,7 +18,7 @@ Disciplene info
 
      <!-- User Profile Content -->
      <div class="row">
-        <div class="col-xl-12 col-lg-5 col-md-5">
+        <div class="col-xl-7 col-lg-5 col-md-5">
                 <div class="alert alert-info">
                     <h5>Case : {{ $probono->referral_case_no }} Status :   @switch($probono->status)
                         @case('OPEN')
@@ -84,7 +84,7 @@ Disciplene info
                 </div>
           <div class="row">
             @foreach ($probono_devs as $probono_dev)
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card">
                     <h6 class="card-header">
                         <span class="badge bg-label-dark">Title:</span>
@@ -106,6 +106,50 @@ Disciplene info
          
           </div>
            
+        </div>
+        <div class="col-xl-5 col-lg-5 col-md-5">
+            <div class="card card-action mb-4">
+                <div class="card-header align-items-center">
+                    <h5 class="card-action-title mb-0">Probono Case Files</h5>
+
+                </div>
+                <div class="card-body">
+
+                    <div class="table-responsive text-nowrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                    <th>File</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                @php
+                                $count = 1;
+                                @endphp
+                                @forelse ($files as $file)
+                                <tr>
+                                    <td>{{ $count }}</td>
+                                    <td>{{ $file->case_title }}</td>
+                                    <td>{{ $file->case_type }}</td>
+                                    <td><a href="{{ route('userDownload-files',$file->case_file) }}">Download</a></td>
+                                </tr> 
+                                @empty
+                                <tr><td>No file uploaded</td></tr> 
+                                @php
+                                $count++
+                                @endphp
+                                @endforelse
+                           
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!--/ Teams -->
+            </div>
         </div>
        
     </div>

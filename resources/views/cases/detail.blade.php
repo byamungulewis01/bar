@@ -12,7 +12,6 @@ Discipline Details
     <!-- User Profile Content -->
     <div class="row">
         <div class="col-xl-6 col-lg-5 col-md-5">
-            @include('layouts.flash_message')
             <!-- About User -->
             <div class="card mb-4">
                 <div class="card-body">

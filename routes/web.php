@@ -95,6 +95,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/booking-pay', [UserProfileController::class, 'paytraining'])->name('paytraining');
     Route::get('/mytraings-detail/{training}', [UserProfileController::class, 'mytraings_detail'])->name('mytraings_detail');
     Route::get('/Download/{file}', [TrainingController::class, 'download'])->name('userDownload');
+    Route::get('/Download-file/{file}', [ProbonoController::class, 'download'])->name('userDownload-files');
 
 
 });
@@ -169,7 +170,10 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::post('/probono', [ProbonoController::class, 'store'])->name('probono.store');
     Route::put('/probono-update', [ProbonoController::class, 'update'])->name('probono.update');
     Route::post('/probono-file', [ProbonoController::class, 'file_store'])->name('probono.file_store');
+    Route::delete('/probono-file-delete', [ProbonoController::class, 'file_delete'])->name('probono.DeleteFile');
     Route::get('/probono/{id}', [ProbonoController::class, 'show'])->name('probono.show');
+    Route::get('/probono-devs/{id}', [ProbonoController::class, 'show_devs'])->name('probono.show_devs');
+    Route::get('/Download-files/{file}', [ProbonoController::class, 'download'])->name('Download-files');
     Route::post('/probonomember', [ProbonoController::class, 'addmember'])->name('probono.addmember');
 
 

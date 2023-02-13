@@ -20,7 +20,6 @@ class ProbonoController extends Controller
 
         $probonos = Probono::all();
 
-
         return view('probono.index', compact('users','probonos'));
     }
     public function store(Request $request)
@@ -90,20 +89,22 @@ class ProbonoController extends Controller
     }
     public function show($id)
     {
-        // $members = ProbonoMember::where('probono',$id)->get();
-        //     foreach ($members as $member) {
-        //        // $users = User::where('id','!=',$member->advocate)->get();    
-        //         $users = User::all();    
-        //         $users = $users->except([$member->advocate]);    
-        //     }
-            
+        $probono = Probono::findorfail($id);
+        $files = ProbonoFile::where('probono_id' , $id)->get();
 
-        // $probono = Probono::findorfail($id);
-        // $hoster = $probono->register;
-        // $host = Admin::find($hoster);
-       
+        return view('probono.details', compact('probono','files'));
+    }
+    public function show_devs($id)
+    {
+        $probono = Probono::findorfail($id);
+        $probono_devs = Probono_dev::where('probono_id' , $id)->get();
 
-        // return view('probono.details', compact('probono','host','members','users'));
+        return view('probono.devs', compact('probono','probono_devs'));
+    }
+    public function download($file)
+    { 
+        $pathToFile = public_path('assets/img/files/'.$file);
+     return response()->download($pathToFile);
     }
     public function file_store(Request $request)
     {
@@ -130,10 +131,29 @@ class ProbonoController extends Controller
                 'probono_id' => $request->probono_id,
                 'register' => auth()->guard('admin')->user()->id,
             ]);
-    
+        $probono = Probono::findorfail($request->probono_id);
+        $probono->probono_files = $probono->probono_files + 1;
+        $probono->save();
              return redirect()->back()->with('message','Case '.$count + 1 .' File uploaded');
          }
          
+        
+    }
+    public function file_delete(Request $request)
+    {
+      $probonoFile = ProbonoFile::find($request->id);
+      $pathToFile = public_path('assets/img/Files/');
+      $filename = $probonoFile->case_file;
+      $prob_id = $probonoFile->probono_id;
+
+      $probono = Probono::findorfail($prob_id);
+      $probono->probono_files = $probono->probono_files - 1;
+      $probono->save();
+
+
+      unlink($pathToFile .$filename);
+      $probonoFile->delete();
+     return back()->with('warning','File Removed');
         
     }
 

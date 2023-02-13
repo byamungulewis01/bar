@@ -15,147 +15,151 @@ Probono Details
             <!-- About User -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <h3>{{ $probono->referral_case_no }} </h3>
-                    <small class="card-text text-uppercase">About Probono</small>
-                    <ul class="list-unstyled mb-4 mt-3">
-                        <li class="d-flex align-items-center mb-3"><i class="ti ti-check"></i><span
-                                class="fw-bold mx-2">Status:</span>
-                            @if ($probono->case_status == 'OPEN')
-                            <span class="badge bg-label-info me-2">{{ $probono->case_status }}</span>
-                            @else
-                            <span class="badge bg-label-danger me-2">{{ $probono->case_status }}</span>
-                            @endif
-                            <a href=""><i class="ti ti-edit"></i></a>
-                        </li>
-                        <li class="d-flex align-items-center mb-3"><i class="ti ti-crown"></i><span
-                                class="fw-bold mx-2">Created:</span>{{ $probono->created_at; }}</span></li>
-                        <li class="d-flex align-items-center mb-3"><i class="ti ti-crown"></i><span
-                                class="fw-bold mx-2">category:</span>{{ $probono->category; }}</span></li>
-                        <li class="d-flex align-items-center mb-3"><i class="ti ti-crown"></i><span
-                                class="fw-bold mx-2">Case nature:</span>{{ $probono->case_nature; }}</span></li>
+                    <h5>`Probono Case Information</h5>
+                    {{-- {{ $case->case_number }} --}}
+                    <div class="table-responsive text-nowrap">
+                        <table class="table">
+                            <tbody class="table-border-bottom-0">
+                                <tr>
+                                    <td>Case Number</td>
+                                    <td>{{ $probono->referral_case_no }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Created On</td>
+                                    <td>{{ $probono->created_at }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Status</td>
+                                    <td> @switch($probono->status)
+                                        @case('OPEN')
+                                        <span class="badge bg-label-primary me-2">{{ $probono->status }}</span>
+                                        @break
+                                        @case('WON')
+                                        <span class="badge bg-label-success me-2">{{ $probono->status }}</span>
+                                        @break
+                                        @case('LOST')
+                                        <span class="badge bg-label-warning me-2">{{ $probono->status }}</span>
+                                        @break
+                                        @default
+                                        <span class="badge bg-label-danger me-2">{{ $probono->status }}</span>
+                                        @endswitch
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Hearing day </td>
+                                    <td>{{ $probono->hearing_date }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Case Nature</td>
+                                    <td>{{ $probono->case_nature }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Jurisdiction</td>
+                                    <td>{{ $probono->jurisdiction }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Court</td>
+                                    <td>{{ $probono->court }} </td>
+                                </tr>
+                                <tr>
+                                    <td>LEGAL AIDS SEEKER</td>
+                                    <td><strong>{{ $probono->fname }} {{ $probono->lname }} </strong><br>
+                                        <span class="badge bg-label-info me-2">Phone</span>{{ $probono->phone }}</td>
+                                </tr>
+                                <tr>
+                                    <td>REFERRER</td>
+                                    <td>{{ $probono->referrel }}</td>
+                                </tr>
 
 
-
-                        <li class="d-flex align-items-center mb-3"><i class="ti ti-check"></i><span
-                                class="fw-bold mx-2">Hearing Date:</span>
-                            {{ $probono->hearing_date; }}
-                            <a href=""><i class="ti ti-edit"></i></a>
-                        </li>
-
-                    </ul>
-                    <small class="card-text text-uppercase">REFERRAL INFO</small>
-                    <ul class="list-unstyled mb-4 mt-3">
-                        <li class="d-flex align-items-center mb-3"><i class="ti ti-user"></i><span
-                                class="fw-bold mx-2">name:</span> {{ $probono->referral_name }}<span></span></li>
-                        <li class="d-flex align-items-center mb-3"><i class="ti ti-mail"></i><span
-                                class="fw-bold mx-2">Gender:</span> <span> {{ $probono->referral_gender }}</span></li>
-                        <li class="d-flex align-items-center mb-3"><i class="ti ti-phone"></i><span
-                                class="fw-bold mx-2">Mobile:</span> <span> {{ $probono->referral_mobile }}</span></li>
-
-                    </ul>
-
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <!--/ About User -->
 
-            <!--/ Profile Overview -->
+
+            </div>
         </div>
         <div class="col-xl-6 col-lg-7 col-md-7">
-            <div class="card mb-2">
-                <h5 class="card-header">CREATED BY</h5>
-                <div class="d-flex align-items-center" style="padding: 2%">
-                    <div class="d-flex align-items-start">
-                        <div class="avatar me-2">
-                            <img src="../../assets/img/icons/brands/react-label.png" alt="Avatar"
-                                class="rounded-circle" />
-                        </div>
-                        <div class="me-2 ms-1">
-                            <h6 class="mb-0">{{ $host->name }}</h6>
-                            <small class="text-muted">{{ $host->email }}</small>
-                        </div>
-                    </div>
-                    <div class="ms-auto">
-                        <a href="javascript:;"><span class="badge bg-label-danger">host</span></a>
-                    </div>
-                </div>
-            </div>
-
             <div class="card card-action mb-4">
                 <div class="card-header align-items-center">
-                    <h5 class="card-action-title mb-0">Participant</h5>
+                    <h5 class="card-action-title mb-0">Probono Case Files</h5>
 
                 </div>
                 <div class="card-body">
-                    <ul class="list-unstyled mb-0">
 
-                        @foreach ($members as $member)
-                        <li class="mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="d-flex align-items-start">
-                                    <div class="avatar me-2">
-                                        <img src="{{ asset('assets/img/avatars/')}}/{{$member->user->photo}}"
-                                            alt="Avatar" class="rounded-circle" />
-                                    </div>
-                                    <div class="me-2 ms-1">
-                                        <h6 class="mb-0">{{ $member->user->name }}</h6>
-                                        <small class="text-muted">{{ $member->user->email }}</small>
-                                    </div>
-                                </div>
-                                <div class="ms-auto">
-                                    <a href="javascript:;"><span class="badge bg-label-primary">Support</span></a>
-                                    <a href=""><i class="ti ti-trash ti-sm me-2"></i></a>
-                                </div>
-                            </div>
-                        </li>
-                        @endforeach
+                    <div class="table-responsive text-nowrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                    <th>File</th>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                @php
+                                $count = 1;
+                                @endphp
+                                @forelse ($files as $file)
+                                <tr>
+                                    <td>{{ $count }}</td>
+                                    <td>{{ $file->case_title }}</td>
+                                    <td>{{ $file->case_type }}</td>
+                                    <td><a href="{{ route('Download-files',$file->case_file) }}">Download</a></td>
+                                    <td> <a href="" data-bs-toggle="modal" data-bs-target="#delete{{ $file->id }}"
+                                            class="text-danger"><i class="ti ti-trash me-0 me-sm-1 ti-xs"></i></a>
+                                        <div class="modal modal-top fade" id="delete{{ $file->id }}" tabindex="-1"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-sm" role="document">
+                                                <div class="modal-content">
+                                                    <form method="POST" action="{{ route('probono.DeleteFile') }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="hidden" name="id" value="{{ $file->id }}" />
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel2">Are you
+                                                                sure you want Delete this?</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-label-secondary"
+                                                                data-bs-dismiss="modal">no</button>
+                                                            <button type="submit" class="btn btn-danger">Yes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                    </td>
+                                </tr>
+                                @php
+                                $count++
+                                @endphp
+                                @empty
+                                <tr>
+                                    <td>No file uploaded</td>
+                                </tr>
 
-                        <li class="text-center">
-                            <a href="" data-bs-toggle="modal" data-bs-target="#partipant">Add new</a>
-                        </li>
-                    </ul>
+                                @endforelse
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <!--/ Teams -->
             </div>
         </div>
     </div>
-    <!--/ User Profile Content -->
-    <div class="modal fade" id="partipant" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
-            <div class="modal-content p-3 p-md-5">
-                <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <div class="text-center mb-4">
-                        <h3 class="mb-2">Add Participant</h3>
-                        <p class="text-muted">Add new Disciplene Case Member for followup Every Days</p>
-                    </div>
-<form method="POST" class="row g-3" action="{{ route('probono.addmember') }}">
-    @csrf
-    <div class="col-12">
-        <label class="form-label w-100" for="modalAddCard">Name</label>
-        <div class="input-group input-group-merge">
-            <input type="hidden" name="probono" value="{{ $probono->id }}">
-            <select id="user" name="advcate_id" class="form-select" required>
-                <option value="" selected> - Select - </option>
-                @foreach ($users as $user)
-                <option @if(old('advcate_id')==$user->name) selected @endif
-                    value="{{ $user->id }}">{{ $user->name}}</option>
-                @endforeach
 
-            </select>
-        </div>
-    </div>
-    <div class="col-12 text-center">
-        <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
-        <button type="reset" class="btn btn-label-secondary btn-reset" data-bs-dismiss="modal"
-            aria-label="Close">Cancel</button>
-    </div>
-    </form>
 </div>
-</div>
-</div>
-</div>
+
 </div>
 @endsection
 
