@@ -32,13 +32,11 @@ User Profile
                     <li class="list-inline-item">
                       <i class='ti ti-map-pin'></i> DISTRICT: <span class="fw-bold"><?php echo e($user->district); ?></span>
                     </li>
-                    <li class="list-inline-item">
-                      <i class='ti ti-sitemap'></i> CATEGORY: <span class="fw-bold"><?php echo e($user->category); ?></span></li>
+                    <li class="list-inline-item text-uppercase">
+                      <i class='ti ti-sitemap'></i> Administration Status: <span class="fw-bold"><?php echo e($user->category); ?></span></li>
                   </ul>
                 </div>
-                <a href="javascript:void(0)" class="btn btn-<?php echo e(badge($user->practicing)); ?>">
-                  <?php echo e(userStatus($user->practicing)); ?> <i class="ti ti-<?php echo e(icon($user->practicing)); ?> ps-2"></i>
-                </a>
+                <span class="badge bg-label-<?php echo e(badge($user->practicing)); ?>"><?php echo e(userStatus($user->practicing)); ?></span>
               </div>
             </div>
           </div>
