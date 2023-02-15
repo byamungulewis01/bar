@@ -18,7 +18,7 @@ class AreaController extends Controller
         foreach($request->areas as $area){
             $user->areas()->create(['lawscategory_id' => $area]);
         }
-
+            // return back
         return back()->with('message','Practice area added!');
     }
 }
