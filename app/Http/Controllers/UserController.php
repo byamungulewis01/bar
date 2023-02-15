@@ -41,7 +41,6 @@ class UserController extends Controller
           ]);
       }
     }
-
     public function deactivated()
     {
         return view('users.deactive');
@@ -59,10 +58,6 @@ class UserController extends Controller
           ]);
       }
     }
-
-  
-
-   
     public function deseacedpage()
     {
         $marital = marital::all();
