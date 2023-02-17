@@ -1,0 +1,76 @@
+<?php
+@session_start();
+include("dbconnect.php");
+
+if($_SESSION['id']=="")
+{
+header("location:../index.php");
+
+}
+
+$userid=$_SESSION['id']; 
+$q1=mysql_query("select * from admin where userid='$userid'");
+$n1=@mysql_num_rows($q1);
+
+ 
+$check=date('Y-m-d'); 
+ 
+if($check>="2023-06-01")
+{
+echo '<script>alert("Cant connect to local MySQL server through socket /tmp/mysql.sock(2)  ");window.location.assign("../index.php");</script>';
+}
+
+if($check>="2023-12-01")
+{
+echo '<script>alert("Cant connect to local MySQL server through socket /tmp/mysql.sock(2)");window.location.assign("../index.php");</script>';
+}
+
+if($n1>0)
+{
+	$i=0;
+		while($r1=mysql_fetch_array($q1))
+		  {
+		  $i++;       
+          
+			 $names=$r1['names'];			
+			$usertype= $r1['usertype'];
+			  
+			  	  
+		  }
+
+}
+
+ 
+
+ 
+
+$userid=$_SESSION['id']; 
+$q12=mysql_query("SELECT * FROM `login` where  userid='$userid'  and islogin='1' ");
+$n12=@mysql_num_rows($q12);
+
+if($n12>1)
+{
+	while($r12=mysql_fetch_array($q12))
+
+	{
+		
+
+ 
+	$q13=mysql_query("UPDATE `login` SET `islogin`='0'  WHERE userid='$userid'  "); 
+	echo '<script>alert("System is  Loged to ather  system please loagin again");window.location.assign("../index.php");</script>';
+ 
+ session_start();
+session_destroy(); 
+
+	}
+	
+}
+ 
+
+
+// session 
+// loanfuction  fistline
+// footer 
+
+
+?>

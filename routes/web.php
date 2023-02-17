@@ -186,6 +186,9 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::delete('/meetings/delete', [MeetingController::class, 'delete'])->name('meeting.delete');
     Route::post('/meetings/invite', [MeetingController::class, 'invite'])->name('meetings.invite');
     Route::delete('/meetings/remove', [MeetingController::class, 'removeInviter'])->name('meetings.removeInviter');
+    Route::post('/meetings/notify', [MeetingController::class, 'notify'])->name('meetings.notify');
+    Route::get('/users/search', [MeetingController::class, 'search'])->name('users.search');
+    Route::get('/meetings/attends/{meeting}/{user}', [MeetingController::class, 'attends']);
 
 
 

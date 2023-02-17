@@ -19,7 +19,7 @@ class MeetingController extends Controller
     }
     public function show($meeting)
     {
-        $invitations = Invitations::where('meeting_id', $meeting)->get();
+        $invitations = Invitations::where('meeting_id', $meeting)->paginate(10);
         $meeting = Meeting::findorfail($meeting);
         $users = User::all();
         return view('meetings.detail', compact('meeting','invitations','users'));
@@ -151,6 +151,70 @@ class MeetingController extends Controller
         $invitor = Invitations::findorfail($request->id);
         $invitor->delete();
         return back()->with('message', 'remove Successfully');
+    }
+
+
+    public function notify(Request $request)
+    {
+        $formField = $request->validate([
+            'recipients' => 'required',
+            'subject' => 'required',
+            'message' => 'required|min:10',
+            'sent' => 'required',
+            'attachments.*' => 'max:10240', // Maximum file size of 10 MB
+            'attachments' => 'max:5' // Maximum of 5 files
+        ]);
+
+        $attachments = $request->file('attachments');
+        $attachmentsPaths = [];
+        if ($attachments) {
+            foreach ($attachments as $attachment) {
+                $path = $attachment->store('attachments');
+                $attachmentsPaths[] = $path;
+            }
+        }
+
+         $ids = Invitations::where('status',$request->recipients)->where('meeting_id', $request->id)->pluck('user_id')->toArray();
+         $users = User::whereIn('id', $ids)->get();
+        
+        foreach ($request->sent as $value) {
+            if ($value == 'EMAIL') {
+                foreach ($users as $user) {
+                   (new NotifyController)->notify_meeting($user->email,$request->subject,$request->message,$attachmentsPaths);
+                  }
+         
+            }elseif ($value == 'SMS') {
+              echo 'In SMS';
+            } else{
+            foreach ($users as $user) {
+                (new NotifyController)->notify_meeting($user->email,$request->subject,$request->message,$attachmentsPaths);
+                }
+            }
+       }
+
+     return back()->with('message', 'Notified Successfully');
+       
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $users = User::where('name', 'LIKE', "%{$query}%")
+        ->orWhere('regNumber', 'LIKE', "%{$query}%")
+        ->get();
+
+    
+        return response()->json($users);
+    }
+    public function attends($meeting,$user)
+    {
+        Invitations::where('meeting_id', $meeting)->where('user_id', $user)
+        ->take(1)->update([
+        'status' => 2,
+        'updated_at' => date('Y-m-d H:i:s'),
+    ]);
+    return back()->with('message', 'Added to Attendence');
     }
 
 }

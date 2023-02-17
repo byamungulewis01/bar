@@ -25,8 +25,22 @@ Meetings
                                 {{ \Carbon\Carbon::parse($meeting->date)->locale('fr')->format('F j, Y') }}, Venue:
                                 <strong>{{ $meeting->venue }}</strong>, Starting at {{ $meeting->start }} to End at
                                 {{ $meeting->end }}</p>
-
+                         
                         </div>
+
+                        <div>
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text" id="basic-addon-search31"><i
+                                        class="ti ti-search"></i></span>
+                                <input type="text" id="search" class="form-control" placeholder="Search..." aria-label="Search..."
+                                    aria-describedby="basic-addon-search31" /> 
+                                    
+                            </div>
+                            <br>
+                            <div id="results"></div>
+                        </div>
+
+
                     </div>
 
 
@@ -50,13 +64,11 @@ Meetings
                                     <th style="width: 40ch">Setting</th>
                                 </tr>
                             </thead>
-                            @php
-                            $count = 1;
-                            @endphp
+                           
                             <tbody>
-                                @forelse ($invitations as $invitation)
+                                @forelse ($invitations as $key => $invitation)
                                 <tr>
-                                    <td>{{ $count }}</td>
+                                    <td>{{ $key + 1 }}</td>
                                     <td>{{ $invitation->user->name }}</td>
                                     <td>
                                         @if ($invitation->status == 1)
@@ -97,9 +109,7 @@ Meetings
                                         </div>
                                     </div>
                                 </div>
-                                @php
-                                $count++;
-                                @endphp
+                             
                                 @empty
                                 <tr>
                                     <td></td>
@@ -113,42 +123,14 @@ Meetings
 
                                 @endforelse
                             </tbody>
+                          
                         </table>
                         <div class="col-lg-4">
-                       
-                            <div class="demo-inline-spacing">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination pagination-sm">
-                                        <li class="page-item prev">
-                                            <a class="page-link" href="javascript:void(0);"><i
-                                                    class="tf-icon fs-6 ti ti-chevrons-left"></i></a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="javascript:void(0);">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="javascript:void(0);">2</a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a class="page-link" href="javascript:void(0);">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="javascript:void(0);">4</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="javascript:void(0);">5</a>
-                                        </li>
-                                        <li class="page-item next">
-                                            <a class="page-link" href="javascript:void(0);"><i
-                                                    class="tf-icon fs-6 ti ti-chevrons-right"></i></a>
-                                        </li>
-                                    </ul>
-                                </nav>
-    
-                            </div>
+                            {{ $invitations->links('vendor.pagination.custom') }}
+                           
                         </div>
                     </div>
-                   
+
                 </div>
 
             </div>
@@ -216,6 +198,28 @@ Meetings
 <script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+<script>
+let searchInput = document.querySelector('#search');
+let resultsDiv = document.querySelector('#results');
 
+searchInput.addEventListener('input', function() {
+    let query = searchInput.value;
+    let meeting = '{{ $meeting->id }}'; 
+    if (query.length >= 2) {
+        fetch('{{ route('users.search') }}?query=' + query)
+            .then(response => response.json())
+            .then(users => {
+                resultsDiv.innerHTML = '';
+                for (let user of users) {
+                    let userDiv = document.createElement('div');
+                    userDiv.innerHTML = user.name + ' (' + user.regNumber + ') <a href="/meetings/attends/'+ meeting +'/'+ user.id + '" class="btn btn-sm btn-success text-white"><i class="ti ti-check me-0 me-sm-1 ti-xs"></i></a>';
+                    resultsDiv.appendChild(userDiv);
+                }
+            });
+    } else {
+        resultsDiv.innerHTML = '';
+    }
+});
+</script>
 
 @endsection

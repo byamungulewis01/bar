@@ -248,7 +248,7 @@ class UserController extends Controller
         ]));
         
         Phonenumber::create([ 'user_id'=>$user->id, 'name' => 'mobile', 'phone' => $request->phone]);
-        // (new NotifyController)->newAccount($email,$password);
+         (new NotifyController)->newAccount($email,$password);
 
         return back()->with('message','New User added!');
     }

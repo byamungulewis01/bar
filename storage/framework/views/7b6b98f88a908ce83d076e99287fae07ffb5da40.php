@@ -17,7 +17,6 @@ Suspended user
                 <table class="datatables-users table border-top">
                   <thead>
                     <tr>
-                      <th></th>
                       <th>User</th>
                       <th>Roll Number</th>
                       <th>Phone</th>
@@ -30,174 +29,175 @@ Suspended user
                 </table>
               </div>
             </div>
-            <!-- Edit User Modal -->
-            <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
-              <div class="modal-dialog modal-lg modal-simple modal-edit-user">
-                <div class="modal-content p-3 p-md-5">
-                  <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <div class="text-center mb-4">
-                      <h3 class="mb-2">Update User Information</h3>
-                      <?php if($errors->any()): ?>
-                      <div class="alert alert-danger">
-                        <p><strong>Opps Something went wrong</strong></p>
-                        <ul>
-                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                          <li>* <?php echo e($error); ?></li>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </ul>
-                      </div>
-                        <?php endif; ?>
+           <!-- Edit User Modal -->
+           <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+              <div class="modal-content p-3 p-md-5">
+                <div class="modal-body">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div class="text-center mb-4">
+                    <h3 class="mb-2">Update User Information</h3>
+                    <?php if($errors->any()): ?>
+                    <div class="alert alert-danger">
+                      <p><strong>Opps Something went wrong</strong></p>
+                      <ul>
+                      <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li>* <?php echo e($error); ?></li>
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                      </ul>
                     </div>
-                    <form id="editUserForm" class="row g-3 needs-validation <?php if($errors->any()): ?> validated <?php endif; ?>" novalidate="" method="post"  enctype="multipart/form-data">
-                      <?php echo csrf_field(); ?>
-                      <?php echo method_field('PUT'); ?>
-                      <input type="hidden" id="is" name="express"/>
-                      <div class="col-12 col-md-6">
-                        <div class="d-flex align-items-start align-items-sm-center gap-4">
-                          <img src="<?php echo e(asset('assets/img/avatars/placeholder.jpg')); ?>" alt="user-avatar" class="d-block w-px-100 h-px-100 rounded" id="updatedAvatar" />
-                          <div class="button-wrapper">
-                            <label for="updateAvatar" class="btn btn-sm btn-primary me-2 mb-3" tabindex="0">
-                              <i class="ti ti-upload"></i>
-                              <input type="file" id="updateAvatar" name="profile" class="user-avatar-updated" hidden accept="image/png, image/jpeg" />
-                            </label>
-                            <button type="button" class="btn btn-sm btn-label-secondary updated-avatar-reset mb-3 waves-effect">
-                              <i class="ti ti-refresh-dot d-block d-sm-none"></i>
-                              <span class="d-none d-sm-block">Reset</span>
-                            </button>
-                            <div class="text-muted">Profile Picture</div>
-                            <div class="text-muted d-none">Allowed JPG, GIF or PNG. Max size of 800K</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <div class="d-flex align-items-start align-items-sm-center gap-4">
-                          <img src="<?php echo e(asset('assets/img/avatars/diploma.jpg')); ?>" alt="user-avatar" class="d-block w-px-100 h-px-100 rounded" id="updatedDiploma" />
-                          <div class="button-wrapper">
-                            <label for="updateDiploma" class="btn btn-sm  btn-primary me-2 mb-3" tabindex="0">
-                              <i class="ti ti-upload"></i>
-                              <input type="file" id="updateDiploma" name="diploma" class="user-diploma-updated" hidden accept="image/png, image/jpeg" />
-                            </label>
-                            <button type="button" class="btn btn-sm btn-label-secondary updated-diploma-reset mb-3 waves-effect">
-                              <i class="ti ti-refresh-dot d-block d-sm-none"></i>
-                              <span class="d-none d-sm-block">Reset</span>
-                            </button>
-                            <div class="text-muted">Diploma</div>
-                            <div class="text-muted d-none">Allowed JPG, GIF or PNG. Max size of 800K</div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-12 col-md-6">
-                        <label class="form-label" for="updateName">Full Name</label>
-                        <input type="text" id="updateName" name="name" class="form-control" placeholder="John" value="<?php echo e(old('name')); ?>"/>
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label class="form-label" for="updateEmail">Email</label>
-                        <input type="text" id="updateEmail" name="email" class="form-control" placeholder="example@domain.com"  value="<?php echo e(old('email')); ?>"/>
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label class="form-label" for="updatePhone">Phone Number</label>
-                        <div class="input-group">
-                          <span class="input-group-text">RW (+250)</span>
-                          <input type="text" id="updatePhone" name="phone" class="form-control phone-number-mask" maxLength="10" placeholder="xxx xxx xxxx"  value="<?php echo e(old('phone')); ?>"/>
-                        </div>
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label class="form-label" for="updateGender">Gender</label>
-                        <select id="updateGender" name="gender" class="form-select">
-                          <option value="" selected> - Select - </option>
-                          <option <?php if(old('gender')=="Male"): ?> selected <?php endif; ?> value="Male">Male</option>
-                          <option <?php if(old('gender')=="Male"): ?> selected <?php endif; ?> value="Female">Female</option>
-                        </select>
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label class="form-label" for="updateMarital">Martial Status</label>
-                        <select id="updateMarital" name="marital" class="form-select">
-                          <option value="">Select</option>
-                          <?php $__currentLoopData = $marital; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $status): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                          <option <?php if(old('marital')==$status->id): ?> selected <?php endif; ?> value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
-                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label class="form-label" for="updateDistrict">District</label>
-                        <select id="updateDistrict" name="district" class="select2 form-select" data-allow-clear="true">
-                          <option value="">Select</option>
-                          <option value="Bugesera" <?php if(old('district')=="Bugesera"): ?> selected <?php endif; ?>>Bugesera</option>
-                          <option value="Burera" <?php if(old('district')=="Burera"): ?> selected <?php endif; ?>>Burera</option>
-                          <option value="Gakenke" <?php if(old('district')=="Gakenke"): ?> selected <?php endif; ?>>Gakenke</option>
-                          <option value="Gasabo" <?php if(old('district')=="Gasabo"): ?> selected <?php endif; ?>>Gasabo</option>
-                          <option value="Gatsibo" <?php if(old('district')=="Gatsibo"): ?> selected <?php endif; ?>>Gatsibo</option>
-                          <option value="Gicumbi" <?php if(old('district')=="Gicumbi"): ?> selected <?php endif; ?>>Gicumbi</option>
-                          <option value="Gisagara" <?php if(old('district')=="Gisagara"): ?> selected <?php endif; ?>>Gisagara</option>
-                          <option value="Huye" <?php if(old('district')=="Huye"): ?> selected <?php endif; ?>>Huye</option>
-                          <option value="Kamonyi" <?php if(old('district')=="Kamonyi"): ?> selected <?php endif; ?>>Kamonyi</option>
-                          <option value="Karongi" <?php if(old('district')=="Karongi"): ?> selected <?php endif; ?>>Karongi</option>
-                          <option value="Kayonza" <?php if(old('district')=="Kayonza"): ?> selected <?php endif; ?>>Kayonza</option>
-                          <option value="Kicukiro" <?php if(old('district')=="Kicukiro"): ?> selected <?php endif; ?>>Kicukiro</option>
-                          <option value="Kirehe" <?php if(old('district')=="Kirehe"): ?> selected <?php endif; ?>>Kirehe</option>
-                          <option value="Muhanga" <?php if(old('district')=="Muhanga"): ?> selected <?php endif; ?>>Muhanga</option>
-                          <option value="Musanze" <?php if(old('district')=="Musanze"): ?> selected <?php endif; ?>>Musanze</option>
-                          <option value="Ngoma" <?php if(old('district')=="Ngoma"): ?> selected <?php endif; ?>>Ngoma</option>
-                          <option value="Ngororero" <?php if(old('district')=="Ngororero"): ?> selected <?php endif; ?>>Ngororero</option>
-                          <option value="Nyabihu" <?php if(old('district')=="Nyabihu"): ?> selected <?php endif; ?>>Nyabihu</option>
-                          <option value="Nyagatare" <?php if(old('district')=="Nyagatare"): ?> selected <?php endif; ?>>Nyagatare</option>
-                          <option value="Nyamagabe" <?php if(old('district')=="Nyamagabe"): ?> selected <?php endif; ?>>Nyamagabe</option>
-                          <option value="Nyamasheke" <?php if(old('district')=="Nyamasheke"): ?> selected <?php endif; ?>>Nyamasheke</option>
-                          <option value="Nyanza" <?php if(old('district')=="Nyanza"): ?> selected <?php endif; ?>>Nyanza</option>
-                          <option value="Nyarugenge" <?php if(old('district')=="Nyarugenge"): ?> selected <?php endif; ?>>Nyarugenge</option>
-                          <option value="Nyaruguru" <?php if(old('district')=="Nyaruguru"): ?> selected <?php endif; ?>>Nyaruguru</option>
-                          <option value="Rubavu" <?php if(old('district')=="Rubavu"): ?> selected <?php endif; ?>>Rubavu</option>
-                          <option value="Ruhango" <?php if(old('district')=="Ruhango"): ?> selected <?php endif; ?>>Ruhango</option>
-                          <option value="Rulindo" <?php if(old('district')=="Rulindo"): ?> selected <?php endif; ?>>Rulindo</option>
-                          <option value="Rusizi" <?php if(old('district')=="Rusizi"): ?> selected <?php endif; ?>>Rusizi</option>
-                          <option value="Rutsiro" <?php if(old('district')=="Rutsiro"): ?> selected <?php endif; ?>>Rutsiro</option>
-                          <option value="Rwamagana" <?php if(old('district')=="Rwamagana"): ?> selected <?php endif; ?>>Rwamagana</option>
-                        </select>
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label class="form-label" for="updateStatus">Administration Status</label>
-                        <select id="updateStatus" name="category" class="form-select">
-                          <option value="" selected> - Select - </option>
-                          <option <?php if(old('status')=="Advocate"): ?> selected <?php endif; ?> value="Advocate">Advocate</option>
-                          <option <?php if(old('status')=="Staff"): ?> selected <?php endif; ?> value="Staff">Staff</option>
-                        </select>
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label class="form-label" for="flatpickr-date-up">Admission Date</label>
-                        <input type="text" id="flatpickr-date-up" name="date" placeholder="Month DD, YYYY" class="form-control" />
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label class="form-label" for="updateCategory">Admission Status</label>
-                        <select id="updateCategory" name="status" class="form-select">
-                          <option value="" selected> - Select - </option>
-                          <option <?php if(old('category')=="1"): ?> selected <?php endif; ?> value="1">Advocate</option>
-                          <option <?php if(old('category')=="2"): ?> selected <?php endif; ?> value="2">Intern Advocate</option>
-                          <option <?php if(old('category')=="3"): ?> selected <?php endif; ?> value="3">Support Staff</option>
-                          <option <?php if(old('category')=="4"): ?> selected <?php endif; ?> value="4">Technical Staff</option>
-                        </select>
-                      </div>
-                      <div class="col-12 col-md-6">
-                        <label class="form-label" for="updatePracticing">Practicing</label>
-                        <select id="updatePracticing" name="practicing" class="form-select">
-                          <option value="" selected> - Select - </option>
-                          <option <?php if(old('practicing')=="2"): ?> selected <?php endif; ?> value="2">Active</option>
-                          <option <?php if(old('practicing')=="3"): ?> selected <?php endif; ?> value="3">Inactive</option>
-                          <option <?php if(old('practicing')=="4"): ?> selected <?php endif; ?> value="4">Suspended</option>
-                          <option <?php if(old('practicing')=="5"): ?> selected <?php endif; ?> value="5">Struck Off</option>
-                        </select>
-                      </div>
-                      <div class="col-12 text-center">
-                        <button type="submit" class="btn btn-primary me-sm-3 me-1">Update</button>
-                        <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                      </div>
-                    </form>
+                      <?php endif; ?>
                   </div>
+                  <form id="editUserForm" class="row g-3 needs-validation <?php if($errors->any()): ?> validated <?php endif; ?>" novalidate="" method="post"  enctype="multipart/form-data">
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('PUT'); ?>
+                    <input type="hidden" id="is" name="express" value="<?php echo e(old('express')); ?>"/>
+                    <div class="col-12 col-md-6">
+                      <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img src="<?php echo e(asset('assets/img/avatars/placeholder.jpg')); ?>" alt="user-avatar" class="d-block w-px-100 h-px-100 rounded" id="updatedAvatar" />
+                        <div class="button-wrapper">
+                          <label for="updateAvatar" class="btn btn-sm btn-primary me-2 mb-3" tabindex="0">
+                            <i class="ti ti-upload"></i>
+                            <input type="file" id="updateAvatar" name="profile" class="user-avatar-updated" hidden accept="image/png, image/jpeg" />
+                          </label>
+                          <button type="button" class="btn btn-sm btn-label-secondary updated-avatar-reset mb-3 waves-effect">
+                            <i class="ti ti-refresh-dot d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Reset</span>
+                          </button>
+                          <div class="text-muted">Profile Picture</div>
+                          <div class="text-muted d-none">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img src="<?php echo e(asset('assets/img/avatars/diploma.jpg')); ?>" alt="user-avatar" class="d-block w-px-100 h-px-100 rounded" id="updatedDiploma" />
+                        <div class="button-wrapper">
+                          <label for="updateDiploma" class="btn btn-sm  btn-primary me-2 mb-3" tabindex="0">
+                            <i class="ti ti-upload"></i>
+                            <input type="file" id="updateDiploma" name="diploma" class="user-diploma-updated" hidden accept="image/png, image/jpeg" />
+                          </label>
+                          <button type="button" class="btn btn-sm btn-label-secondary updated-diploma-reset mb-3 waves-effect">
+                            <i class="ti ti-refresh-dot d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Reset</span>
+                          </button>
+                          <div class="text-muted">Diploma</div>
+                          <div class="text-muted d-none">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                        </div>
+                      </div> 
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                      <label class="form-label" for="updateName">Full Name</label>
+                      <input type="text" id="updateName" name="name" class="form-control" placeholder="John" value="<?php echo e(old('name')); ?>"/>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label" for="updateEmail">Email</label>
+                      <input type="text" id="updateEmail" name="email" class="form-control" placeholder="example@domain.com"  value="<?php echo e(old('email')); ?>"/>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label" for="updatePhone">Phone Number</label>
+                      <div class="input-group">
+                        <span class="input-group-text">RW (+250)</span>
+                        <input type="text" id="updatePhone" name="phone" class="form-control phone-number-mask" maxLength="10" placeholder="xxx xxx xxxx"  value="<?php echo e(old('phone')); ?>"/>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label" for="updateGender">Gender</label>
+                      <select id="updateGender" name="gender" class="form-select">
+                        <option value="" selected> - Select - </option>
+                        <option <?php if(old('gender')=="Male"): ?> selected <?php endif; ?> value="Male">Male</option>
+                        <option <?php if(old('gender')=="Male"): ?> selected <?php endif; ?> value="Female">Female</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label" for="updateMarital">Martial Status</label>
+                      <select id="updateMarital" name="marital" class="form-select">
+                        <option value="">Select</option>
+                        <?php $__currentLoopData = $marital; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $status): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option <?php if(old('marital')==$status->id): ?> selected <?php endif; ?> value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                      </select>
+                   
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label" for="updateDistrict">District</label>
+                      <select id="updateDistrict" name="district" class="select2 form-select" data-allow-clear="true">
+                        <option value="">Select</option>
+                        <option value="Bugesera" <?php if(old('district')=="Bugesera"): ?> selected <?php endif; ?>>Bugesera</option>
+                        <option value="Burera" <?php if(old('district')=="Burera"): ?> selected <?php endif; ?>>Burera</option>
+                        <option value="Gakenke" <?php if(old('district')=="Gakenke"): ?> selected <?php endif; ?>>Gakenke</option>
+                        <option value="Gasabo" <?php if(old('district')=="Gasabo"): ?> selected <?php endif; ?>>Gasabo</option>
+                        <option value="Gatsibo" <?php if(old('district')=="Gatsibo"): ?> selected <?php endif; ?>>Gatsibo</option>
+                        <option value="Gicumbi" <?php if(old('district')=="Gicumbi"): ?> selected <?php endif; ?>>Gicumbi</option>
+                        <option value="Gisagara" <?php if(old('district')=="Gisagara"): ?> selected <?php endif; ?>>Gisagara</option>
+                        <option value="Huye" <?php if(old('district')=="Huye"): ?> selected <?php endif; ?>>Huye</option>
+                        <option value="Kamonyi" <?php if(old('district')=="Kamonyi"): ?> selected <?php endif; ?>>Kamonyi</option>
+                        <option value="Karongi" <?php if(old('district')=="Karongi"): ?> selected <?php endif; ?>>Karongi</option>
+                        <option value="Kayonza" <?php if(old('district')=="Kayonza"): ?> selected <?php endif; ?>>Kayonza</option>
+                        <option value="Kicukiro" <?php if(old('district')=="Kicukiro"): ?> selected <?php endif; ?>>Kicukiro</option>
+                        <option value="Kirehe" <?php if(old('district')=="Kirehe"): ?> selected <?php endif; ?>>Kirehe</option>
+                        <option value="Muhanga" <?php if(old('district')=="Muhanga"): ?> selected <?php endif; ?>>Muhanga</option>
+                        <option value="Musanze" <?php if(old('district')=="Musanze"): ?> selected <?php endif; ?>>Musanze</option>
+                        <option value="Ngoma" <?php if(old('district')=="Ngoma"): ?> selected <?php endif; ?>>Ngoma</option>
+                        <option value="Ngororero" <?php if(old('district')=="Ngororero"): ?> selected <?php endif; ?>>Ngororero</option>
+                        <option value="Nyabihu" <?php if(old('district')=="Nyabihu"): ?> selected <?php endif; ?>>Nyabihu</option>
+                        <option value="Nyagatare" <?php if(old('district')=="Nyagatare"): ?> selected <?php endif; ?>>Nyagatare</option>
+                        <option value="Nyamagabe" <?php if(old('district')=="Nyamagabe"): ?> selected <?php endif; ?>>Nyamagabe</option>
+                        <option value="Nyamasheke" <?php if(old('district')=="Nyamasheke"): ?> selected <?php endif; ?>>Nyamasheke</option>
+                        <option value="Nyanza" <?php if(old('district')=="Nyanza"): ?> selected <?php endif; ?>>Nyanza</option>
+                        <option value="Nyarugenge" <?php if(old('district')=="Nyarugenge"): ?> selected <?php endif; ?>>Nyarugenge</option>
+                        <option value="Nyaruguru" <?php if(old('district')=="Nyaruguru"): ?> selected <?php endif; ?>>Nyaruguru</option>
+                        <option value="Rubavu" <?php if(old('district')=="Rubavu"): ?> selected <?php endif; ?>>Rubavu</option>
+                        <option value="Ruhango" <?php if(old('district')=="Ruhango"): ?> selected <?php endif; ?>>Ruhango</option>
+                        <option value="Rulindo" <?php if(old('district')=="Rulindo"): ?> selected <?php endif; ?>>Rulindo</option>
+                        <option value="Rusizi" <?php if(old('district')=="Rusizi"): ?> selected <?php endif; ?>>Rusizi</option>
+                        <option value="Rutsiro" <?php if(old('district')=="Rutsiro"): ?> selected <?php endif; ?>>Rutsiro</option>
+                        <option value="Rwamagana" <?php if(old('district')=="Rwamagana"): ?> selected <?php endif; ?>>Rwamagana</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label" for="updateStatus">Administration Status</label>
+                      <select id="updateStatus" name="category" class="form-select">
+                        <option value="" selected> - Select - </option>
+                        <option <?php if(old('category')=="Advocate"): ?> selected <?php endif; ?> value="Advocate">Advocate</option>
+                        <option <?php if(old('category')=="Staff"): ?> selected <?php endif; ?> value="Staff">Staff</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label" for="flatpickr-date-up">Admission Date</label>
+                      <input type="text" id="flatpickr-date-up" name="date" value="<?php echo e(old('date')); ?>" placeholder="Month DD, YYYY" class="form-control" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label" for="updateCategory">Admission Status</label>
+                      <select id="updateCategory" name="status" class="form-select">
+                        <option value="" selected> - Select - </option>
+                        <option <?php if(old('status')=="1"): ?> selected <?php endif; ?> value="1">Advocate</option>
+                        <option <?php if(old('status')=="2"): ?> selected <?php endif; ?> value="2">Intern Advocate</option>
+                        <option <?php if(old('status')=="3"): ?> selected <?php endif; ?> value="3">Support Staff</option>
+                        <option <?php if(old('status')=="4"): ?> selected <?php endif; ?> value="4">Technical Staff</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <label class="form-label" for="updatePracticing">Practicing</label>
+                      <select id="updatePracticing" name="practicing" class="form-select">
+                        <option value="" selected> - Select - </option>
+                        <option <?php if(old('practicing')=="2"): ?> selected <?php endif; ?> value="2">Active</option>
+                        <option <?php if(old('practicing')=="3"): ?> selected <?php endif; ?> value="3">Inactive</option>
+                        <option <?php if(old('practicing')=="4"): ?> selected <?php endif; ?> value="4">Suspended</option>
+                        <option <?php if(old('practicing')=="5"): ?> selected <?php endif; ?> value="5">Struck Off</option>
+                      </select>
+                    </div>
+                    <div class="col-12 text-center">
+                      <button type="submit" class="btn btn-primary me-sm-3 me-1">Update</button>
+                      <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
-            <!--/ Edit User Modal -->
+          </div>
+          <!--/ Edit User Modal -->
 
                       </div>
                       <!-- / Content -->
@@ -271,7 +271,6 @@ $(function(){
     n.length&&(e=n.DataTable({
         ajax:"/api/users/suspendedApi",
         columns:[
-            {data:""},
             {data:"name"},
             {data:"regNumber"},
             {data:"phone"},
@@ -281,55 +280,46 @@ $(function(){
             {data:"action"}
         ],
         columnDefs:[
-            {
-                className:"control",
-                searchable:!1,
-                orderable:!1,
-                responsivePriority:2,
-                targets:0,
-                render:function(e,t,a,s){
-                    return""
-                }
-            },
-            {
-                targets:1,
-                responsivePriority:4,
-                render:function(e,t,a,s){
-                    var n=a.name, i=a.email, o=a.photo, j=a.id;
-                    return'<div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3">'+(o?'<img src="'+assetsPath+"img/avatars/"+o+'" alt="Avatar" class="rounded-circle">':'<span class="avatar-initial rounded-circle bg-label-'+["success","danger","warning","info","primary","secondary"][Math.floor(6*Math.random())]+'">'+(o=(((o=(n=a.name).match(/\b\w/g)||[]).shift()||"")+(o.pop()||"")).toUpperCase())+"</span>")+'</div></div><div class="d-flex flex-column"><a href="'+r+j+'" class="text-body text-truncate"><span class="fw-semibold">'+n+'</span></a><small class="text-muted">'+i+"</small></div></div>"
-                }
-            },
-            {
-                targets:3,
-                render:function(e,t,a,s){
-                    a=a.phone;
-                    return'<span class="fw-semibold">'+a[0].phone+"</span>"
-                    }
-                },
-                {
-                    targets:4,
-                    render:function(e,t,a,s){
-                        return'<span class="fw-semibold">'+a.district+"</span>"
-                    }
-                },
-                {
-                    targets:6,
-                    render:function(e,t,a,s){
-                        a=a.practicing;
-                        return'<span class="badge '+o[a].class+'" text-capitalized>'+o[a].title+"</span>"
-                    }
-                },
-                {
-                    targets:-1,
-                    title:"Actions",
-                    searchable:!1,
-                    orderable:!1,
-                    render:function(e,t,a,s){
-                        return'<div class="d-flex align-items-center"><a href="javascript:;" class="text-body edit-record "><i class="ti ti-edit ti-sm me-2" data-id="'+a.id+'" data-name="'+a.name+'" data-photo="'+a.photo+'" data-diplome="'+a.diplome+'" data-phone="'+a.phone[0].phone+'" data-email="'+a.email+'" data-district="'+a.district+'" data-gender="'+a.gender+'" data-marital="'+a.marital+'" data-regNumber="'+a.regNumber+'" data-status="'+a.status+'" data-practicing="'+a.practicing+'" data-category="'+a.category+'"  data-date="'+a.date+'"></i></a><a href="'+r+a.id+'" class="text-body"><i class="ti ti-eye ti-sm mx-2"></i></a><a href="javascript:;" class="text-body delete-record '+a.id+'"><i class="ti ti-trash ti-sm mx-2"></i></a></div></div>'
-                    }
-                }
-            ],
-            order:[
+          
+          {
+              targets:0,
+              responsivePriority:4,
+              render:function(e,t,a,s){
+                  var n=a.name, i=a.email, o=a.photo, j=a.id;
+                  return'<div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3">'+(o?'<img src="'+assetsPath+"img/avatars/"+o+'" alt="Avatar" class="rounded-circle">':'<span class="avatar-initial rounded-circle bg-label-'+["success","danger","warning","info","primary","secondary"][Math.floor(6*Math.random())]+'">'+(o=(((o=(n=a.name).match(/\b\w/g)||[]).shift()||"")+(o.pop()||"")).toUpperCase())+"</span>")+'</div></div><div class="d-flex flex-column"><a href="'+r+j+'" class="text-body text-truncate"><span class="fw-semibold">'+n+'</span></a><small class="text-muted">'+i+"</small></div></div>"
+              }
+          },
+          {
+              targets:2,
+              render:function(e,t,a,s){
+                  a=a.phone;
+                  return'<span class="fw-semibold">'+a[0].phone+"</span>"
+                  }
+              },
+              {
+                  targets:3,
+                  render:function(e,t,a,s){
+                      return'<span class="fw-semibold">'+a.district+"</span>"
+                  }
+              },
+              {
+                  targets:5,
+                  render:function(e,t,a,s){
+                      a=a.practicing;
+                      return'<span class="badge '+o[a].class+'" text-capitalized>'+o[a].title+"</span>"
+                  }
+              },
+              {
+                  targets:6,
+                  title:"Actions",
+                  searchable:!1,
+                  orderable:!1,
+                  render:function(e,t,a,s){
+                      return'<div class="d-flex align-items-center"><a href="javascript:;" class="text-body edit-record "><i class="ti ti-edit ti-sm me-2" data-id="'+a.id+'" data-name="'+a.name+'" data-photo="'+a.photo+'" data-diplome="'+a.diplome+'" data-phone="'+a.phone[0].phone+'" data-email="'+a.email+'" data-district="'+a.district+'" data-gender="'+a.gender+'" data-marital="'+a.marital+'" data-regNumber="'+a.regNumber+'" data-status="'+a.status+'" data-practicing="'+a.practicing+'" data-category="'+a.category+'"  data-date="'+a.date+'"></i></a><a href="'+r+a.id+'" class="text-body"><i class="ti ti-eye ti-sm mx-2"></i></a><a href="javascript:;" class="text-body delete-record '+a.id+'"><i class="ti ti-trash ti-sm mx-2"></i></a></div></div>'
+                  }
+              }
+          ],
+        order:[
                 [1,"desc"]
             ],
             dom:'<"row me-2"<"col-md-2"<"me-3"l>><"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"fB>>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',

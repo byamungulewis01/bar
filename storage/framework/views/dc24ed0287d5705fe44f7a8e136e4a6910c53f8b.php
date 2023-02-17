@@ -17,7 +17,6 @@ Inactive user
                 <table class="datatables-users table border-top">
                   <thead>
                     <tr>
-                      <th></th>
                       <th>User</th>
                       <th>Roll Number</th>
                       <th>Phone</th>
@@ -52,7 +51,7 @@ Inactive user
                     <form id="editUserForm" class="row g-3 needs-validation <?php if($errors->any()): ?> validated <?php endif; ?>" novalidate="" method="post"  enctype="multipart/form-data">
                       <?php echo csrf_field(); ?>
                       <?php echo method_field('PUT'); ?>
-                      <input type="hidden" id="is" name="express"/>
+                      <input type="hidden" id="is" name="express" value="<?php echo e(old('express')); ?>"/>
                       <div class="col-12 col-md-6">
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                           <img src="<?php echo e(asset('assets/img/avatars/placeholder.jpg')); ?>" alt="user-avatar" class="d-block w-px-100 h-px-100 rounded" id="updatedAvatar" />
@@ -85,7 +84,7 @@ Inactive user
                             <div class="text-muted">Diploma</div>
                             <div class="text-muted d-none">Allowed JPG, GIF or PNG. Max size of 800K</div>
                           </div>
-                        </div>
+                        </div> 
                       </div>
 
                       <div class="col-12 col-md-6">
@@ -119,6 +118,7 @@ Inactive user
                           <option <?php if(old('marital')==$status->id): ?> selected <?php endif; ?> value="<?php echo e($status->id); ?>"><?php echo e($status->title); ?></option>
                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
+                     
                       </div>
                       <div class="col-12 col-md-6">
                         <label class="form-label" for="updateDistrict">District</label>
@@ -160,22 +160,22 @@ Inactive user
                         <label class="form-label" for="updateStatus">Administration Status</label>
                         <select id="updateStatus" name="category" class="form-select">
                           <option value="" selected> - Select - </option>
-                          <option <?php if(old('status')=="Advocate"): ?> selected <?php endif; ?> value="Advocate">Advocate</option>
-                          <option <?php if(old('status')=="Staff"): ?> selected <?php endif; ?> value="Staff">Staff</option>
+                          <option <?php if(old('category')=="Advocate"): ?> selected <?php endif; ?> value="Advocate">Advocate</option>
+                          <option <?php if(old('category')=="Staff"): ?> selected <?php endif; ?> value="Staff">Staff</option>
                         </select>
                       </div>
                       <div class="col-12 col-md-6">
                         <label class="form-label" for="flatpickr-date-up">Admission Date</label>
-                        <input type="text" id="flatpickr-date-up" name="date" placeholder="Month DD, YYYY" class="form-control" />
+                        <input type="text" id="flatpickr-date-up" name="date" value="<?php echo e(old('date')); ?>" placeholder="Month DD, YYYY" class="form-control" />
                       </div>
                       <div class="col-12 col-md-6">
                         <label class="form-label" for="updateCategory">Admission Status</label>
                         <select id="updateCategory" name="status" class="form-select">
                           <option value="" selected> - Select - </option>
-                          <option <?php if(old('category')=="1"): ?> selected <?php endif; ?> value="1">Advocate</option>
-                          <option <?php if(old('category')=="2"): ?> selected <?php endif; ?> value="2">Intern Advocate</option>
-                          <option <?php if(old('category')=="3"): ?> selected <?php endif; ?> value="3">Support Staff</option>
-                          <option <?php if(old('category')=="4"): ?> selected <?php endif; ?> value="4">Technical Staff</option>
+                          <option <?php if(old('status')=="1"): ?> selected <?php endif; ?> value="1">Advocate</option>
+                          <option <?php if(old('status')=="2"): ?> selected <?php endif; ?> value="2">Intern Advocate</option>
+                          <option <?php if(old('status')=="3"): ?> selected <?php endif; ?> value="3">Support Staff</option>
+                          <option <?php if(old('status')=="4"): ?> selected <?php endif; ?> value="4">Technical Staff</option>
                         </select>
                       </div>
                       <div class="col-12 col-md-6">
@@ -271,7 +271,6 @@ $(function(){
     n.length&&(e=n.DataTable({
         ajax:"/api/users/inactiveApi",
         columns:[
-            {data:""},
             {data:"name"},
             {data:"regNumber"},
             {data:"phone"},
@@ -281,55 +280,46 @@ $(function(){
             {data:"action"}
         ],
         columnDefs:[
-            {
-                className:"control",
-                searchable:!1,
-                orderable:!1,
-                responsivePriority:2,
-                targets:0,
-                render:function(e,t,a,s){
-                    return""
-                }
-            },
-            {
-                targets:1,
-                responsivePriority:4,
-                render:function(e,t,a,s){
-                    var n=a.name, i=a.email, o=a.photo, j=a.id;
-                    return'<div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3">'+(o?'<img src="'+assetsPath+"img/avatars/"+o+'" alt="Avatar" class="rounded-circle">':'<span class="avatar-initial rounded-circle bg-label-'+["success","danger","warning","info","primary","secondary"][Math.floor(6*Math.random())]+'">'+(o=(((o=(n=a.name).match(/\b\w/g)||[]).shift()||"")+(o.pop()||"")).toUpperCase())+"</span>")+'</div></div><div class="d-flex flex-column"><a href="'+r+j+'" class="text-body text-truncate"><span class="fw-semibold">'+n+'</span></a><small class="text-muted">'+i+"</small></div></div>"
-                }
-            },
-            {
-                targets:3,
-                render:function(e,t,a,s){
-                    a=a.phone;
-                    return'<span class="fw-semibold">'+a[0].phone+"</span>"
-                    }
-                },
-                {
-                    targets:4,
-                    render:function(e,t,a,s){
-                        return'<span class="fw-semibold">'+a.district+"</span>"
-                    }
-                },
-                {
-                    targets:6,
-                    render:function(e,t,a,s){
-                        a=a.practicing;
-                        return'<span class="badge '+o[a].class+'" text-capitalized>'+o[a].title+"</span>"
-                    }
-                },
-                {
-                    targets:-1,
-                    title:"Actions",
-                    searchable:!1,
-                    orderable:!1,
-                    render:function(e,t,a,s){
-                        return'<div class="d-flex align-items-center"><a href="javascript:;" class="text-body edit-record "><i class="ti ti-edit ti-sm me-2" data-id="'+a.id+'" data-name="'+a.name+'" data-photo="'+a.photo+'" data-diplome="'+a.diplome+'" data-phone="'+a.phone[0].phone+'" data-email="'+a.email+'" data-district="'+a.district+'" data-gender="'+a.gender+'" data-marital="'+a.marital+'" data-regNumber="'+a.regNumber+'" data-status="'+a.status+'" data-practicing="'+a.practicing+'" data-category="'+a.category+'"  data-date="'+a.date+'"></i></a><a href="'+r+a.id+'" class="text-body"><i class="ti ti-eye ti-sm mx-2"></i></a><a href="javascript:;" class="text-body delete-record '+a.id+'"><i class="ti ti-trash ti-sm mx-2"></i></a></div></div>'
-                    }
-                }
-            ],
-            order:[
+          
+          {
+              targets:0,
+              responsivePriority:4,
+              render:function(e,t,a,s){
+                  var n=a.name, i=a.email, o=a.photo, j=a.id;
+                  return'<div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3">'+(o?'<img src="'+assetsPath+"img/avatars/"+o+'" alt="Avatar" class="rounded-circle">':'<span class="avatar-initial rounded-circle bg-label-'+["success","danger","warning","info","primary","secondary"][Math.floor(6*Math.random())]+'">'+(o=(((o=(n=a.name).match(/\b\w/g)||[]).shift()||"")+(o.pop()||"")).toUpperCase())+"</span>")+'</div></div><div class="d-flex flex-column"><a href="'+r+j+'" class="text-body text-truncate"><span class="fw-semibold">'+n+'</span></a><small class="text-muted">'+i+"</small></div></div>"
+              }
+          },
+          {
+              targets:2,
+              render:function(e,t,a,s){
+                  a=a.phone;
+                  return'<span class="fw-semibold">'+a[0].phone+"</span>"
+                  }
+              },
+              {
+                  targets:3,
+                  render:function(e,t,a,s){
+                      return'<span class="fw-semibold">'+a.district+"</span>"
+                  }
+              },
+              {
+                  targets:5,
+                  render:function(e,t,a,s){
+                      a=a.practicing;
+                      return'<span class="badge '+o[a].class+'" text-capitalized>'+o[a].title+"</span>"
+                  }
+              },
+              {
+                  targets:6,
+                  title:"Actions",
+                  searchable:!1,
+                  orderable:!1,
+                  render:function(e,t,a,s){
+                      return'<div class="d-flex align-items-center"><a href="javascript:;" class="text-body edit-record "><i class="ti ti-edit ti-sm me-2" data-id="'+a.id+'" data-name="'+a.name+'" data-photo="'+a.photo+'" data-diplome="'+a.diplome+'" data-phone="'+a.phone[0].phone+'" data-email="'+a.email+'" data-district="'+a.district+'" data-gender="'+a.gender+'" data-marital="'+a.marital+'" data-regNumber="'+a.regNumber+'" data-status="'+a.status+'" data-practicing="'+a.practicing+'" data-category="'+a.category+'"  data-date="'+a.date+'"></i></a><a href="'+r+a.id+'" class="text-body"><i class="ti ti-eye ti-sm mx-2"></i></a><a href="javascript:;" class="text-body delete-record '+a.id+'"><i class="ti ti-trash ti-sm mx-2"></i></a></div></div>'
+                  }
+              }
+          ],
+        order:[
                 [1,"desc"]
             ],
             dom:'<"row me-2"<"col-md-2"<"me-3"l>><"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"fB>>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',

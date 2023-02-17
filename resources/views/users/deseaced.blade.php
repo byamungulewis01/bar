@@ -17,7 +17,6 @@ Deseaced user
                 <table class="datatables-users table border-top">
                   <thead>
                     <tr>
-                      <th></th>
                       <th>User</th>
                       <th>Roll Number</th>
                       <th>Phone</th>
@@ -272,7 +271,6 @@ $(function(){
     n.length&&(e=n.DataTable({
         ajax:"/api/users/deseacedApi",
         columns:[
-            {data:""},
             {data:"name"},
             {data:"regNumber"},
             {data:"phone"},
@@ -282,18 +280,9 @@ $(function(){
             {data:"action"}
         ],
         columnDefs:[
+          
             {
-                className:"control",
-                searchable:!1,
-                orderable:!1,
-                responsivePriority:2,
                 targets:0,
-                render:function(e,t,a,s){
-                    return""
-                }
-            },
-            {
-                targets:1,
                 responsivePriority:4,
                 render:function(e,t,a,s){
                     var n=a.name, i=a.email, o=a.photo, j=a.id;
@@ -301,27 +290,27 @@ $(function(){
                 }
             },
             {
-                targets:3,
+                targets:2,
                 render:function(e,t,a,s){
                     a=a.phone;
                     return'<span class="fw-semibold">'+a[0].phone+"</span>"
                     }
                 },
                 {
-                    targets:4,
+                    targets:3,
                     render:function(e,t,a,s){
                         return'<span class="fw-semibold">'+a.district+"</span>"
                     }
                 },
                 {
-                    targets:6,
+                    targets:5,
                     render:function(e,t,a,s){
                         a=a.practicing;
                         return'<span class="badge '+o[a].class+'" text-capitalized>'+o[a].title+"</span>"
                     }
                 },
                 {
-                    targets:-1,
+                    targets:6,
                     title:"Actions",
                     searchable:!1,
                     orderable:!1,
@@ -330,6 +319,7 @@ $(function(){
                     }
                 }
             ],
+            
             order:[
                 [1,"desc"]
             ],

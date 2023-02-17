@@ -3,9 +3,11 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class resetPassword extends Mailable
 {
@@ -23,6 +25,46 @@ class resetPassword extends Mailable
         $this->key = $key;
         $this->email = $email;
     }
+
+     /**
+     * Get the message envelope.
+     *
+     * @return \Illuminate\Mail\Mailables\Envelope
+     */
+    public function envelope()
+    {
+        return new Envelope(
+            subject: 'Password reset',
+        );
+    }
+
+    /**
+     * Get the message content definition.
+     *
+     * @return \Illuminate\Mail\Mailables\Content
+     */
+    public function content()
+    {
+        return new Content(
+            view: 'view.name',
+        );
+    }
+
+    /**
+     * Get the attachments for the message.
+     *
+     * @return array
+     */
+    public function attachments()
+    {
+        return [];
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
 
     /**
      * Build the message.
