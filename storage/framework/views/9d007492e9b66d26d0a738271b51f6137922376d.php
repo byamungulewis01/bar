@@ -29,7 +29,8 @@ Disciplinary Cases
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             <div class="text-center mb-4">
                                 <h3 class="mb-2">New Discipline case</h3>
-                                <p class="text-muted">You also need to select one of three choise meeting to case Category</p>
+                                <p class="text-muted">You also need to select one of three choise meeting to case
+                                    Category</p>
                             </div>
                             <div class="form-check custom-option custom-option-basic mb-3">
                                 <label class="form-check-label custom-option-content ps-3" for="customRadioTemp1"
@@ -43,7 +44,8 @@ Disciplinary Cases
                                                 <span class="h4 mb-2">(Layman Or Institution) => (Advocate)</span>
                                             </span>
                                             <span class="custom-option-body">
-                                                <p class="mb-0">Plaintiff is a Layman Or Institution => Defendant is an Advocate</p>
+                                                <p class="mb-0">Plaintiff is a Layman Or Institution => Defendant is an
+                                                    Advocate</p>
                                             </span>
                                         </div>
                                     </div>
@@ -61,7 +63,8 @@ Disciplinary Cases
                                                 <span class="h4 mb-2">(Advocate) => (Layman Or Institution)</span>
                                             </span>
                                             <span class="custom-option-body">
-                                                <p class="mb-0">Plaintiff is an Advocate => Defendant is a Layman Or Institution</p>
+                                                <p class="mb-0">Plaintiff is an Advocate => Defendant is a Layman Or
+                                                    Institution</p>
                                             </span>
                                         </div>
                                     </div>
@@ -79,7 +82,8 @@ Disciplinary Cases
                                                 <span class="h4 mb-2">(Advocate) => (Advocate)</span>
                                             </span>
                                             <span class="custom-option-body">
-                                                <p class="mb-0">Plaintiff is an Advocate and Defendant is an Advocate .</p>
+                                                <p class="mb-0">Plaintiff is an Advocate and Defendant is an Advocate .
+                                                </p>
                                             </span>
                                         </div>
                                     </div>
@@ -110,7 +114,8 @@ Disciplinary Cases
                                 <div class="col-12">
                                     <label class="form-label w-100" for="modalAddCard">Name</label>
                                     <div class="input-group input-group-merge">
-                                        <input pattern="[A-Za-z0-9 ]{6,}" title="Name Must have at least 6 characters" required name="name" value="<?php echo e(old('name')); ?>"
+                                        <input pattern="[A-Za-z0-9 ]{6,}" title="Name Must have at least 6 characters"
+                                            required name="name" value="<?php echo e(old('name')); ?>"
                                             class="form-control credit-card-mask" type="text" placeholder="John Doe" />
                                         <span class="input-group-text cursor-pointer p-1" id="modalAddCard2"><span
                                                 class="card-type"></span></span>
@@ -124,8 +129,8 @@ Disciplinary Cases
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <label class="form-label" for="modalAddCardName">Mobile Number</label>
-                                    <input name="phone" pattern="[0-9]{10}" required maxlength="10" value="<?php echo e(old('phone')); ?>"
-                                        class="form-control" placeholder="XXX-XXX-XXXX" />
+                                    <input name="phone" pattern="[0-9]{10}" required maxlength="10"
+                                        value="<?php echo e(old('phone')); ?>" class="form-control" placeholder="XXX-XXX-XXXX" />
                                 </div>
 
                                 <div class="col-12">
@@ -148,16 +153,19 @@ Disciplinary Cases
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label" for="modalAddCardName">complaint</label>
-                                    <input pattern="[A-Za-z0-9 ]{10,}" title="complaint must have at least 10 characters" required type="text" value="<?php echo e(old('complaint')); ?>" name="complaint" class="form-control" placeholder="Subject here" />
+                                    <input pattern="[A-Za-z0-9 ]{10,}"
+                                        title="complaint must have at least 10 characters" required type="text"
+                                        value="<?php echo e(old('complaint')); ?>" name="complaint" class="form-control"
+                                        placeholder="Subject here" />
                                     <input type="hidden" name="case_type" value="1" />
                                 </div>
                                 <div class="col-12">
                                     <label for="exampleFormControlTextarea1" class="form-label">Case Sammary</label>
-                                    <textarea required name="sammary" class="form-control" id="exampleFormControlTextarea1"
-                                        rows="3">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
+                                    <textarea required name="sammary" class="form-control"
+                                        id="exampleFormControlTextarea1" rows="3">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
                                     </textarea>
                                 </div>
-                                
+
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
                                     <button type="reset" class="btn btn-label-secondary btn-reset"
@@ -207,7 +215,8 @@ Disciplinary Cases
                                 <div class="col-12">
                                     <label class="form-label w-100" for="modalAddCard">Name</label>
                                     <div class="input-group input-group-merge">
-                                        <input pattern="[A-Za-z0-9 ]{6,}" title="Name Must have at least 6 characters" required name="name" value="<?php echo e(old('name')); ?>"
+                                        <input pattern="[A-Za-z0-9 ]{6,}" title="Name Must have at least 6 characters"
+                                            required name="name" value="<?php echo e(old('name')); ?>"
                                             class="form-control credit-card-mask" type="text" placeholder="John Doe" />
                                         <span class="input-group-text cursor-pointer p-1" id="modalAddCard2"><span
                                                 class="card-type"></span></span>
@@ -221,19 +230,22 @@ Disciplinary Cases
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <label class="form-label" for="modalAddCardName">Mobile Number</label>
-                                    <input  name="phone" pattern="[0-9]{10}" required maxlength="10" value="<?php echo e(old('phone')); ?>"
-                                        class="form-control" placeholder="XXX-XXX-XXXX" />
+                                    <input name="phone" pattern="[0-9]{10}" required maxlength="10"
+                                        value="<?php echo e(old('phone')); ?>" class="form-control" placeholder="XXX-XXX-XXXX" />
                                 </div>
 
                                 <div class="col-12">
                                     <label class="form-label" for="modalAddCardName">complaint</label>
-                                    <input pattern="[A-Za-z0-9 ]{10,}" title="complaint must have at least 10 characters" required type="text" value="<?php echo e(old('complaint')); ?>" name="complaint" class="form-control" placeholder="Subject here" />
+                                    <input pattern="[A-Za-z0-9 ]{10,}"
+                                        title="complaint must have at least 10 characters" required type="text"
+                                        value="<?php echo e(old('complaint')); ?>" name="complaint" class="form-control"
+                                        placeholder="Subject here" />
                                     <input type="hidden" name="case_type" value="2" />
                                 </div>
                                 <div class="col-12">
                                     <label for="exampleFormControlTextarea1" class="form-label">Case Sammary</label>
-                                    <textarea required name="sammary" class="form-control" id="exampleFormControlTextarea1"
-                                        rows="3">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
+                                    <textarea required name="sammary" class="form-control"
+                                        id="exampleFormControlTextarea1" rows="3">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
                                     </textarea>
                                 </div>
                                 <div class="col-12 text-center">
@@ -300,13 +312,16 @@ Disciplinary Cases
 
                                 <div class="col-12">
                                     <label class="form-label" for="modalAddCardName">complaint</label>
-                                    <input pattern="[A-Za-z0-9 ]{10,}" title="complaint must have at least 10 characters" required type="text" value="<?php echo e(old('complaint')); ?>" name="complaint" class="form-control" placeholder="Subject here" />
+                                    <input pattern="[A-Za-z0-9 ]{10,}"
+                                        title="complaint must have at least 10 characters" required type="text"
+                                        value="<?php echo e(old('complaint')); ?>" name="complaint" class="form-control"
+                                        placeholder="Subject here" />
                                     <input type="hidden" name="case_type" value="3" />
                                 </div>
                                 <div class="col-12">
                                     <label for="exampleFormControlTextarea1" class="form-label">Case Sammary</label>
-                                    <textarea required name="sammary" class="form-control" id="exampleFormControlTextarea1"
-                                        rows="3">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
+                                    <textarea required name="sammary" class="form-control"
+                                        id="exampleFormControlTextarea1" rows="3">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
                                     </textarea>
                                 </div>
                                 <div class="col-12 text-center">
@@ -321,70 +336,70 @@ Disciplinary Cases
             </div>
             <!--/ Two Factor Auth Modal -->
 
-  
+
         </div>
-       <?php echo $__env->make('layouts.flash_message', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-       
+
         <div class="table-responsive text-nowrap">
             <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Case number</th>
-                  <th>Complaint</th>
-                  <th>Plaintiff</th>
-                  <th>Defendant</th>
-                  <th>Authority</th>
-                  <th>Status</th>
-                  <th>Next Sitting</th>
-                  <th>Manage</th>
-                </tr>
-              </thead>
-              <tbody class="table-border-bottom-0">
-                <?php
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Case number</th>
+                        <th>Complaint</th>
+                        <th>Plaintiff</th>
+                        <th>Defendant</th>
+                        <th>Authority</th>
+                        <th>Status</th>
+                        <th>Next Sitting</th>
+                        <th>Manage</th>
+                    </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    <?php
                     $count = 1;
-                ?>
-               <?php $__currentLoopData = $cases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $case): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                   <tr>
+                    ?>
+                    <?php $__currentLoopData = $cases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $case): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <tr>
 
-                    <td><?php echo e($count); ?></td>
-                    <td><?php echo e($case->case_number); ?></td>
-                    <td><?php echo e($case->complaint); ?></td>
-                    <td><?php echo e($case->p_name); ?>
+                        <td><?php echo e($count); ?></td>
+                        <td><?php echo e($case->case_number); ?></td>
+                        <td><?php echo e($case->complaint); ?></td>
+                        <td><?php echo e($case->p_name); ?>
 
-                    <?php if($case->case_type != 1): ?>
-                    <span class="badge bg-label-warning me-2">Advocate</span>
-                    <?php endif; ?>
-                    </td>
-                    <td><?php echo e($case->d_name); ?>
+                            <?php if($case->case_type != 1): ?>
+                            <span class="badge bg-label-warning me-2">Advocate</span>
+                            <?php endif; ?>
+                        </td>
+                        <td><?php echo e($case->d_name); ?>
 
-                      <?php if($case->case_type != 2): ?>
-                      <span class="badge bg-label-warning me-2">Advocate</span>
-                      <?php endif; ?>
-                    </td>
-                    <td><?php echo e($case->authority); ?></td>
-                    <td>
-                      <?php if($case->case_status == 'OPEN'): ?>
-                      <span class="badge bg-label-info me-2"><?php echo e($case->case_status); ?></span>
-                      <?php else: ?>
-                      <span class="badge bg-label-danger me-2"><?php echo e($case->case_status); ?></span>
-                      <?php endif; ?>
-                    </td>
-                    <td><?php echo e($case->sittingDay); ?></td>
-                    <td><a href="<?php echo e(route('cases.show',$case->id)); ?>" class="btn btn-sm btn-primary">Manage</button></td>
-                   </tr>
-                   <?php
-                       $count++;
-                   ?>
-               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-              </tbody>
+                            <?php if($case->case_type != 2): ?>
+                            <span class="badge bg-label-warning me-2">Advocate</span>
+                            <?php endif; ?>
+                        </td>
+                        <td><?php echo e($case->authority); ?></td>
+                        <td>
+                            <?php if($case->case_status == 'OPEN'): ?>
+                            <span class="badge bg-label-info me-2"><?php echo e($case->case_status); ?></span>
+                            <?php else: ?>
+                            <span class="badge bg-label-danger me-2"><?php echo e($case->case_status); ?></span>
+                            <?php endif; ?>
+                        </td>
+                        <td><?php echo e($case->sittingDay); ?></td>
+                        <td><a href="<?php echo e(route('cases.show',$case->id)); ?>" class="btn btn-sm btn-primary">Manage</button>
+                        </td>
+                    </tr>
+                    <?php
+                    $count++;
+                    ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </tbody>
             </table>
-          </div>
-    
+        </div>
+
     </div>
-    
-    </div>
-  
+
+</div>
+
 
 
 <?php $__env->stopSection(); ?>

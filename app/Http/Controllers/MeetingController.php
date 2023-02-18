@@ -19,7 +19,7 @@ class MeetingController extends Controller
     }
     public function show($meeting)
     {
-        $invitations = Invitations::where('meeting_id', $meeting)->paginate(10);
+        $invitations = Invitations::where('meeting_id', $meeting)->paginate(8);
         $meeting = Meeting::findorfail($meeting);
         $users = User::all();
         return view('meetings.detail', compact('meeting','invitations','users'));
@@ -52,7 +52,7 @@ class MeetingController extends Controller
     }
     public function api(Request $request)
     {
-        $data = Meeting::latest()->with(['invitations', 'user'])->get();
+        $data = Meeting::orderby('date')->get();
         if (!$request->expectsJson()) {
             return $data;
         } else {

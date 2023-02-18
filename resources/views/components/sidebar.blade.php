@@ -136,8 +136,8 @@
     {{-- <i class='ti-xs ti ti-link me-1'></i>  --}}
 
     <!-- Finance -->
-    <li class="menu-item">
-      <a href="javascript:void(0);" class="menu-link">
+    <li class="menu-item {{ Request::routeIs('contribution.index') ? 'active' : '' }}">
+      <a href="{{ route('contribution.index') }}" class="menu-link">
         <i class="menu-icon tf-icons ti ti-report-money"></i>
         <div data-i18n="Finance">Finance</div>
       </a>
@@ -147,12 +147,12 @@
     <li class="menu-header small text-uppercase">
       <span class="menu-header-text">Extra</span>
     </li>
-    <li class="menu-item">
+    {{-- <li class="menu-item">
       <a href="{{ route('roles') }}" class="menu-link">
         <i class='menu-icon tf-icons ti ti-settings'></i>
         <div data-i18n="Roles & Permissions">Roles & Permissions</div>
       </a>
-    </li>
+    </li> --}}
     <!-- System settings -->
     <li class="menu-item {{ Request::routeIs('settings') ? 'active' : '' }}">
       <a href="{{ route('settings') }}" class="menu-link">

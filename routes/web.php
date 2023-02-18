@@ -21,11 +21,11 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\PhonenumberController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\ContributionController;
 use App\Http\Controllers\DisciplinaryController;
 use App\Http\Controllers\LawscategoryController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\UserDashboardController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -203,6 +203,11 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::post('/addMaterial', [TrainingController::class, 'addMaterial'])->name('addMaterial');
     Route::get('/Download-material/{file}', [TrainingController::class, 'download'])->name('download');
     Route::delete('/material-delete', [TrainingController::class, 'materialDelete'])->name('materialDelete');
+
+    
+    Route::get('/contribution' , [ContributionController::class , 'index'])->name('contribution.index');
+    Route::post('/contribution/store' , [ContributionController::class , 'store'])->name('contribution.store');
+
 
 
     Route::get('/roles', [RolesController::class, 'index'])->name('roles');
