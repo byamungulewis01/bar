@@ -34,6 +34,9 @@
                 <h4>Attendence List</h4>
                 <p>Please choose Training Day to generate eAttendance List for <strong>
                         {{ $training->title }}</strong></p>
+                @if (Request::routeIs('trainings.manage'))
+                <a href="" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#generate"><i class="ti ti-settings ti-sm me-2"></i>Generate</a>
+                @endif
 
             </div>
 
@@ -46,6 +49,29 @@
 
 </div>
 
+<div class="modal fade" id="generate" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+        <div class="modal-content p-3 p-md-5">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="text-center mb-4">
+                    <h3 class="mb-2">Genarate Vouchers</h3>
+                </div>
+                <form method="POST" class="row g-3" action="{{ route('trainings.generateVouchers') }}">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $training->id }}">
+                    <div class="col-12">
+                        <label for="title" class="form-label">Attendance Day</label>
+                        <input required type="text" name="attendanceDay" class="form-control" id="attendanceDay" placeholder="Month DD, YYYY">
+                    </div>
+                    <div class="col-12 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Genarate</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="Addpart" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
         <div class="modal-content p-3 p-md-5">
@@ -73,3 +99,28 @@
         </div>
     </div>
 </div>
+
+
+
+
+@section('css')
+<link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+
+@endsection
+
+@section('js')
+<script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+<script>
+    $(function () {
+    var dtt = document.querySelector("#attendanceDay");
+    dtt && dtt.flatpickr({
+        enableTime: false,
+        altInput: !0,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d",
+        minDate: 'today'
+    })
+});
+</script>
+
+@endsection

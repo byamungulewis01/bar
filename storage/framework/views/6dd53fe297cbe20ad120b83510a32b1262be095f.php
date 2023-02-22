@@ -142,6 +142,7 @@ Trainings
         var dtt = document.querySelector("#starton");
         var startAt = document.querySelector("#startAt");
         var endAt = document.querySelector("#endAt");
+        var attendanceDay = document.querySelector("#attendanceDay");
 
         startAt.flatpickr({
                 enableTime: !0,
@@ -158,7 +159,8 @@ Trainings
                 altFormat: "F j, Y",
                 dateFormat: "Y-m-d",
                 minDate: 'today'
-            })
+            }),
+                
     });
     $(function () {
         var dtt = document.querySelector("#endon");
@@ -168,6 +170,15 @@ Trainings
             altFormat: "F j, Y",
             dateFormat: "Y-m-d",
             minDate: 'today'
+        })
+    });
+    $(function () {
+        var dtt = document.querySelector("#early_deadline");
+        dtt && dtt.flatpickr({
+            enableTime: false,
+            altInput: !0,
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
         })
     });
     $(function () {

@@ -195,6 +195,22 @@ class TrainingController extends Controller
         }
         return to_route('trainings.manage' ,$request->id)->with('message', 'Participant Added');
     }
+    public function generateVouchers(Request $request)
+    {
+       $users = Booking::where('training', $request->id)->get();
+        foreach ($users as $user) {
+            Booking::where('advocate',$user->advocate)
+            ->update([
+            'attendanceDay' => $request->attendanceDay,
+            'cumulatedCredit' => 2.0,
+            'voucherNumber' => rand(1000000, 9999999),
+            'confirm' => 3,
+        ]);
+        }
+
+    return 'Done';
+
+    }
 
 
 
