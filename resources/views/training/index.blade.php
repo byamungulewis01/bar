@@ -118,7 +118,7 @@ Legal Edication
             <table class="datatables table border-top">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th style="width: 5px">#</th>
                   <th style="width: 25%">Training title</th>
                   <th>Start on</th>
                   <th>End on</th>
@@ -151,12 +151,36 @@ Legal Edication
                     <td>
                       <i class="fas fa-bullhorn"></i>
                     </td>
-                    <td colspan="6"><h6><span class="badge bg-label-warning me-2">Warning </span>
+                    <td colspan="7"><h6><span class="badge bg-label-warning me-2">Warning </span>
                         Early Registration Deadline <u class="text-danger">{{ $training->early_deadline }}</u> And  Late Registration Deadline 
                         ( <span class="text-warning">with {{ $training->rate }}% increase </span> ) 
                         <u class="text-danger">{{ $training->late_deadline }}</u>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#delete{{ $training->id }}" class="pull-left float-end"><i class="ti ti-trash me-0 me-sm-1 ti-xs text-danger"></i><span
+                            class="d-none d-sm-inline-block"></span></a>
                       </h6>
+
+                      <div class="modal modal-top fade" id="delete{{ $training->id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-sm" role="document">
+                          <div class="modal-content">
+                            <form action="{{ route('trainings.delete') }}" method="POST">
+                              @csrf
+                              @method('DELETE')
+                              <input type="hidden" name="id" value="{{ $training->id }}" />
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel2">Are you sure you want to delete?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+
                     </td>
+                
                  
                   </tr>
               </tbody>  

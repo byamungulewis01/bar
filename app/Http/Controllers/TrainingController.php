@@ -8,13 +8,14 @@ use App\Models\TrainingTopic;
 use App\Models\TrainingMaterial;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\User;
 
 class TrainingController extends Controller
 {
     //
     public function index()
     {
-        $trainings = Training::all();
+     $trainings = Training::all();
      return view('training.index' ,compact('trainings'));
     }
     public function store(Request $request)
@@ -52,25 +53,43 @@ class TrainingController extends Controller
 
          return back()->with('message','Training registered!');
     }
+    public function delete(Request $request)
+    {
+    Training::findorfail($request->id)->delete();
+    TrainingMaterial::where('training_id',$request->id)->delete();
+    TrainingTopic::where('training_id',$request->id)->delete();
+    Booking::where('training',$request->id)->delete();
+    return back()->with('message','Training removed');
+    }
     public function details($details)
     {
+        $users = User::where('practicing' ,2)->orderby('name')->get();
         $training = Training::findorfail($details);
         $topics = TrainingTopic::where('training_id',$details)->get();
         $materials = TrainingMaterial::where('training_id',$details)->get();
-        return view('training.details' ,compact('training','topics','materials'));
+        return view('training.details' ,compact('training','topics','materials','users'));
     }
     public function booked($details)
     {
+        $users = User::where('practicing' ,2)->orderby('name')->get();
         $training = Training::findorfail($details);
         $bookings = Booking::where('training' , $details)->get();
 
-        return view('training.booked' ,compact('training','bookings'));
+        return view('training.booked' ,compact('training','bookings','users'));
     }
     public function confirmed($details)
     {
+        $users = User::where('practicing' ,2)->orderby('name')->get();
         $training = Training::findorfail($details);
         $bookings = Booking::where('training' , $details)->where('confirm', true)->get();
-        return view('training.confirmed' ,compact('training','bookings'));
+        return view('training.confirmed' ,compact('training','bookings','users'));
+    }
+    public function manage($details)
+    {
+        $users = User::where('practicing' ,2)->orderby('name')->get();
+        $training = Training::findorfail($details);
+        $bookings = Booking::where('training' , $details)->get();
+        return view('training.manage' ,compact('training','bookings','users'));
     }
     public function update(Request $request)
     {
@@ -162,5 +181,21 @@ class TrainingController extends Controller
       $material->delete();
      return back()->with('warning','Training Material Deleted');
     } 
-    
+
+    public function addParticipant(Request $request)
+    {
+        foreach ($request->user as $user) {
+            $check = Booking::where('advocate', $user)->where('training', $request->id)->get();
+            foreach ($check as $value) {
+                $data = User::findorfail($value->advocate);
+                $name = $data->name;
+             return back()->with('warning',$name . ' Arleady Existy');
+            }
+            Booking::create(['training' => $request->id,'advocate' => $user ,'confirm' => 3]);
+        }
+        return to_route('trainings.manage' ,$request->id)->with('message', 'Participant Added');
+    }
+
+
+
 }
