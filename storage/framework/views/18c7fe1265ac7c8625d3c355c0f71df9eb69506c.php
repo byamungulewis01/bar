@@ -21,21 +21,11 @@ Role List
                     <div class="d-flex justify-content-between">
                       <h6 class="fw-normal mb-2">Total <?php echo e($role->users->count()); ?> <?php echo e(Str::plural('user',$role->users->count())); ?></h6>
                       <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Vinnie Mostowy" class="avatar avatar-sm pull-up">
-                          <img class="rounded-circle" src="<?php echo e(asset('assets/img/avatars/5.png')); ?>" alt="Avatar">
+                        <?php $__currentLoopData = $role->users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ru): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="<?php echo e($ru->name); ?>" class="avatar avatar-sm pull-up">
+                          <img class="rounded-circle" src="<?php echo e(asset('assets/img/avatars/')); ?><?php echo e($ru->photo); ?>" alt="Avatar">
                         </li>
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Allen Rieske" class="avatar avatar-sm pull-up">
-                          <img class="rounded-circle" src="<?php echo e(asset('assets/img/avatars/12.png')); ?>" alt="Avatar">
-                        </li>
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Julee Rossignol" class="avatar avatar-sm pull-up">
-                          <img class="rounded-circle" src="<?php echo e(asset('assets/img/avatars/6.png')); ?>" alt="Avatar">
-                        </li>
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Kaith D'souza" class="avatar avatar-sm pull-up">
-                          <img class="rounded-circle" src="<?php echo e(asset('assets/img/avatars/3.png')); ?>" alt="Avatar">
-                        </li>
-                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="John Doe" class="avatar avatar-sm pull-up">
-                          <img class="rounded-circle" src="<?php echo e(asset('assets/img/avatars/1.png')); ?>" alt="Avatar">
-                        </li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </ul>
                     </div>
                     <div class="d-flex justify-content-between align-items-end mt-1">
@@ -67,27 +57,6 @@ Role List
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-12">
-                <!-- Role Table -->
-                <div class="card">
-                  <div class="card-datatable table-responsive">
-                    <table class="datatables-users table border-top">
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th>User</th>
-                          <th>Role</th>
-                          <th>Roll Number</th>
-                          <th>Admission Status</th>
-                          <th>Status</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                    </table>
-                  </div>
-                </div>
-                <!--/ Role Table -->
               </div>
             </div>
             <!--/ Role cards -->
