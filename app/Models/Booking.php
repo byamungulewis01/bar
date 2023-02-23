@@ -14,7 +14,10 @@ class Booking extends Model
         'attendanceDay',
         'cumulatedCredit',
         'voucherNumber',
+        'booked',
         'confirm',
+        'attend',
+        'yearInBar',
 ];
 public function trains()
 {

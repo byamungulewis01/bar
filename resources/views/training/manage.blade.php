@@ -47,20 +47,17 @@ Trainings
                                                 <td>{{ $booking->trains->price }}</td>
                                                 <td>{{ $booking->trains->credits }}</td>
                                                 <td>
-                                                    @switch($booking->confirm)
-                                                    @case(0)
-                                                    <span class="badge bg-label-info me-2">booking</span>
-                                                    @break
-                                                    @case(1)
+                                                    @if ($booking->booked && !$booking->confirm && !$booking->attend)
+                                                      <span class="badge bg-label-info me-2">Booking</span>
+                                                    @elseif($booking->booked && $booking->confirm && !$booking->attend)
                                                     <span class="badge bg-label-primary me-2">Confirm</span>
-                                                    @break
-                                                    @case(2)
-                                                    <span class="badge bg-label-warning me-2">Attending</span>
-                                                    @break
-                                                    @default
-                                                    <span class="badge bg-label-info me-2">Attended</span>
-                                                    @endswitch
-
+                                                    @elseif($booking->booked && $booking->confirm && $booking->attend)
+                                                    <span class="badge bg-label-success me-2">Attended</span>
+                                                    @else
+                                                    <span class="badge bg-label-info me-2">Attending</span>
+                                                    @endif
+                                                   
+                                                 
                                                 </td>
                                                 <td>
                                                     <a href="" data-bs-toggle="modal" data-bs-target="#" class="text-primary"><i

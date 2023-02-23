@@ -47,20 +47,17 @@ Trainings
                                                 <td><?php echo e($booking->trains->price); ?></td>
                                                 <td><?php echo e($booking->trains->credits); ?></td>
                                                 <td>
-                                                    <?php switch($booking->confirm):
-                                                    case (0): ?>
-                                                    <span class="badge bg-label-info me-2">booking</span>
-                                                    <?php break; ?>
-                                                    <?php case (1): ?>
+                                                    <?php if($booking->booked && !$booking->confirm && !$booking->attend): ?>
+                                                      <span class="badge bg-label-info me-2">Booking</span>
+                                                    <?php elseif($booking->booked && $booking->confirm && !$booking->attend): ?>
                                                     <span class="badge bg-label-primary me-2">Confirm</span>
-                                                    <?php break; ?>
-                                                    <?php case (2): ?>
-                                                    <span class="badge bg-label-warning me-2">Attending</span>
-                                                    <?php break; ?>
-                                                    <?php default: ?>
-                                                    <span class="badge bg-label-info me-2">Attended</span>
-                                                    <?php endswitch; ?>
-
+                                                    <?php elseif($booking->booked && $booking->confirm && $booking->attend): ?>
+                                                    <span class="badge bg-label-success me-2">Attended</span>
+                                                    <?php else: ?>
+                                                    <span class="badge bg-label-info me-2">Attending</span>
+                                                    <?php endif; ?>
+                                                   
+                                                 
                                                 </td>
                                                 <td>
                                                     <a href="" data-bs-toggle="modal" data-bs-target="#" class="text-primary"><i

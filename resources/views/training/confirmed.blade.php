@@ -48,9 +48,9 @@ Trainings
                                                 <td>{{ $booking->trains->price }}</td>
                                                 <td>{{ $booking->trains->credits }}</td>
                                                 <td> @if ($booking->confirm)
-                                                    <span class="badge bg-label-info me-2">Attended</span>
+                                                    <span class="badge bg-label-info me-2">Confirm</span>
                                                 @else
-                                                <span class="badge bg-label-warning me-2">Not Attended</span>
+                                                <span class="badge bg-label-warning me-2">not Confirm</span>
                                                 @endif </td>
                                              
                                             </tr>

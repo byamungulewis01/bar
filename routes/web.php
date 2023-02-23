@@ -207,6 +207,7 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::get('/Download-material/{file}', [TrainingController::class, 'download'])->name('download');
     Route::delete('/material-delete', [TrainingController::class, 'materialDelete'])->name('materialDelete');
     Route::post('/generateVouchers', [TrainingController::class, 'generateVouchers'])->name('trainings.generateVouchers');
+    Route::get('/printpdf', [TrainingController::class, 'printpdf'])->name('trainings.printpdf');
 
     
     Route::get('/contribution' , [ContributionController::class , 'index'])->name('contribution.index');

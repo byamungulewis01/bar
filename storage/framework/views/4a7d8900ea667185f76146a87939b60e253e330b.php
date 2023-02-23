@@ -47,7 +47,7 @@ Trainings
                                                 <td><?php echo e($booking->user->name); ?></td>
                                                 <td><?php echo e($booking->trains->price); ?></td>
                                                 <td><?php echo e($booking->trains->credits); ?></td>
-                                                <td> <?php if($booking->confirm): ?>
+                                                <td> <?php if($booking->booked): ?>
                                                     <span class="badge bg-label-info me-2">Booked</span>
                                                 <?php else: ?>
                                                 <span class="badge bg-label-warning me-2">Not booked</span>

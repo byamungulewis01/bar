@@ -36,6 +36,9 @@
                         <?php echo e($training->title); ?></strong></p>
                 <?php if(Request::routeIs('trainings.manage')): ?>
                 <a href="" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#generate"><i class="ti ti-settings ti-sm me-2"></i>Generate</a>
+                        <?php if($booking->voucherNumber != null): ?>
+                            <a href="<?php echo e(route('trainings.printpdf')); ?>" class="btn btn-sm btn-primary"><i class="ti ti-prints ti-sm me-2"></i>Print list</a>
+                        <?php endif; ?>
                 <?php endif; ?>
 
             </div>

@@ -73,7 +73,7 @@ class TrainingController extends Controller
     {
         $users = User::where('practicing' ,2)->orderby('name')->get();
         $training = Training::findorfail($details);
-        $bookings = Booking::where('training' , $details)->get();
+        $bookings = Booking::where('training' , $details)->where('booked',true)->get();
 
         return view('training.booked' ,compact('training','bookings','users'));
     }
@@ -200,16 +200,20 @@ class TrainingController extends Controller
        $users = Booking::where('training', $request->id)->get();
         foreach ($users as $user) {
             Booking::where('advocate',$user->advocate)
-            ->update([
-            'attendanceDay' => $request->attendanceDay,
+            ->update(['attendanceDay' => $request->attendanceDay,
             'cumulatedCredit' => 2.0,
             'voucherNumber' => rand(1000000, 9999999),
-            'confirm' => 3,
+            'attend' => true,
         ]);
         }
 
     return 'Done';
 
+    }
+
+    public function printpdf()
+    {
+       return view('training.attendancevourcher');
     }
 
 
