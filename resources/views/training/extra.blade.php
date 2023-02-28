@@ -36,9 +36,12 @@
                         {{ $training->title }}</strong></p>
                 @if (Request::routeIs('trainings.manage'))
                 <a href="" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#generate"><i class="ti ti-settings ti-sm me-2"></i>Generate</a>
+                     @if ($bookings_count == 0)
+                     @else
                         @if ($booking->voucherNumber != null)
-                            <a href="{{ route('trainings.printpdf') }}" class="btn btn-sm btn-primary"><i class="ti ti-prints ti-sm me-2"></i>Print list</a>
-                        @endif
+                        <a href="{{ route('trainings.voucher', $booking->training) }}" class="btn btn-sm btn-primary" target="_blank"><i class="ti ti-prints ti-sm me-2"></i>Create list</a>
+                        @endif       
+                     @endif
                 @endif
 
             </div>

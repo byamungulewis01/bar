@@ -328,9 +328,8 @@ Trainings
 
                                                                     <div class="col-12">
                                                                         <label for="title"
-                                                                            class="form-label">File</label>
-                                                                        <input required type="file" name="file_name"
-                                                                            class="form-control">
+                                                                            class="form-label">File  <span class="text-warning">Allowable file is only Word, PPT and PDF</span> </label>
+                                                                        <input required type="file" name="file_name" class="form-control" accept=".doc, .docx, .ppt, .pptx, .pdf">
                                                                     </div>
                                                                     <div class="col-12 d-flex justify-content-center">
                                                                         <button type="submit"

@@ -58,23 +58,31 @@
 <body>
 
     <div class="container mt-4">
+        
+        <br>
+        <br>
         <div class="row">
-            <div class="col-md-4 p-3 border">
-                <h6 class="fw-semibold">RWANDA BAR ASSOCIATION (R.B.A)</h6>
-              <span class="fw-semibold"><u>ATTENDANCE VOUCHER</u></span>
-              <div class="pt-1">
-                <span>Date:</span>
-                <span class="fw-semibold">May 25, 2021</span>
-              </div>
-              <div class="pt-1">
-                <span>Vouncher Number:</span>
-                <span class="fw-semibold">May 25, 2021</span>
-              </div>
-              <div class="pt-1">
-                <span>Trainee:</span>
-                <span class="fw-semibold">May 25, 2021</span>
-              </div>
-            </div>
+          <?php $__empty_1 = true; $__currentLoopData = $vouchers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $voucher): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+          <div class="col-md-4 p-2 m-2 border">
+            <h6 class="fw-semibold">RWANDA BAR ASSOCIATION (R.B.A)</h6>
+          <span class="fw-semibold"><u>ATTENDANCE VOUCHER</u></span>
+          <div class="pt-1">
+            <span>Date:</span>
+            <span class="fw-semibold"><?php echo e($voucher->attendanceDay); ?></span>
+          </div>
+          <div class="pt-1">
+            <span>Vouncher Number:</span>
+            <span class="fw-semibold"><?php echo e($voucher->voucherNumber); ?></span>
+          </div>
+          <div class="pt-1">
+            <span>Trainee:</span>
+            <span class="fw-semibold"><?php echo e($voucher->user->name); ?></span>
+          </div>
+        </div>
+          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+              <h6>Empty </h6>
+          <?php endif; ?>
+           
         </div>
     </div>
 
@@ -105,6 +113,4 @@
 
 </html>
 
-<!-- beautify ignore:end -->
-
-<?php /**PATH C:\Users\admin\Desktop\Lewis\rba\resources\views/training/attendancevourcher.blade.php ENDPATH**/ ?>
+<!-- beautify ignore:end --><?php /**PATH C:\Users\admin\Desktop\Lewis\rba\resources\views/training/attendancevourcher.blade.php ENDPATH**/ ?>

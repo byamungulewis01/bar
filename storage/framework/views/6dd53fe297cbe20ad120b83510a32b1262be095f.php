@@ -47,17 +47,23 @@ Trainings
                                                 <td><?php echo e($booking->trains->price); ?></td>
                                                 <td><?php echo e($booking->trains->credits); ?></td>
                                                 <td>
-                                                    <?php if($booking->booked && !$booking->confirm && !$booking->attend): ?>
-                                                      <span class="badge bg-label-info me-2">Booking</span>
-                                                    <?php elseif($booking->booked && $booking->confirm && !$booking->attend): ?>
-                                                    <span class="badge bg-label-primary me-2">Confirm</span>
-                                                    <?php elseif($booking->booked && $booking->confirm && $booking->attend): ?>
-                                                    <span class="badge bg-label-success me-2">Attended</span>
-                                                    <?php else: ?>
-                                                    <span class="badge bg-label-info me-2">Attending</span>
-                                                    <?php endif; ?>
-                                                   
-                                                 
+                                                    <?php switch($booking->status):
+                                                        case (1): ?>
+                                                             <span class="badge bg-label-primary me-2">Booking</span>
+                                                            <?php break; ?>
+                                                        <?php case (2): ?>
+                                                             <span class="badge bg-label-secondary me-2">Confirm</span>
+                                                            <?php break; ?>
+                                                        <?php case (3): ?>
+                                                             <span class="badge bg-label-warning me-2">Attending</span>
+                                                            <?php break; ?>
+                                                        <?php case (4): ?>
+                                                            <span class="badge bg-label-info me-2">Attended</span>
+                                                            <?php break; ?>
+                                                        <?php default: ?>
+                                                            <span class="badge bg-label-warning me-2">N/A</span>
+                                                    <?php endswitch; ?>
+                        
                                                 </td>
                                                 <td>
                                                     <a href="" data-bs-toggle="modal" data-bs-target="#" class="text-primary"><i
@@ -83,6 +89,11 @@ Trainings
 
                                         </tbody>
                                     </table>
+                                    <div class="col-lg-4">
+                                        <?php echo e($bookings->links('vendor.pagination.custom')); ?>
+
+                                       
+                                    </div>
                                 </div>
                             </div>
                         </div>

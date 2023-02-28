@@ -86,4 +86,21 @@ class AdminController extends Controller
         $user_id = $user->id;
         return view('profile.training',compact('probonos','user_id'));
     }
+
+    public function notify()
+    {
+        $users = User::where('practicing', '<>', 6)->get();
+        return view('notify',compact('users'));
+    }
+    public function send_notify(Request $request)
+    {
+        dd($request->response);
+        // $recipient = [];
+        //     foreach ($request->recipient as $value) {
+        //         $recipient[] = $value;
+
+        //         echo "<br>".$value;
+        //     }
+    }
+
 }

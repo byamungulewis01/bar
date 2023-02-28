@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Booking;
 use App\Models\Training;
 use Illuminate\Http\Request;
 use App\Models\TrainingTopic;
 use App\Models\TrainingMaterial;
 use App\Http\Controllers\Controller;
-use App\Models\Booking;
-use App\Models\User;
 
 class TrainingController extends Controller
 {
     //
     public function index()
     {
-     $trainings = Training::all();
+     $trainings = Training::orderBy('created_at','desc')->get();
      return view('training.index' ,compact('trainings'));
     }
     public function store(Request $request)
@@ -88,8 +89,9 @@ class TrainingController extends Controller
     {
         $users = User::where('practicing' ,2)->orderby('name')->get();
         $training = Training::findorfail($details);
-        $bookings = Booking::where('training' , $details)->get();
-        return view('training.manage' ,compact('training','bookings','users'));
+        $bookings = Booking::where('training' , $details)->paginate(10);
+        $bookings_count = $bookings->count();
+        return view('training.manage' ,compact('training','bookings','users','bookings_count'));
     }
     public function update(Request $request)
     {
@@ -151,7 +153,7 @@ class TrainingController extends Controller
     {
         $formDate = $request->validate([
             'title' => 'required',
-            'file_name' => 'required',
+            'file_name' => 'required|mimes:doc,docx,ppt,pptx,pdf',
         ]);
 
         if($request->hasFile('file_name')){
@@ -184,6 +186,9 @@ class TrainingController extends Controller
 
     public function addParticipant(Request $request)
     {
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+        $yearInBar = ($currentMonth == 1) ? $currentYear - 1 : $currentYear;
         foreach ($request->user as $user) {
             $check = Booking::where('advocate', $user)->where('training', $request->id)->get();
             foreach ($check as $value) {
@@ -191,7 +196,7 @@ class TrainingController extends Controller
                 $name = $data->name;
              return back()->with('warning',$name . ' Arleady Existy');
             }
-            Booking::create(['training' => $request->id,'advocate' => $user ,'confirm' => 3]);
+            Booking::create(['training' => $request->id,'advocate' => $user ,'yearInBar' => $yearInBar,'status' => 3]);
         }
         return to_route('trainings.manage' ,$request->id)->with('message', 'Participant Added');
     }
@@ -203,19 +208,54 @@ class TrainingController extends Controller
             ->update(['attendanceDay' => $request->attendanceDay,
             'cumulatedCredit' => 2.0,
             'voucherNumber' => rand(1000000, 9999999),
-            'attend' => true,
         ]);
         }
 
-    return 'Done';
+    return back()->with('message','Attendence Voucher numbers created');
 
     }
 
-    public function printpdf()
+    public function voucher($id)
     {
-       return view('training.attendancevourcher');
+        $vouchers = Booking::where('training' ,$id)->get();
+       return view('training.attendancevourcher',compact('vouchers'));
     }
 
+    public function notify(Request $request)
+    {
+        $formField = $request->validate([
+            'recipients' => 'required',
+            'subject' => 'required',
+            'message' => 'required|min:10',
+            'sent' => 'required',
+        ]);
+
+        $recipient = [];
+            foreach ($request->recipients as $value) {
+                $recipient[] = $value;
+            }
+
+         $ids = Booking::whereIn('status',$recipient)->where('training', $request->id)->pluck('advocate')->toArray();
+         $users = User::whereIn('id', $ids)->get();
+        
+        foreach ($request->sent as $value) {
+            if ($value == 'EMAIL') {
+                foreach ($users as $user) {
+                    // echo '<br> '.$user->name;
+                    (new NotifyController)->notify_training($user->email,$request->subject,$request->message);
+                  }         
+            }elseif ($value == 'SMS') {
+              echo 'In SMS';
+            } else{
+            foreach ($users as $user) {
+                (new NotifyController)->notify_training($user->email,$request->subject,$request->message);
+                }
+            }
+       }
+
+     return back()->with('message', 'Notified Successfully');
+       
+    }
 
 
 }

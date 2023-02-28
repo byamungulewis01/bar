@@ -16,7 +16,7 @@ class Booking extends Model
         'voucherNumber',
         'booked',
         'confirm',
-        'attend',
+        'status',
         'yearInBar',
 ];
 public function trains()

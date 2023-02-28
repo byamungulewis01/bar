@@ -94,6 +94,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/booking-remove', [UserProfileController::class, 'book_remove'])->name('book_remove');
     Route::put('/booking-pay', [UserProfileController::class, 'paytraining'])->name('paytraining');
     Route::get('/mytraings-detail/{training}', [UserProfileController::class, 'mytraings_detail'])->name('mytraings_detail');
+    Route::put('/makeAttendence', [UserProfileController::class, 'makeAttendence'])->name('makeAttendence');
     Route::get('/Download/{file}', [TrainingController::class, 'download'])->name('userDownload');
     Route::get('/Download-file/{file}', [ProbonoController::class, 'download'])->name('userDownload-files');
 
@@ -207,7 +208,8 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::get('/Download-material/{file}', [TrainingController::class, 'download'])->name('download');
     Route::delete('/material-delete', [TrainingController::class, 'materialDelete'])->name('materialDelete');
     Route::post('/generateVouchers', [TrainingController::class, 'generateVouchers'])->name('trainings.generateVouchers');
-    Route::get('/printpdf', [TrainingController::class, 'printpdf'])->name('trainings.printpdf');
+    Route::get('/Vouchers/{id}', [TrainingController::class, 'voucher'])->name('trainings.voucher');
+    Route::post('/trainings/notify', [TrainingController::class, 'notify'])->name('trainings.notify');
 
     
     Route::get('/contribution' , [ContributionController::class , 'index'])->name('contribution.index');
@@ -215,8 +217,13 @@ Route::group(['middleware' => 'adminauth'], function(){
 
 
 
+   
     Route::get('/roles', [RolesController::class, 'index'])->name('roles');
     Route::post('/roles', [RolesController::class, 'store']);
     Route::put('/roles/{user}', [RolesController::class, 'assign'])->name('assignRole');
+
+
+   Route::get('/notify-users', [AdminController::class, 'notify'])->name('notify-users');
+   Route::post('/notify-users-send', [AdminController::class, 'send_notify'])->name('send_notify');
 
 });

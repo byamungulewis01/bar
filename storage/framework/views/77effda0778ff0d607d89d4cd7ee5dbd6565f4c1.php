@@ -163,6 +163,13 @@
         <div data-i18n="System settings">System settings</div>
       </a>
     </li>
+
+    <li class="menu-item <?php echo e(Request::routeIs('notify-users') ? 'active' : ''); ?>">
+      <a href="<?php echo e(route('notify-users')); ?>" class="menu-link">
+        <i class="menu-icon tf-icons ti ti-bell"></i>
+        <div data-i18n="Notifying">Notifying</div>
+      </a>
+    </li>
   </ul>
   
   

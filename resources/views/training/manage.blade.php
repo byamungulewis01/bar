@@ -47,17 +47,23 @@ Trainings
                                                 <td>{{ $booking->trains->price }}</td>
                                                 <td>{{ $booking->trains->credits }}</td>
                                                 <td>
-                                                    @if ($booking->booked && !$booking->confirm && !$booking->attend)
-                                                      <span class="badge bg-label-info me-2">Booking</span>
-                                                    @elseif($booking->booked && $booking->confirm && !$booking->attend)
-                                                    <span class="badge bg-label-primary me-2">Confirm</span>
-                                                    @elseif($booking->booked && $booking->confirm && $booking->attend)
-                                                    <span class="badge bg-label-success me-2">Attended</span>
-                                                    @else
-                                                    <span class="badge bg-label-info me-2">Attending</span>
-                                                    @endif
-                                                   
-                                                 
+                                                    @switch($booking->status)
+                                                        @case(1)
+                                                             <span class="badge bg-label-primary me-2">Booking</span>
+                                                            @break
+                                                        @case(2)
+                                                             <span class="badge bg-label-secondary me-2">Confirm</span>
+                                                            @break
+                                                        @case(3)
+                                                             <span class="badge bg-label-warning me-2">Attending</span>
+                                                            @break
+                                                        @case(4)
+                                                            <span class="badge bg-label-info me-2">Attended</span>
+                                                            @break
+                                                        @default
+                                                            <span class="badge bg-label-warning me-2">N/A</span>
+                                                    @endswitch
+                        
                                                 </td>
                                                 <td>
                                                     <a href="" data-bs-toggle="modal" data-bs-target="#" class="text-primary"><i
@@ -83,6 +89,10 @@ Trainings
 
                                         </tbody>
                                     </table>
+                                    <div class="col-lg-4">
+                                        {{ $bookings->links('vendor.pagination.custom') }}
+                                       
+                                    </div>
                                 </div>
                             </div>
                         </div>

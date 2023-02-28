@@ -659,12 +659,7 @@ $(function(){
             }
         }));
       }
-      <?php if($errors->any()): ?>
-        var myModal = new bootstrap.Modal(document.getElementById('newUser'), {
-          keyboard: false
-        })
-        myModal.show()
-      <?php endif; ?>
+
     })
    
     

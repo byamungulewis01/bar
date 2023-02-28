@@ -30,9 +30,10 @@ Meetings
 
                         <div>
                             <div class="input-group input-group-merge">
+                                
                                 <span class="input-group-text" id="basic-addon-search31"><i
                                         class="ti ti-search"></i></span>
-                                <input type="text" id="search" class="form-control" placeholder="Search..." aria-label="Search..."
+                                <input type="text" id="search" class="form-control" placeholder="Attendance checkin" aria-label="Search..."
                                     aria-describedby="basic-addon-search31" /> 
                                     
                             </div>

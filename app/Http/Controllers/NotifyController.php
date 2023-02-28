@@ -7,6 +7,7 @@ use App\Mail\NewAccount;
 use App\Mail\ChangedEmail;
 use App\Mail\MeetingNotify;
 use App\Mail\resetPassword;
+use App\Mail\TrainingNotify;
 use Illuminate\Http\Request;
 use App\Mail\NewOrganization;
 use Illuminate\Support\Facades\Mail;
@@ -50,4 +51,11 @@ class NotifyController extends Controller
     public function notify_meeting($email,$subject,$message,$attachments){
         Mail::to($email)->send(new MeetingNotify($email,$subject,$message,$attachments));
     }
+
+    public function notify_training($email,$subject,$message){
+        Mail::to($email)->send(new TrainingNotify($email,$subject,$message));
+    }
+
+
+    
 }

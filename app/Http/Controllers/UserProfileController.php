@@ -128,7 +128,8 @@ class UserProfileController extends Controller
         $trainings = Training::where('publish' , 2)->get();
         $bookings = Booking::where('advocate' , $advocate)->get();
         $booked = Booking::where('advocate',$advocate)->pluck('training')->toArray();
-        return view('myprofile.trainings',compact('trainings','bookings','booked'));
+        $attendances = Booking::where('advocate' , $advocate)->where('attendanceDay', '<>', null)->whereIn('status',[1,2,3])->get();
+        return view('myprofile.trainings',compact('trainings','bookings','booked','attendances'));
     }
     public function training_book(Request $request)
     {   
@@ -142,7 +143,7 @@ class UserProfileController extends Controller
         $yearInBar = ($currentMonth == 1) ? $currentYear - 1 : $currentYear;
 
         Booking::create(['training' => $request->training, 'advocate' => $advocate,
-                        'yearInBar' => $yearInBar , 'booked' => true]);
+                        'yearInBar' => $yearInBar , 'booked' => true, 'status' => 1]);
 
         return back()->with('message',$training->title .'Booked');
     }
@@ -163,6 +164,7 @@ class UserProfileController extends Controller
     {   
         $booking = Booking::findorfail($request->id);
         $booking->confirm = true;
+        $booking->status = 2;
         $train = $booking->training;
         $booking->save();
 
@@ -189,7 +191,22 @@ class UserProfileController extends Controller
 
         return view('myprofile.trainings-details',compact('trainings','bookings','booked','training','topics','materials'));
     }
+    public function makeAttendence(Request $request)
+    {
+        $check = Booking::where('training',$request->training)
+        ->where('voucherNumber',$request->voucher)->where('advocate',auth()->user()->id)->
+        first();
+        if ($check) {
+            Booking::where('training',$request->training)->where('advocate',auth()->user()->id)
+            ->update(['status' => 4,
+            'updated_at' => now()->format('Y-m-d H:i:s'),
+        ]);
+        } else {
+            return back()->with('warning', 'Voucher Number Does not much');
+        }
+        return back()->with('message', 'Attendance Done');
 
+    }
 
 
 

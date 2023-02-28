@@ -17,102 +17,102 @@ Legal Edication
                     data-bs-target="#training"><i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span
                         class="d-none d-sm-inline-block">New Training</span></a></h5>
 
-                            <div class="modal fade" id="training" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
-                                    <div class="modal-content p-3 p-md-5">
-                                        <div class="modal-body">
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            <div class="text-center mb-4">
-                                                <h3 class="mb-2">New Training</h3>
-                                            </div>
-                                            <form method="POST" class="row g-3" action="{{ route('trainings.store') }}">
-                                                @csrf
-                                                <div class="col-12">
-                                                    <label for="title" class="form-label">Title</label>
-                                                    <input required type="text" name="title" class="form-control" placeholder="Title">
-                                                </div>
-                                                <div class="col-12">
-                                                    <label for="category" class="form-label">Training Category</label>
-                                                    <select required id="category" name="category" class="form-select">
-                                                        <option value="" selected>Choose one </option>
-                                                        <option @if(old('category')=="CLE" ) selected @endif value="CLE">CLE</option>
-                                                        <option @if(old('category')=="Publication" ) selected @endif
-                                                            value="Publication">Publication</option>
-                                                        <option @if(old('category')=="Legal Workshop" ) selected @endif
-                                                            value="Legal Workshop">Legal Workshop</option>
-                                                        <option @if(old('category')=="Meeting (Credit)" ) selected @endif
-                                                            value="Meeting (Credit)">Meeting (Credit)</option>
-                                                        <option @if(old('category')=="Lecture" ) selected @endif value="Lecture">Lecture
-                                                        </option>
-                                                        <option @if(old('category')=="Others" ) selected @endif value="Others">Others
-                                                        </option>
-                                                    </select>
-                                                </div>
+            <div class="modal fade" id="training" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                    <div class="modal-content p-3 p-md-5">
+                        <div class="modal-body">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="text-center mb-4">
+                                <h3 class="mb-2">New Training</h3>
+                            </div>
+                            <form method="POST" class="row g-3" action="{{ route('trainings.store') }}">
+                                @csrf
+                                <div class="col-12">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input required type="text" name="title" class="form-control" placeholder="Title">
+                                </div>
+                                <div class="col-12">
+                                    <label for="category" class="form-label">Training Category</label>
+                                    <select required id="category" name="category" class="form-select">
+                                        <option value="" selected>Choose one </option>
+                                        <option @if(old('category')=="CLE" ) selected @endif value="CLE">CLE</option>
+                                        <option @if(old('category')=="Publication" ) selected @endif
+                                            value="Publication">Publication</option>
+                                        <option @if(old('category')=="Legal Workshop" ) selected @endif
+                                            value="Legal Workshop">Legal Workshop</option>
+                                        <option @if(old('category')=="Meeting (Credit)" ) selected @endif
+                                            value="Meeting (Credit)">Meeting (Credit)</option>
+                                        <option @if(old('category')=="Lecture" ) selected @endif value="Lecture">Lecture
+                                        </option>
+                                        <option @if(old('category')=="Others" ) selected @endif value="Others">Others
+                                        </option>
+                                    </select>
+                                </div>
 
-                                                <div class="col-6">
-                                                    <label for="venue" class="form-label">Venue</label>
-                                                    <input required type="text" name="venue" class="form-control" id="venue">
-                                                </div>
-                                                <div class="col-3">
-                                                    <label for="venue" class="form-label">Credit</label>
-                                                    <input required type="text" name="credits" id="credit" class="form-control">
-                                                </div>
-                                                <div class="col-3">
-                                                    <label for="venue" class="form-label">Price</label>
-                                                    <input required type="text" name="price" id="price" class="form-control">
-                                                </div>
+                                <div class="col-6">
+                                    <label for="venue" class="form-label">Venue</label>
+                                    <input required type="text" name="venue" class="form-control" id="venue">
+                                </div>
+                                <div class="col-3">
+                                    <label for="venue" class="form-label">Credit</label>
+                                    <input required type="text" name="credits" id="credit" class="form-control">
+                                </div>
+                                <div class="col-3">
+                                    <label for="venue" class="form-label">Price</label>
+                                    <input required type="text" name="price" id="price" class="form-control">
+                                </div>
 
-                                                <div class="col-md-6">
-                                                    <label for="starton" class="form-label">Start on</label>
-                                                    <input required type="text" class="form-control" id="starton" name="starton"
-                                                        placeholder="Month DD, YYYY">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="endon" class="form-label">End on</label>
-                                                    <input required type="text" class="form-control" id="endon" name="endon"
-                                                        placeholder="Month DD, YYYY">
-                                                </div>
+                                <div class="col-md-6">
+                                    <label for="starton" class="form-label">Start on</label>
+                                    <input required type="text" class="form-control" id="starton" name="starton"
+                                        placeholder="Month DD, YYYY">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="endon" class="form-label">End on</label>
+                                    <input required type="text" class="form-control" id="endon" name="endon"
+                                        placeholder="Month DD, YYYY">
+                                </div>
 
-                                                <div class="col-md-6">
-                                                    <label for="early_deadline" class="form-label">Early Registration Deadline</label>
-                                                    <input required type="text" class="form-control" id="early_deadline"
-                                                        name="early_deadline" placeholder="Month DD, YYYY">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="late_deadline" class="form-label">Late Registration Deadline</label>
-                                                    <input required type="text" class="form-control" id="late_deadline"
-                                                        name="late_deadline" placeholder="Month DD, YYYY H:i">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="rate" class="form-label">Late Registration Rate</label>
-                                                    <input required type="text" class="form-control" id="rate" name="rate"
-                                                        placeholder="10">
-                                                </div>
+                                <div class="col-md-6">
+                                    <label for="early_deadline" class="form-label">Early Registration Deadline</label>
+                                    <input required type="text" class="form-control" id="early_deadline"
+                                        name="early_deadline" placeholder="Month DD, YYYY">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="late_deadline" class="form-label">Late Registration Deadline</label>
+                                    <input required type="text" class="form-control" id="late_deadline"
+                                        name="late_deadline" placeholder="Month DD, YYYY H:i">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="rate" class="form-label">Late Registration Rate</label>
+                                    <input required type="text" class="form-control" id="rate" name="rate"
+                                        placeholder="10">
+                                </div>
 
-                                                <div class="col-md-6">
-                                                    <label for="seats" class="form-label">Number Of Seats</label>
-                                                    <input required type="text" class="form-control" id="seats" name="seats"
-                                                        placeholder="50">
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" name="publish" type="checkbox" value="1"
-                                                            id="defaultCheck2" />
-                                                        <label class="form-check-label" for="defaultCheck2">
-                                                            Published ? (Uncheck if "NO")
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12 d-flex justify-content-center">
-                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save
-                                                        Training</button>
-                                                </div>
-                                            </form>
-                                        </div>
+                                <div class="col-md-6">
+                                    <label for="seats" class="form-label">Number Of Seats</label>
+                                    <input required type="text" class="form-control" id="seats" name="seats"
+                                        placeholder="50">
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="publish" type="checkbox" value="1"
+                                            id="defaultCheck2" />
+                                        <label class="form-check-label" for="defaultCheck2">
+                                            Published ? (Uncheck if "NO")
+                                        </label>
                                     </div>
                                 </div>
-                            </div>
+
+                                <div class="col-12 d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save
+                                        Training</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-datatable table-responsive">
             <table class="datatables table border-top">
@@ -131,7 +131,7 @@ Legal Edication
                 @php
                 $count = 1;
                 @endphp
-               
+
                 @forelse ($trainings as $training)
                 <tbody>
                     <tr>
@@ -164,9 +164,116 @@ Legal Edication
                                 ( <span class="text-warning">with {{ $training->rate }}% increase </span> )
                                 <u class="text-danger">{{ $training->late_deadline }}</u>
                                 <a href="" data-bs-toggle="modal" data-bs-target="#delete{{ $training->id }}"
-                                    class="pull-left float-end"><i
-                                        class="ti ti-trash me-0 me-sm-1 ti-xs text-danger"></i><span
+                                    class="btn btn-sm btn-danger pull-left float-end"><i class="ti ti-trash"></i><span
                                         class="d-none d-sm-inline-block"></span></a>
+                                 @if ($training->publish == 1)
+                                 <a href="" data-bs-toggle="modal" data-bs-target="#notify{{ $training->id }}"
+                                    class="btn btn-sm btn-dark float-end"><i class="ti ti-mail"></i><span
+                                        class="d-none d-sm-inline-block"></span></a>
+                                <div class="modal fade" id="notify{{ $training->id }}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                                        <div class="modal-content p-3 p-md-5">
+                                            <div class="modal-body">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                                <div class="text-center mb-4">
+                                                    <h3 class="mb-2">Send Notification Messages</h3>
+                                                    @if($errors->any())
+                                                    <div class="alert alert-danger">
+                                                        <p><strong>Opps Something went wrong</strong></p>
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                            <li>* {{ $error }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    @endif
+                                                </div>
+                                                <form method="POST" class="row g-3"
+                                                    action="{{ route('trainings.notify') }}"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $training->id }}">
+                                      
+                                                    <div class="col-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" checked name="recipients[]"
+                                                                type="checkbox" value="1" id="Booked" />
+                                                            <label class="form-check-label" for="Booked">Booked
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" name="recipients[]"
+                                                                type="checkbox" value="2" id="Confirm" />
+                                                            <label class="form-check-label" for="Confirm">Confirm
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" name="recipients[]"
+                                                                type="checkbox" value="3" id="Attending" />
+                                                            <label class="form-check-label" for="Attending">Attending
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" name="recipients[]"
+                                                                type="checkbox" value="4" id="Attended" />
+                                                            <label class="form-check-label" for="Attended">Attended
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <label class="switch">
+                                                            <span class="switch-label">Subject <span
+                                                                    class="text-danger">include in Email
+                                                                    only</span></span>
+                                                        </label>
+                                                        <input required type="text" name="subject" class="form-control"
+                                                            id="subject" value="{{ $training->title }}">
+
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="exampleFormControlTextarea1"
+                                                            class="form-label">Message</label>
+                                                        <textarea required name="message" class="form-control"
+                                                            id="exampleFormControlTextarea1" rows="4">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake.
+                                                      </textarea>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" name="sent[]"
+                                                                type="checkbox" value="SMS" id="defaultCheck3" />
+                                                            <label class="form-check-label" for="defaultCheck3">SMS
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" checked name="sent[]"
+                                                                type="checkbox" value="EMAIL" id="defaultCheck4" />
+                                                            <label class="form-check-label" for="defaultCheck4">EMAIL
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                 
+                                                    <div class="col-12 text-center">
+                                                        <button type="submit"
+                                                            class="btn btn-primary me-sm-3 me-1">Submit</button>
+                                                        <button type="reset" class="btn btn-label-secondary btn-reset"
+                                                            data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                 @endif
                             </h6>
 
                             <div class="modal modal-top fade" id="delete{{ $training->id }}" tabindex="-1"
@@ -202,7 +309,7 @@ Legal Edication
                 $count++
                 @endphp
                 @empty
-                 <tbody>
+                <tbody>
                     <tr>
                         <td>
                             <i class="fas fa-bullhorn"></i>
@@ -215,7 +322,7 @@ Legal Edication
 
 
                     </tr>
-                 </tbody>
+                </tbody>
                 @endforelse
 
             </table>
