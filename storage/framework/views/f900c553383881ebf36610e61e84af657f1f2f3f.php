@@ -149,7 +149,6 @@ Meetings
                     <form method="POST" class="row g-3" action="<?php echo e(route('meetings.invite')); ?>">
                         <?php echo csrf_field(); ?>
                         <div class="col-12">
-                            <label for="exampleFormControlSelect2" class="form-label">Example multiple select</label>
                             <input type="hidden" name="meeting" value="<?php echo e($meeting->id); ?>">
                             <select required name="user[]" multiple class="form-select" id="exampleFormControlSelect2"
                                 aria-label="Multiple select example">

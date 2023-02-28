@@ -148,7 +148,6 @@ Meetings
                     <form method="POST" class="row g-3" action="{{ route('meetings.invite') }}">
                         @csrf
                         <div class="col-12">
-                            <label for="exampleFormControlSelect2" class="form-label">Example multiple select</label>
                             <input type="hidden" name="meeting" value="{{ $meeting->id }}">
                             <select required name="user[]" multiple class="form-select" id="exampleFormControlSelect2"
                                 aria-label="Multiple select example">

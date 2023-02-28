@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\Meeting;
@@ -136,8 +137,12 @@ class UserProfileController extends Controller
         $booked = $training->booking;
         $training->booking = $booked + 1;
         $training->save();
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+        $yearInBar = ($currentMonth == 1) ? $currentYear - 1 : $currentYear;
 
-        Booking::create(['training' => $request->training, 'advocate' => $advocate]);
+        Booking::create(['training' => $request->training, 'advocate' => $advocate,
+                        'yearInBar' => $yearInBar , 'booked' => true]);
 
         return back()->with('message',$training->title .'Booked');
     }

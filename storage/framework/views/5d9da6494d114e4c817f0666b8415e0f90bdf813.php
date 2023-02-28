@@ -48,9 +48,9 @@ Trainings
                                                 <td><?php echo e($booking->trains->price); ?></td>
                                                 <td><?php echo e($booking->trains->credits); ?></td>
                                                 <td> <?php if($booking->confirm): ?>
-                                                    <span class="badge bg-label-info me-2">Attended</span>
+                                                    <span class="badge bg-label-info me-2">Confirm</span>
                                                 <?php else: ?>
-                                                <span class="badge bg-label-warning me-2">Not Attended</span>
+                                                <span class="badge bg-label-warning me-2">not Confirm</span>
                                                 <?php endif; ?> </td>
                                              
                                             </tr>
@@ -83,48 +83,7 @@ Trainings
             </div>
         </div>
         <div class="col-xl-5 col-md-8 col-12 mb-md-0 mb-4">
-            <div class="card invoice-preview-card mb-1">
-                <div class="card-body">
-                    <div
-                        class="d-flex justify-content-between flex-xl-row flex-md-column flex-sm-row flex-column m-sm-3 m-0">
-
-                        <div>
-                            <h4> Attendence</h4>
-                            <p>Please Add all Advocates who succesffully completed <strong>
-                                    <?php echo e($training->title); ?></strong></p>
-                            <a href="" class="btn btn-sm btn-success"><i class="ti ti-user ti-sm me-2"></i>Add
-                                Participants</a>
-                            <a href="" class="btn btn-sm btn-info"><i class="ti ti-edit ti-sm me-2"></i>Participants</a>
-                        </div>
-
-                    </div>
-
-
-                </div>
-                <hr class="my-0" />
-
-
-            </div>
-            <div class="card invoice-preview-card">
-                <div class="card-body">
-                    <div
-                        class="d-flex justify-content-between flex-xl-row flex-md-column flex-sm-row flex-column m-sm-3 m-0">
-
-                        <div>
-                            <h4>Attendence List</h4>
-                            <p>Please choose Training Day to generate eAttendance List for <strong>
-                                    <?php echo e($training->title); ?></strong></p>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-                <hr class="my-0" />
-
-
-            </div>
+            <?php echo $__env->make('training.extra', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
     </div>
 

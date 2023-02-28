@@ -17,7 +17,13 @@ return new class extends Migration
             $table->id();
             $table->UnsignedBigInteger('training');
             $table->UnsignedBigInteger('advocate');
+            $table->boolean('booked')->default(false);
             $table->boolean('confirm')->default(false);
+            $table->boolean('attend')->default(false);
+            $table->integer('yearInBar');
+            $table->decimal('cumulatedCredit')->nullable();
+            $table->date('attendanceDay')->nullable();
+            $table->bigInteger('voucherNumber')->nullable();
             $table->foreign('training')->references('id')->on('trainings')->constrained()->onDelete('cascade');
             $table->foreign('advocate')->references('id')->on('users')->constrained()->onDelete('cascade');
             $table->timestamps();

@@ -11,7 +11,13 @@ class Booking extends Model
     protected $fillable = [
         'training',
         'advocate',
+        'attendanceDay',
+        'cumulatedCredit',
+        'voucherNumber',
+        'booked',
         'confirm',
+        'attend',
+        'yearInBar',
 ];
 public function trains()
 {

@@ -194,8 +194,11 @@ Route::group(['middleware' => 'adminauth'], function(){
 
     Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
     Route::get('/trainings/{details}', [TrainingController::class, 'details'])->name('trainings.details');
+    Route::delete('/trainings/delete', [TrainingController::class, 'delete'])->name('trainings.delete');
     Route::get('/trainings/{id}/booked', [TrainingController::class, 'booked'])->name('trainings.booked');
     Route::get('/trainings/{id}/confirmed', [TrainingController::class, 'confirmed'])->name('trainings.confirmed');
+    Route::get('/trainings/{id}/manage', [TrainingController::class, 'manage'])->name('trainings.manage');
+    Route::post('/trainings/addParticipant', [TrainingController::class, 'addParticipant'])->name('trainings.addParticipant');
     Route::post('/trainings', [TrainingController::class, 'store'])->name('trainings.store');
     Route::put('/trainings-update', [TrainingController::class, 'update'])->name('trainings.update');
     Route::post('/trainings-topic', [TrainingController::class, 'addTopic'])->name('trainings.addTopic');
@@ -203,6 +206,8 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::post('/addMaterial', [TrainingController::class, 'addMaterial'])->name('addMaterial');
     Route::get('/Download-material/{file}', [TrainingController::class, 'download'])->name('download');
     Route::delete('/material-delete', [TrainingController::class, 'materialDelete'])->name('materialDelete');
+    Route::post('/generateVouchers', [TrainingController::class, 'generateVouchers'])->name('trainings.generateVouchers');
+    Route::get('/printpdf', [TrainingController::class, 'printpdf'])->name('trainings.printpdf');
 
     
     Route::get('/contribution' , [ContributionController::class , 'index'])->name('contribution.index');
