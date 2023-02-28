@@ -20,7 +20,6 @@ Trainings
                         <div>
                             <div class="card-header border-bottom">
                                 <h5 class="card-title mb-0">Bulk Enrolment Management</h5>
-
                             </div>
                             <div class="row p-4">
                                 <div class="table-responsive">
