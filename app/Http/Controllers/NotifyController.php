@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\NewEmail;
 use App\Mail\NewAccount;
+use App\Mail\NotifyUser;
 use App\Mail\ChangedEmail;
 use App\Mail\MeetingNotify;
 use App\Mail\resetPassword;
@@ -54,6 +55,10 @@ class NotifyController extends Controller
 
     public function notify_training($email,$subject,$message){
         Mail::to($email)->send(new TrainingNotify($email,$subject,$message));
+    }
+    
+    public function notify($email,$subject,$message){
+        Mail::to($email)->send(new NotifyUser($email,$subject,$message));
     }
 
 

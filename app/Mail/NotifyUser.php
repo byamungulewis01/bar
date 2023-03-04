@@ -9,37 +9,23 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MeetingNotify extends Mailable
+class NotifyUser extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $subject;
     public $message;
     public $email;
-    public $attachmentsPaths;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($email,$subject,$message,$attachmentsPaths)
+    public function __construct($email,$subject,$message)
     {
         $this->subject = $subject;
         $this->message = $message;
         $this->email = $email;
-        $this->attachmentsPaths = $attachmentsPaths;
-    }
-
-    /**
-     * Get the message envelope.
-     *
-     * @return \Illuminate\Mail\Mailables\Envelope
-     */
-    public function envelope()
-    {
-        return new Envelope(
-            subject: $this->subject,
-        );
     }
 
     /**
@@ -59,7 +45,11 @@ class MeetingNotify extends Mailable
      *
      * @return array
      */
-   
+    public function attachments()
+    {
+        return [];
+    }
+
     /**
      * Build the message.
      *
@@ -67,13 +57,7 @@ class MeetingNotify extends Mailable
      */
     public function build()
     {
-
-        $message = $this->markdown('emails.meetingNotify')
-        ->subject($this->subject);
-        foreach ($this->attachmentsPaths as $path) {
-        $message->attach(storage_path('app/' . $path));
-        }
-
-        return $message;
+        return $this->markdown('emails.notify')
+            ->subject($this->subject);
     }
 }

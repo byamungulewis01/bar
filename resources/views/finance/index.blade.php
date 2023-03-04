@@ -130,7 +130,7 @@ Contribution
                        <tr>
                         <td>{{ $key+1 }}</td>
                         <td> {{ $contribution->name }} </td>
-                        <td> {{ $contribution->start_period }} to {{ $contribution->end_period }}</td>
+                        <td> {{ $contribution->start_period }} <span class="text-danger">to</span> {{ $contribution->end_period }}</td>
                         <td>{{ $contribution->deadline }}</td>
                         <td>{{ $contribution->amount }}</td>
                         <td>{{ $contribution->percentage }}</td>
@@ -138,17 +138,50 @@ Contribution
                                 @php
                                     $values = explode(',', $contribution->concern);
                                 @endphp
-                                @foreach($values as $value)
-                                    {{ $value }}
+                                @foreach($values as $key => $value)
+                                @php
+                                    switch ($value) {
+                                        case 1:
+                                            $concern = 'Concerns Advocate';
+                                            break;
+                                        case 2:
+                                            $concern = 'Concerns interns';
+                                            break;
+                                        case 3:
+                                            $concern = 'Concerns Support Staff';
+                                            break;
+                                        case 4:
+                                            $concern = 'Technical Staff';
+                                            break;
+                                        
+                                        default:
+                                             $concern = '';
+                                            break;
+                                    }
+                                @endphp
+                                  <li>{{ $concern }}</li>
                                 @endforeach
                         </td>
                         <td>
-                            <a href="" class="btn btn-primary btn-sm text-white"><i class="ti ti-pencil me-0 me-sm-1 ti-xs"></i></a>
-                            <a href="" class="btn btn-dark btn-sm text-white"><i class="ti ti-mail me-0 me-sm-1 ti-xs"></i></a>
+                            <a href="" ><i class="ti ti-pencil me-0 me-sm-1 ti-xs"></i></a>
+                            <a href=""><i class="ti ti-mail me-0 me-sm-1 ti-xs"></i></a>
                         </td>
                        </tr>
                    @empty
-                       
+                   <tbody>
+                    <tr>
+                        <td>
+                            <i class="fas fa-bullhorn"></i>
+                        </td>
+                        <td colspan="4">
+                            <h6><span class="badge bg-label-warning me-2">Comminique </span> No record found
+                            </h6>
+
+                        </td>
+
+
+                    </tr>
+                </tbody>
                    @endforelse
                 </tbody>
             </table>

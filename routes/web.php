@@ -124,6 +124,7 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::get('/meeting-view/{user}', [AdminController::class, 'meeting'])->name('user.meeting-view');
     Route::get('/probono-view/{user}', [AdminController::class, 'probono'])->name('user.probono-view');
     Route::get('/training-view/{user}', [AdminController::class, 'training'])->name('user.training-view');
+    Route::get('/compliance-view/{user}', [AdminController::class, 'compliance'])->name('user.compliance-view');
 
 
     Route::post('/profile/{user}', [UserController::class, 'changeStatus']);
@@ -214,6 +215,7 @@ Route::group(['middleware' => 'adminauth'], function(){
     
     Route::get('/contribution' , [ContributionController::class , 'index'])->name('contribution.index');
     Route::post('/contribution/store' , [ContributionController::class , 'store'])->name('contribution.store');
+    Route::post('/user-contribution' , [ContributionController::class , 'user_contribute'])->name('contribution.user');
 
 
 

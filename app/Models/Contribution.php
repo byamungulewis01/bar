@@ -15,6 +15,7 @@ class Contribution extends Model
         'deadline',
         'amount',
         'percentage',
+        'yearInBar',
         'concern',
         'createdBy',
         'updateby',
