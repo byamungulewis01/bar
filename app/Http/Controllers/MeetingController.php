@@ -7,6 +7,7 @@ use App\Models\Meeting;
 use App\Mail\ContactEmail;
 use App\Models\Invitations;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class MeetingController extends Controller
@@ -19,10 +20,21 @@ class MeetingController extends Controller
     }
     public function show($meeting)
     {
-        $invitations = Invitations::where('meeting_id', $meeting)->paginate(8);
+        // $invitations = Invitations::where('meeting_id', $meeting)->paginate(8);
+        $invitations = DB::table('users')->join('invitation','users.id','=','invitation.user_id')
+        ->where('invitation.meeting_id',$meeting)->orderby('users.name')
+        ->paginate(8);
         $meeting = Meeting::findorfail($meeting);
         $users = User::all();
         return view('meetings.detail', compact('meeting','invitations','users'));
+    }
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $users = User::Where('regNumber', 'LIKE', "%{$query}%")
+        ->get();
+        return response()->json($users);
     }
     public function create()
     {
@@ -184,10 +196,13 @@ class MeetingController extends Controller
                   }
          
             }elseif ($value == 'SMS') {
-              echo 'In SMS';
+                foreach ($users as $user) {
+                    (new NotifyController)->notify_sms($request->message,$user->phone);
+                   }
             } else{
             foreach ($users as $user) {
                 (new NotifyController)->notify_meeting($user->email,$request->subject,$request->message,$attachmentsPaths);
+                (new NotifyController)->notify_sms($request->message,$user->phone);
                 }
             }
        }
@@ -196,25 +211,21 @@ class MeetingController extends Controller
        
     }
 
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
-
-        $users = User::where('name', 'LIKE', "%{$query}%")
-        ->orWhere('regNumber', 'LIKE', "%{$query}%")
-        ->get();
-
-    
-        return response()->json($users);
-    }
     public function attends($meeting,$user)
     {
-        Invitations::where('meeting_id', $meeting)->where('user_id', $user)
-        ->take(1)->update([
-        'status' => 2,
-        'updated_at' => date('Y-m-d H:i:s'),
-    ]);
-    return back()->with('message', 'Added to Attendence');
+        $check = Invitations::where('meeting_id', $meeting)->where('user_id', $user)->count();;
+        if ($check == 1) {
+            Invitations::where('meeting_id', $meeting)->where('user_id', $user)
+            ->take(1)->update([
+            'status' => 2,
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
+        return back()->with('message', 'Added to Attendence');
+        } else {
+        return back()->with('warning', 'User Not Invited on This meeting');
+        }
+        
+      
     }
 
 }

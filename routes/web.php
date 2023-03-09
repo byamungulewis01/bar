@@ -166,7 +166,7 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::delete('/disciplinary', [DisciplinaryController::class, 'deleteparticipant'])->name('participant.delete');
     Route::put('/disciplinarySitting', [DisciplinaryController::class, 'sitting'])->name('cases.sitting');
     Route::post('/scheduleDecision', [SchedulerController::class, 'add_schedule_decision'])->name('cases.scheduleDecion');
-
+    Route::post('/disciplinary/notify', [SchedulerController::class, 'notify'])->name('case.notify');
 
     Route::get('/probono', [ProbonoController::class, 'index'])->name('probono.index');
     Route::post('/probono', [ProbonoController::class, 'store'])->name('probono.store');
@@ -189,7 +189,8 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::post('/meetings/invite', [MeetingController::class, 'invite'])->name('meetings.invite');
     Route::delete('/meetings/remove', [MeetingController::class, 'removeInviter'])->name('meetings.removeInviter');
     Route::post('/meetings/notify', [MeetingController::class, 'notify'])->name('meetings.notify');
-    Route::get('/users/search', [MeetingController::class, 'search'])->name('users.search');
+
+    Route::get('/users/search/', [MeetingController::class, 'search'])->name('users.search');
     Route::get('/meetings/attends/{meeting}/{user}', [MeetingController::class, 'attends']);
 
 
@@ -211,6 +212,7 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::post('/generateVouchers', [TrainingController::class, 'generateVouchers'])->name('trainings.generateVouchers');
     Route::get('/Vouchers/{id}', [TrainingController::class, 'voucher'])->name('trainings.voucher');
     Route::post('/trainings/notify', [TrainingController::class, 'notify'])->name('trainings.notify');
+    Route::post('/trainings/EditBulk', [TrainingController::class, 'EditBulk'])->name('trainings.EditBulk');
 
     
     Route::get('/contribution' , [ContributionController::class , 'index'])->name('contribution.index');

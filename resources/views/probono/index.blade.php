@@ -18,7 +18,7 @@ Pro Bono Cases
           class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editmeetings"></a></h5>
 
     </div>
-   
+
     <div class="card-datatable table-responsive">
       <table class="datatables-probono table border-top">
         <thead>
@@ -53,16 +53,16 @@ Pro Bono Cases
               @switch($probono->status)
               @case('OPEN')
               <span class="badge bg-label-primary me-2">{{ $probono->status }}</span>
-                  @break
+              @break
               @case('WON')
               <span class="badge bg-label-success me-2">{{ $probono->status }}</span>
-                  @break
+              @break
               @case('LOST')
               <span class="badge bg-label-warning me-2">{{ $probono->status }}</span>
-                  @break
+              @break
               @default
               <span class="badge bg-label-danger me-2">{{ $probono->status }}</span>
-          @endswitch
+              @endswitch
 
             </td>
             <td>
@@ -80,16 +80,16 @@ Pro Bono Cases
                         <h3 class="address-title mb-2">Edit Probono Case</h3>
                         <p class="text-muted address-subtitle">change New Probono case Desciption in case you make
                           mistakes </p>
-                          @if ($errors->any())
-                          <div class="alert alert-danger">
-                              <ul>
-                                  @foreach ($errors->all() as $error)
-                                      <li>{{ $error }}</li>
-                                  @endforeach
-                              </ul>
-                          </div>
-                          @endif
-                          
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                          <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                          </ul>
+                        </div>
+                        @endif
+
                       </div>
                       <form action="{{ route('probono.update') }}" class="row g-3" method="post">
                         @csrf
@@ -192,9 +192,10 @@ Pro Bono Cases
                           <select required name="advocate" class="form-select">
                             <option value="">No Advocate Assigned</option>
                             @foreach ($users as $user)
-                            <option value="{{ $user->id }}"  @if ($user->id == $probono->advocate) selected @endif> {{ $user->name }} </option>           
+                            <option value="{{ $user->id }}" @if ($user->id == $probono->advocate) selected @endif>
+                              {{ $user->name }} </option>
                             @endforeach
-                         
+
                           </select>
                         </div>
                         <div class="col-12 text-center">
@@ -217,12 +218,13 @@ Pro Bono Cases
             <td colspan="3">
               <h6 class="text-warning">
                 You can upload defferent documents regarding this case for advocate
-                
+
               </h6>
-             
+
             </td>
             <td colspan="3">
-              <a href="{{ route('probono.show' , $probono->id) }}" type="button" class="btn btn-sm btn-label-secondary text-nowrap d-inline-block">
+              <a href="{{ route('probono.show' , $probono->id) }}" type="button"
+                class="btn btn-sm btn-label-secondary text-nowrap d-inline-block">
                 Upload files
                 <span class="badge bg-danger text-white badge-notifications">{{ $probono->probono_files }}</span>
               </a>
@@ -277,8 +279,8 @@ Pro Bono Cases
                           </div>
                         </div>
                         <div class="col-12">
-                          <label class="form-label w-100" for="title">Case File  <span class="text-danger">
-                            Upload  Only PDF File </span></label>
+                          <label class="form-label w-100" for="title">Case File <span class="text-danger">
+                              Upload Only PDF File </span></label>
                           <div class="input-group input-group-merge">
                             <input accept=".pdf" name="case_file" class="form-control" type="file" />
                             @error('case_file')<span class="text-danger">
@@ -312,22 +314,83 @@ Pro Bono Cases
               </h6>
               @else
               <h6 class="text-primary">
-                Case assigned to <a href="{{ route('profile',$probono->advocate) }}" class="text-dark">{{ $probono->user->name }}</a>
-                <a href="javascript:" class="btn btn-dark btn-sm"> Notify </a>
-            {{-- <span class="pull-left float-end">Reported Events <span class="badge bg-label-dark ">{{ $reportEvent }}</span></span> --}}
+                Case assigned to <a href="{{ route('profile',$probono->advocate) }}"
+                  class="text-dark">{{ $probono->user->name }}</a>
+                {{-- <a href="javascript:" class="btn btn-dark btn-sm" data-bs-toggle="modal"
+                  data-bs-target="#notify{{ $probono->advocate }}"> Notify </a>
+
+                <div class="modal fade" id="notify{{ $probono->advocate }}" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                    <div class="modal-content p-3 p-md-5">
+                      <div class="modal-body">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="text-center mb-4">
+                          <h3 class="mb-2">Send Notification Messages</h3>
+
+                        </div>
+                        <form method="POST" class="row g-3" action="{{ route('case.notify') }}"
+                          enctype="multipart/form-data">
+                          @csrf
+                          <div class="col-12">
+                            <label class="switch">
+                              <span class="switch-label">Subject <span class="text-danger">include
+                                  in Email
+                                  only</span></span>
+                            </label>
+                            <input type="text" name="subject" class="form-control" id="subject">
+
+                          </div>
+                          <div class="col-12">
+                            <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+                            <textarea required name="message" class="form-control" id="exampleFormControlTextarea1"
+                              rows="3">
+                                     </textarea>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-check">
+                              <input class="form-check-input" name="sent[]" type="checkbox" value="SMS"
+                                id="defaultCheck3" />
+                              <label class="form-check-label" for="defaultCheck3">SMS (Uncheck if
+                                "NO")
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="form-check">
+                              <input class="form-check-input" checked name="sent[]" type="checkbox" value="EMAIL"
+                                id="defaultCheck4" />
+                              <label class="form-check-label" for="defaultCheck4">EMAIL (Uncheck
+                                if "NO")
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                            <button type="reset" class="btn btn-label-secondary btn-reset" data-bs-dismiss="modal"
+                              aria-label="Close">Cancel</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div> --}}
+                {{-- <span class="pull-left float-end">Reported Events <span class="badge bg-label-dark ">{{ $reportEvent }}</span></span>
+                --}}
               </h6>
               @endif
 
             </td>
             <td>
-              <a href="{{ route('probono.show_devs' , $probono->id) }}" type="button" class="btn btn-sm btn-label-secondary text-nowrap d-inline-block">
+              <a href="{{ route('probono.show_devs' , $probono->id) }}" type="button"
+                class="btn btn-sm btn-label-secondary text-nowrap d-inline-block">
                 Reported Events
                 <span class="badge bg-danger text-white badge-notifications">{{ $probono->probono_devs }}</span>
               </a>
             </td>
 
           </tr>
-          
+
         </tbody>
 
         @php
@@ -336,17 +399,17 @@ Pro Bono Cases
         @empty
         <tbody>
           <tr>
-           
+
             <td colspan="3">
               <h6 class="text-warning">
                 Empy No Probono Founds Case
-                
+
               </h6>
-             
+
             </td>
-        
+
           </tr>
-    
+
         </tbody>
         @endforelse
 
@@ -434,8 +497,8 @@ Pro Bono Cases
           </div>
           <div class="col-12 col-md-6">
             <label class="form-label" for="flatpickr-date">Hearing Day</label>
-            <input required type="text" class="form-control" id="date" name="hearing_date"
-              placeholder="Month DD, YYYY" class="form-control" />
+            <input required type="text" class="form-control" id="date" name="hearing_date" placeholder="Month DD, YYYY"
+              class="form-control" />
           </div>
           <div class="col-12 col-md-6">
             <label class="form-label" for="status">Category</label>
@@ -509,8 +572,6 @@ Pro Bono Cases
 <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
 <script>
-
-
   "use strict";
   $(function () {
     var dtt = document.querySelector("#date"),

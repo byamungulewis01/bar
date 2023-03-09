@@ -162,8 +162,7 @@ Disciplinary Cases
                                 <div class="col-12">
                                     <label for="exampleFormControlTextarea1" class="form-label">Case Sammary</label>
                                     <textarea required name="sammary" class="form-control"
-                                        id="exampleFormControlTextarea1" rows="3">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
-                                    </textarea>
+                                        id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>
 
                                 <div class="col-12 text-center">
@@ -245,8 +244,7 @@ Disciplinary Cases
                                 <div class="col-12">
                                     <label for="exampleFormControlTextarea1" class="form-label">Case Sammary</label>
                                     <textarea required name="sammary" class="form-control"
-                                        id="exampleFormControlTextarea1" rows="3">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
-                                    </textarea>
+                                        id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
@@ -321,8 +319,7 @@ Disciplinary Cases
                                 <div class="col-12">
                                     <label for="exampleFormControlTextarea1" class="form-label">Case Sammary</label>
                                     <textarea required name="sammary" class="form-control"
-                                        id="exampleFormControlTextarea1" rows="3">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
-                                    </textarea>
+                                        id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>

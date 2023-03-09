@@ -148,10 +148,12 @@ Legal Edication
                         <td>{{ $training->confirm }} / {{ $training->seats }} <a
                                 href="{{ route('trainings.confirmed' , $training->id) }}"><i
                                     class="ti ti-eye ti-sm mx-2"></i></td>
-                        <td> <a href="{{ route('trainings.details' , $training->id) }}"
-                                class="btn btn-primary btn-sm text-white"><i
+                        <td>
+                            <a href="{{ route('trainings.details' , $training->id) }}"
+                                class="btn btn-primary btn-sm text-white float-end"><i
                                     class="ti ti-pencil me-0 me-sm-1 ti-xs"></i><span
-                                    class="d-none d-sm-inline-block">Details</span></a></td>
+                                    class="d-none d-sm-inline-block">Details</span></a>
+                        </td>
                     </tr>
                     <tr>
                         <td>
@@ -166,8 +168,8 @@ Legal Edication
                                 <a href="" data-bs-toggle="modal" data-bs-target="#delete{{ $training->id }}"
                                     class="btn btn-sm btn-danger pull-left float-end"><i class="ti ti-trash"></i><span
                                         class="d-none d-sm-inline-block"></span></a>
-                                 @if ($training->publish == 1)
-                                 <a href="" data-bs-toggle="modal" data-bs-target="#notify{{ $training->id }}"
+                                @if ($training->publish == 1)
+                                <a href="" data-bs-toggle="modal" data-bs-target="#notify{{ $training->id }}"
                                     class="btn btn-sm btn-dark float-end"><i class="ti ti-mail"></i><span
                                         class="d-none d-sm-inline-block"></span></a>
                                 <div class="modal fade" id="notify{{ $training->id }}" tabindex="-1" aria-hidden="true">
@@ -194,7 +196,7 @@ Legal Edication
                                                     enctype="multipart/form-data">
                                                     @csrf
                                                     <input type="hidden" name="id" value="{{ $training->id }}">
-                                      
+
                                                     <div class="col-3">
                                                         <div class="form-check">
                                                             <input class="form-check-input" checked name="recipients[]"
@@ -261,7 +263,7 @@ Legal Edication
                                                             </label>
                                                         </div>
                                                     </div>
-                 
+
                                                     <div class="col-12 text-center">
                                                         <button type="submit"
                                                             class="btn btn-primary me-sm-3 me-1">Submit</button>
@@ -273,7 +275,7 @@ Legal Edication
                                         </div>
                                     </div>
                                 </div>
-                                 @endif
+                                @endif
                             </h6>
 
                             <div class="modal modal-top fade" id="delete{{ $training->id }}" tabindex="-1"

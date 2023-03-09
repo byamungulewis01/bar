@@ -10,7 +10,7 @@ User Profile
 <div class="container-xxl flex-grow-1 container-p-y">
 
     <h4 class="fw-bold py-3 mb-5">
-        <span class="text-muted fw-light">User  /</span> Contribution
+        <span class="text-muted fw-light">User /</span> Contribution
     </h4>
 
     @include('profile.navigation')
@@ -46,7 +46,8 @@ User Profile
                                     </div>
                                     <div class="col-12">
                                         <label for="title" class="form-label">Transaction Date</label>
-                                        <input required type="text" name="transction_date" class="form-control" id="date" placeholder="Month DD, YYYY">
+                                        <input required type="text" name="transction_date" class="form-control"
+                                            id="date" placeholder="Month DD, YYYY">
                                     </div>
                                     <div class="col-12">
                                         <label for="title" class="form-label">Paid Amount</label>
@@ -54,7 +55,8 @@ User Profile
                                     </div>
 
                                     <div class="col-12 d-flex justify-content-center">
-                                        <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                                        <button type="submit"
+                                            class="btn btn-primary waves-effect waves-light">Submit</button>
                                     </div>
                                 </form>
                             </div>
@@ -91,17 +93,17 @@ User Profile
                                                 <td>Defined Amount</td>
                                                 <td>{{ $contribution->amount }} Rwf</td>
                                             </tr>
-                                            {{-- <tr>
+                                            <tr>
                                                 <td>Fine Amount</td>
                                                 <td>
                                                     @php
                                                     $a = App\Models\ContributeAdvocate::count();
-                                                    if ($a == '0') {
+                                                    if ($a == 0) {
                                                     $paid = 0;
                                                     } else {
                                                     $b = App\Models\ContributeAdvocate::where('advocate'
-                                                    ,$user_id)->first();
-                                                    if ($b == '0') {
+                                                    ,$user_id)->count();
+                                                    if ($b == 0) {
                                                     $paid = 0;
                                                     } else {
                                                     $contibu = App\Models\ContributeAdvocate::where('advocate'
@@ -127,20 +129,20 @@ User Profile
                                                     @else
                                                     <span class="badge bg-label-info me-2">Paid</span>
                                                     @endif</td>
-                                            </tr> --}}
+                                            </tr>
 
 
 
                                         </tbody>
                                     </table>
                                     <hr>
-                                    {{-- <div class="d-flex justify-content-center">
+                                    <div class="d-flex justify-content-center">
                                         @unless ($paid != 0)
                                         <button data-bs-toggle="modal" data-bs-target="#settle"
-                                        class="btn btn-sm btn-primary">Settle</button>
+                                            class="btn btn-sm btn-primary">Settle</button>
                                         @endunless
-                                      
-                                    </div> --}}
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -154,14 +156,19 @@ User Profile
                     <table>
                         <tr>
                             <td width="150">Score
-                                {{-- @if ($paid == 0)
+                                @if ($paid == 0)
                                 <span class="badge bg-label-danger me-2">Unpaid</span>
                                 @else
                                 <span class="badge bg-label-info me-2">Paid</span>
-                                @endif --}}
+                                @endif
                             </td>
-                            <td width="200"> Compliance <span class="badge bg-label-info me-2"><i
-                                        class="ti ti-check me-0 me-sm-1"></i></span></td>
+                            <td width="200"> Compliance
+                                @if ($paid == 0)
+                                <span class="badge bg-label-danger"><i class="ti ti-check"></i></span>
+                                @else
+                                <span class="badge bg-label-info"><i class="ti ti-check"></i></span>
+                                @endif
+                            </td>
                             <td><a href="" data-bs-toggle="modal" data-bs-target="#contribution">Details</a>
                             </td>
                         </tr>
@@ -181,10 +188,11 @@ User Profile
             <!-- About User -->
             <div class="card mb-2">
                 <div class="card-body">
-                    <small class="card-text text-uppercase">Practicing Status</small>
-                    <br><br>
-                    <span class="badge bg-label-info me-2">Score</span>23
-                    <span class="badge bg-label-info me-2">Compliance</span> Rwf
+                    <h6 class="text-uppercase">Practicing Status
+                        <span class="pull-left float-end"> <span class="badge bg-label-{{ badge($user->practicing) }}">{{ userStatus($user->practicing) }}</span>
+                        </span>
+                    </h6>
+               
                 </div>
             </div>
             <!--/ About User -->
@@ -251,18 +259,18 @@ User Profile
 <script src="{{ asset('assets/vendor/libs/tagify/tagify.js') }}"></script>
 <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
 <script>
-  "use strict";
-  $(function () {
-    var dtt = document.querySelector("#date");
-    dtt.flatpickr({
-      enableTime: !0,
-      altInput: !0,
-      altFormat: "F j, Y",
-      dateFormat: "Y-m-d",
-    })
-  });
+    "use strict";
+    $(function () {
+        var dtt = document.querySelector("#date");
+        dtt.flatpickr({
+            enableTime: !0,
+            altInput: !0,
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
+        })
+    });
 
-  $(document).ready(function () {
+    $(document).ready(function () {
         $("#amount").on("input", function () {
             var value = $(this).val();
             var decimalRegex = /^[0-9.]+(\.[0-9]{1,2})?$/;
@@ -272,8 +280,8 @@ User Profile
         });
     });
 
-    @if($errors->any())
-    @foreach($errors->all() as $error)
+    @if($errors ->any())
+    @foreach($errors ->all() as $error)
 
     @endforeach
     @php

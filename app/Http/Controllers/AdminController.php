@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Meeting;
 use App\Models\Probono;
 use App\Models\Discipline;
+use App\Models\Phonenumber;
 use App\Models\Contribution;
 use Illuminate\Http\Request;
 use App\Models\DisciplineMember;
@@ -95,7 +96,7 @@ class AdminController extends Controller
         $user = User::findorfail($user);
         $user_id = $user->id;
         $contribution = Contribution::where('yearInBar', $currentYear)->first();
-        return view('profile.compliance',compact('probonos','user_id','contribution'));
+        return view('profile.compliance',compact('probonos','user','user_id','contribution'));
     }
 
     public function notify()
@@ -107,8 +108,7 @@ class AdminController extends Controller
     {
         $formField = $request->validate([
             'user' => 'required',
-            'subject' => 'required',
-            'message' => 'required|min:10',
+            'message' => 'required',
             'sent' => 'required',
         ]);
 
@@ -125,16 +125,17 @@ class AdminController extends Controller
                     (new NotifyController)->notify($user->email,$request->subject,$request->message);
                   }         
             }elseif ($value == 'SMS') {
-              echo 'In SMS';
+                foreach ($users as $user) {
+                 (new NotifyController)->notify_sms($request->message,$user->phone);
+                }
             } else{
             foreach ($users as $user) {
                 (new NotifyController)->notify($user->email,$request->subject,$request->message);
+                (new NotifyController)->notify_sms($request->message,$user->phone);
                 }
             }
        }
-
-     return back()->with('message', 'Notified Successfully');
-       
+       return back()->with('message', 'Notified Successfully');
     }
 
 }

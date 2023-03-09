@@ -25,4 +25,39 @@ class SchedulerController extends Controller
          }
          return back()->with('message','Decission Added Successfully');
     }
+
+    
+    public function notify(Request $request)
+    {
+      $formField = $request->validate([
+          'user' => 'required',
+          'message' => 'required',
+          'sent' => 'required',
+      ]);
+
+      $recipient = [];
+          foreach ($request->user as $value) {
+              $recipient[] = $value;
+          }
+       $users = User::whereIn('id', $recipient)->get();
+      
+      foreach ($request->sent as $value) {
+          if ($value == 'EMAIL') {
+              foreach ($users as $user) {
+                  // echo '<br> '.$user->name;
+                  (new NotifyController)->notify($user->email,$request->subject,$request->message);
+                }         
+          }elseif ($value == 'SMS') {
+              foreach ($users as $user) {
+               (new NotifyController)->notify_sms($request->message,$user->phone);
+              }
+          } else{
+          foreach ($users as $user) {
+              (new NotifyController)->notify($user->email,$request->subject,$request->message);
+              (new NotifyController)->notify_sms($request->message,$user->phone);
+              }
+          }
+     }
+     return back()->with('message', 'Notified Successfully');
+  }
 }

@@ -125,7 +125,7 @@ class UserProfileController extends Controller
     public function mytraings()
     {   
         $advocate = auth()->user()->id;
-        $trainings = Training::where('publish' , 2)->get();
+        $trainings = Training::where('publish' , 2)->orderBy('created_at','desc')->get();
         $bookings = Booking::where('advocate' , $advocate)->get();
         $booked = Booking::where('advocate',$advocate)->pluck('training')->toArray();
         $attendances = Booking::where('advocate' , $advocate)->where('attendanceDay', '<>', null)->whereIn('status',[1,2,3])->get();

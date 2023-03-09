@@ -65,10 +65,57 @@ Trainings
                         
                                                 </td>
                                                 <td>
-                                                    <a href="" data-bs-toggle="modal" data-bs-target="#" class="text-primary"><i
+                                                    <a href="" data-bs-toggle="modal" data-bs-target="#edit{{ $booking->id}}" class="text-primary"><i
                                                         class="ti ti-edit me-0 me-sm-1 ti-xs"></i></a>
-                                                    <a href="" data-bs-toggle="modal" data-bs-target="#" class="text-danger"><i
+                                                    <a href="" data-bs-toggle="modal" data-bs-target="#delete" class="text-danger"><i
                                                         class="ti ti-trash me-0 me-sm-1 ti-xs"></i></a>
+
+                                                    <div class="modal fade" id="edit{{ $booking->id}}" tabindex="-1" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                                                            <div class="modal-content p-3 p-md-5">
+                                                                <div class="modal-body">
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    <div class="text-center mb-4">
+                                                                        <h3 class="mb-2">Edit Bulk Enrolment</h3>
+                                                                    </div>
+                                                                    <form method="POST" class="row g-3" action="{{ route('trainings.EditBulk') }}">
+                                                                        @csrf
+                                                                        <div class="col-12">
+                                                                            <input type="hidden" name="id" value="{{ $booking->id }}">
+                                                                            <label for="users" class="form-label">Choose Participant</label>
+                                                                            <select required name="user" class="form-select" id="users">
+                                                                                @foreach ($users as $user)
+                                                                                <option @if ( $user->id == $booking->advocate) selected @endif value="{{ $user->id }}">{{ $user->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <label for="venue" class="form-label">Price</label>
+                                                                            <input required type="number" name="price" id="price" value="{{ $booking->trains->price }}" class="form-control">
+                                                                        </div>
+
+                                                                        <div class="col-6">
+                                                                            <label for="venue" class="form-label">Cumulated Credit</label>
+                                                                            <input required type="number" name="credits" id="credit" value="{{ $booking->trains->credits }}" class="form-control">
+                                                                        </div>
+                                                                      
+                                                                        <div class="col-12">
+                                                                            <label class="form-label">Status</label>
+                                                                            <select required name="status" class="form-select">
+                                                                                <option @if ($booking->status == 1) selected @endif value="1">Booked</option>
+                                                                                <option @if ($booking->status == 2) selected @endif value="2">Confirmed</option>
+                                                                                <option @if ($booking->status == 3) selected @endif value="3">Attending</option>
+                                                                                <option @if ($booking->status == 4) selected @endif value="4">Attended</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-12 d-flex justify-content-center">
+                                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
 
 
@@ -84,7 +131,6 @@ Trainings
 
                                             </tr>
                                             @endforelse
-
 
                                         </tbody>
                                     </table>
@@ -205,7 +251,6 @@ Trainings
             dateFormat: "Y-m-d H:i",
         })
     });
-
 
     $(document).ready(function () {
         $("#credit").on("input", function () {
