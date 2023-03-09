@@ -27,7 +27,13 @@
         
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
-          
+          <!-- Style Switcher -->
+          <li class="nav-item me-2 me-xl-0">
+            <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
+              <i class='ti ti-md'></i>
+            </a>
+          </li>
+          <!--/ Style Switcher -->
           <!-- Notification -->
           <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
