@@ -65,6 +65,11 @@
             <div data-i18n="Individuals">Individuals Users</div>
           </a>
           <ul class="menu-sub">
+            <li class="menu-item <?php echo e(Request::routeIs('users.ind') ? 'active' : ''); ?>">
+              <a href="<?php echo e(route('users.ind')); ?>" class="menu-link">
+                <div data-i18n="All Users">All Users</div>
+              </a>
+            </li>
             <li class="menu-item <?php echo e(Request::routeIs('') ? 'active' : ''); ?>">
               <a href="<?php echo e(route('activepage')); ?>" class="menu-link">
                 <div data-i18n="Active">Active</div>
@@ -90,11 +95,7 @@
                 <div data-i18n="Deseaced">Deseaced</div>
               </a>
             </li>
-            <li class="menu-item <?php echo e(Request::routeIs('users.ind') ? 'active' : ''); ?>">
-              <a href="<?php echo e(route('users.ind')); ?>" class="menu-link">
-                <div data-i18n="All Users">All Users</div>
-              </a>
-            </li>
+          
           </ul>
         </li>
         

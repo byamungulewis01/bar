@@ -20,7 +20,6 @@ Trainings
                         <div>
                             <div class="card-header border-bottom">
                                 <h5 class="card-title mb-0">Bulk Enrolment Management</h5>
-
                             </div>
                             <div class="row p-4">
                                 <div class="table-responsive">
@@ -47,23 +46,76 @@ Trainings
                                                 <td><?php echo e($booking->trains->price); ?></td>
                                                 <td><?php echo e($booking->trains->credits); ?></td>
                                                 <td>
-                                                    <?php if($booking->booked && !$booking->confirm && !$booking->attend): ?>
-                                                      <span class="badge bg-label-info me-2">Booking</span>
-                                                    <?php elseif($booking->booked && $booking->confirm && !$booking->attend): ?>
-                                                    <span class="badge bg-label-primary me-2">Confirm</span>
-                                                    <?php elseif($booking->booked && $booking->confirm && $booking->attend): ?>
-                                                    <span class="badge bg-label-success me-2">Attended</span>
-                                                    <?php else: ?>
-                                                    <span class="badge bg-label-info me-2">Attending</span>
-                                                    <?php endif; ?>
-                                                   
-                                                 
+                                                    <?php switch($booking->status):
+                                                        case (1): ?>
+                                                             <span class="badge bg-label-primary me-2">Booking</span>
+                                                            <?php break; ?>
+                                                        <?php case (2): ?>
+                                                             <span class="badge bg-label-secondary me-2">Confirm</span>
+                                                            <?php break; ?>
+                                                        <?php case (3): ?>
+                                                             <span class="badge bg-label-warning me-2">Attending</span>
+                                                            <?php break; ?>
+                                                        <?php case (4): ?>
+                                                            <span class="badge bg-label-info me-2">Attended</span>
+                                                            <?php break; ?>
+                                                        <?php default: ?>
+                                                            <span class="badge bg-label-warning me-2">N/A</span>
+                                                    <?php endswitch; ?>
+                        
                                                 </td>
                                                 <td>
-                                                    <a href="" data-bs-toggle="modal" data-bs-target="#" class="text-primary"><i
+                                                    <a href="" data-bs-toggle="modal" data-bs-target="#edit<?php echo e($booking->id); ?>" class="text-primary"><i
                                                         class="ti ti-edit me-0 me-sm-1 ti-xs"></i></a>
-                                                    <a href="" data-bs-toggle="modal" data-bs-target="#" class="text-danger"><i
+                                                    <a href="" data-bs-toggle="modal" data-bs-target="#delete" class="text-danger"><i
                                                         class="ti ti-trash me-0 me-sm-1 ti-xs"></i></a>
+
+                                                    <div class="modal fade" id="edit<?php echo e($booking->id); ?>" tabindex="-1" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                                                            <div class="modal-content p-3 p-md-5">
+                                                                <div class="modal-body">
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    <div class="text-center mb-4">
+                                                                        <h3 class="mb-2">Edit Bulk Enrolment</h3>
+                                                                    </div>
+                                                                    <form method="POST" class="row g-3" action="<?php echo e(route('trainings.EditBulk')); ?>">
+                                                                        <?php echo csrf_field(); ?>
+                                                                        <div class="col-12">
+                                                                            <input type="hidden" name="id" value="<?php echo e($booking->id); ?>">
+                                                                            <label for="users" class="form-label">Choose Participant</label>
+                                                                            <select required name="user" class="form-select" id="users">
+                                                                                <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                                <option <?php if( $user->id == $booking->advocate): ?> selected <?php endif; ?> value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
+                                                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <label for="venue" class="form-label">Price</label>
+                                                                            <input required type="number" name="price" id="price" value="<?php echo e($booking->trains->price); ?>" class="form-control">
+                                                                        </div>
+
+                                                                        <div class="col-6">
+                                                                            <label for="venue" class="form-label">Cumulated Credit</label>
+                                                                            <input required type="number" name="credits" id="credit" value="<?php echo e($booking->trains->credits); ?>" class="form-control">
+                                                                        </div>
+                                                                      
+                                                                        <div class="col-12">
+                                                                            <label class="form-label">Status</label>
+                                                                            <select required name="status" class="form-select">
+                                                                                <option <?php if($booking->status == 1): ?> selected <?php endif; ?> value="1">Booked</option>
+                                                                                <option <?php if($booking->status == 2): ?> selected <?php endif; ?> value="2">Confirmed</option>
+                                                                                <option <?php if($booking->status == 3): ?> selected <?php endif; ?> value="3">Attending</option>
+                                                                                <option <?php if($booking->status == 4): ?> selected <?php endif; ?> value="4">Attended</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="col-12 d-flex justify-content-center">
+                                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">Submit</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </td>
 
 
@@ -80,9 +132,13 @@ Trainings
                                             </tr>
                                             <?php endif; ?>
 
-
                                         </tbody>
                                     </table>
+                                    <div class="col-lg-4">
+                                        <?php echo e($bookings->links('vendor.pagination.custom')); ?>
+
+                                       
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -196,7 +252,6 @@ Trainings
             dateFormat: "Y-m-d H:i",
         })
     });
-
 
     $(document).ready(function () {
         $("#credit").on("input", function () {

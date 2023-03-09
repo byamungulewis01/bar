@@ -7,6 +7,7 @@
         <li class="nav-item"><a class="nav-link <?php echo e(Request::routeIs('user.meeting-view')  ? 'active' : ''); ?>" href="<?php echo e(route('user.meeting-view' ,$user_id)); ?>"><i class='ti-xs ti ti-layout-grid me-1'></i> R.B.A Meetings</a></li>
         <li class="nav-item"><a class="nav-link <?php echo e(Request::routeIs('user.training-view')  ? 'active' : ''); ?>" href="<?php echo e(route('user.training-view' ,$user_id)); ?>"><i class='ti-xs ti ti-link me-1'></i> Legal Education</a></li>
         <li class="nav-item"><a class="nav-link <?php echo e(Request::routeIs('user.probono-view')  ? 'active' : ''); ?>" href="<?php echo e(route('user.probono-view' ,$user_id)); ?>"><i class='ti-xs ti ti-gavel me-1'></i> Pro Bono Publico</a></li>
+        <li class="nav-item"><a class="nav-link <?php echo e(Request::routeIs('user.compliance-view') ? 'active' : ''); ?>" href="<?php echo e(route('user.compliance-view' ,$user_id)); ?>"><i class='ti-xs ti ti-gavel me-1'></i> Compliances</a></li>
       </ul>
     </div>
   </div>

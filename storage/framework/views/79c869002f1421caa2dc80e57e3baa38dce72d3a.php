@@ -18,7 +18,7 @@ Pro Bono Cases
           class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editmeetings"></a></h5>
 
     </div>
-   
+
     <div class="card-datatable table-responsive">
       <table class="datatables-probono table border-top">
         <thead>
@@ -55,16 +55,16 @@ Pro Bono Cases
               <?php switch($probono->status):
               case ('OPEN'): ?>
               <span class="badge bg-label-primary me-2"><?php echo e($probono->status); ?></span>
-                  <?php break; ?>
+              <?php break; ?>
               <?php case ('WON'): ?>
               <span class="badge bg-label-success me-2"><?php echo e($probono->status); ?></span>
-                  <?php break; ?>
+              <?php break; ?>
               <?php case ('LOST'): ?>
               <span class="badge bg-label-warning me-2"><?php echo e($probono->status); ?></span>
-                  <?php break; ?>
+              <?php break; ?>
               <?php default: ?>
               <span class="badge bg-label-danger me-2"><?php echo e($probono->status); ?></span>
-          <?php endswitch; ?>
+              <?php endswitch; ?>
 
             </td>
             <td>
@@ -83,16 +83,16 @@ Pro Bono Cases
                         <h3 class="address-title mb-2">Edit Probono Case</h3>
                         <p class="text-muted address-subtitle">change New Probono case Desciption in case you make
                           mistakes </p>
-                          <?php if($errors->any()): ?>
-                          <div class="alert alert-danger">
-                              <ul>
-                                  <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                      <li><?php echo e($error); ?></li>
-                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                              </ul>
-                          </div>
-                          <?php endif; ?>
-                          
+                        <?php if($errors->any()): ?>
+                        <div class="alert alert-danger">
+                          <ul>
+                            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li><?php echo e($error); ?></li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                          </ul>
+                        </div>
+                        <?php endif; ?>
+
                       </div>
                       <form action="<?php echo e(route('probono.update')); ?>" class="row g-3" method="post">
                         <?php echo csrf_field(); ?>
@@ -195,9 +195,10 @@ Pro Bono Cases
                           <select required name="advocate" class="form-select">
                             <option value="">No Advocate Assigned</option>
                             <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($user->id); ?>"  <?php if($user->id == $probono->advocate): ?> selected <?php endif; ?>> <?php echo e($user->name); ?> </option>           
+                            <option value="<?php echo e($user->id); ?>" <?php if($user->id == $probono->advocate): ?> selected <?php endif; ?>>
+                              <?php echo e($user->name); ?> </option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                         
+
                           </select>
                         </div>
                         <div class="col-12 text-center">
@@ -220,12 +221,13 @@ Pro Bono Cases
             <td colspan="3">
               <h6 class="text-warning">
                 You can upload defferent documents regarding this case for advocate
-                
+
               </h6>
-             
+
             </td>
             <td colspan="3">
-              <a href="<?php echo e(route('probono.show' , $probono->id)); ?>" type="button" class="btn btn-sm btn-label-secondary text-nowrap d-inline-block">
+              <a href="<?php echo e(route('probono.show' , $probono->id)); ?>" type="button"
+                class="btn btn-sm btn-label-secondary text-nowrap d-inline-block">
                 Upload files
                 <span class="badge bg-danger text-white badge-notifications"><?php echo e($probono->probono_files); ?></span>
               </a>
@@ -296,8 +298,8 @@ unset($__errorArgs, $__bag); ?>
                           </div>
                         </div>
                         <div class="col-12">
-                          <label class="form-label w-100" for="title">Case File  <span class="text-danger">
-                            Upload  Only PDF File </span></label>
+                          <label class="form-label w-100" for="title">Case File <span class="text-danger">
+                              Upload Only PDF File </span></label>
                           <div class="input-group input-group-merge">
                             <input accept=".pdf" name="case_file" class="form-control" type="file" />
                             <?php $__errorArgs = ['case_file'];
@@ -339,22 +341,24 @@ unset($__errorArgs, $__bag); ?>
               </h6>
               <?php else: ?>
               <h6 class="text-primary">
-                Case assigned to <a href="<?php echo e(route('profile',$probono->advocate)); ?>" class="text-dark"><?php echo e($probono->user->name); ?></a>
-                <a href="javascript:" class="btn btn-dark btn-sm"> Notify </a>
-            
+                Case assigned to <a href="<?php echo e(route('profile',$probono->advocate)); ?>"
+                  class="text-dark"><?php echo e($probono->user->name); ?></a>
+                
+                
               </h6>
               <?php endif; ?>
 
             </td>
             <td>
-              <a href="<?php echo e(route('probono.show_devs' , $probono->id)); ?>" type="button" class="btn btn-sm btn-label-secondary text-nowrap d-inline-block">
+              <a href="<?php echo e(route('probono.show_devs' , $probono->id)); ?>" type="button"
+                class="btn btn-sm btn-label-secondary text-nowrap d-inline-block">
                 Reported Events
                 <span class="badge bg-danger text-white badge-notifications"><?php echo e($probono->probono_devs); ?></span>
               </a>
             </td>
 
           </tr>
-          
+
         </tbody>
 
         <?php
@@ -363,17 +367,17 @@ unset($__errorArgs, $__bag); ?>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
         <tbody>
           <tr>
-           
+
             <td colspan="3">
               <h6 class="text-warning">
                 Empy No Probono Founds Case
-                
+
               </h6>
-             
+
             </td>
-        
+
           </tr>
-    
+
         </tbody>
         <?php endif; ?>
 
@@ -461,8 +465,8 @@ unset($__errorArgs, $__bag); ?>
           </div>
           <div class="col-12 col-md-6">
             <label class="form-label" for="flatpickr-date">Hearing Day</label>
-            <input required type="text" class="form-control" id="date" name="hearing_date"
-              placeholder="Month DD, YYYY" class="form-control" />
+            <input required type="text" class="form-control" id="date" name="hearing_date" placeholder="Month DD, YYYY"
+              class="form-control" />
           </div>
           <div class="col-12 col-md-6">
             <label class="form-label" for="status">Category</label>
@@ -536,8 +540,6 @@ unset($__errorArgs, $__bag); ?>
 <script src="<?php echo e(asset('assets/vendor/libs/sweetalert2/sweetalert2.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/vendor/libs/flatpickr/flatpickr.js')); ?>"></script>
 <script>
-
-
   "use strict";
   $(function () {
     var dtt = document.querySelector("#date"),
@@ -589,5 +591,4 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\rba\resources\views/probono/index.blade.php ENDPATH**/ ?>
