@@ -47,12 +47,8 @@
             </div>
 
         </div>
-
-
     </div>
     <hr class="my-0" />
-
-
 </div>
 
 <div class="modal fade" id="generate" tabindex="-1" aria-hidden="true">

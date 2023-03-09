@@ -146,7 +146,6 @@ Trainings
                 </div>
                 <hr class="my-0" />
 
-
             </div>
         </div>
         <div class="col-xl-4 col-md-8 col-12 mb-md-0 mb-4">

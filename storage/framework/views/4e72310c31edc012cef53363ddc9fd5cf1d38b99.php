@@ -245,7 +245,7 @@ Legal Edication
                                                         <label for="exampleFormControlTextarea1"
                                                             class="form-label">Message</label>
                                                         <textarea required name="message" class="form-control"
-                                                            id="exampleFormControlTextarea1" rows="4">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake.
+                                                            id="exampleFormControlTextarea1" rows="4">
                                                       </textarea>
                                                     </div>
                                                     <div class="col-6">
