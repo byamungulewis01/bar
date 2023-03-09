@@ -99,9 +99,79 @@ Discipline Details
                             class="btn btn-warning btn-sm">Edit </a>
                         <a href="javascript:" data-bs-toggle="modal" data-bs-target="#schedule"
                             class="btn btn-primary btn-sm">Schedule Next Sitting</a>
-                        <a href="javascript:" data-bs-toggle="modal" data-bs-target="#notift"
+                        <a href="javascript:" data-bs-toggle="modal" data-bs-target="#notify"
                             class="btn btn-dark btn-sm">Notify
                         </a>
+                        <div class="modal fade" id="notify" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                                <div class="modal-content p-3 p-md-5">
+                                    <div class="modal-body">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                        <div class="text-center mb-4">
+                                            <h3 class="mb-2">Send Notification Messages</h3>
+
+                                        </div>
+                                        <form method="POST" class="row g-3" action="{{ route('case.notify') }}"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="col-12">
+                                                <select row="6" required name="user[]" multiple class="form-select"
+                                                    id="exampleFormControlSelect2" aria-label="Multiple select example">
+                                                    @foreach ($members as $member)
+                                                    <option value="{{ $member->user->id }}">{{ $member->user->name }} -
+                                                        {{ $member->role }}</option>
+                                                    @endforeach
+                                                </select>
+
+
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="switch">
+                                                    <span class="switch-label">Subject <span class="text-danger">include
+                                                            in Email
+                                                            only</span></span>
+                                                </label>
+                                                <input type="text" name="subject" class="form-control" id="subject">
+
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="exampleFormControlTextarea1"
+                                                    class="form-label">Message</label>
+                                                <textarea required name="message" class="form-control"
+                                                    id="exampleFormControlTextarea1" rows="3">
+                                      </textarea>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="sent[]" type="checkbox"
+                                                        value="SMS" id="defaultCheck3" />
+                                                    <label class="form-check-label" for="defaultCheck3">SMS (Uncheck if
+                                                        "NO")
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" checked name="sent[]"
+                                                        type="checkbox" value="EMAIL" id="defaultCheck4" />
+                                                    <label class="form-check-label" for="defaultCheck4">EMAIL (Uncheck
+                                                        if "NO")
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 text-center">
+                                                <button type="submit"
+                                                    class="btn btn-primary me-sm-3 me-1">Submit</button>
+                                                <button type="reset" class="btn btn-label-secondary btn-reset"
+                                                    data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         @endif
 
                     </div>
@@ -129,195 +199,210 @@ Discipline Details
                             <div class="text-center mb-4">
                                 <h3 class="mb-2">Update case</h3>
                             </div>
-                         @if ($case->case_type == 1)
-                         <form method="POST" class="row g-3" action="{{ route('cases.update') }}">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" name="case" value="{{ $case->id }}">
-                            <div class="col-12">
-                                <label class="switch">
-                                    <span class="switch-label">Layman Or Institution Plaintiff</span>
-                                </label>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label w-100" for="modalAddCard">Name</label>
-                                <div class="input-group input-group-merge">
-                                    <input pattern="[A-Za-z0-9 ]{6,}" title="Name Must have at least 6 characters" required name="name" value="{{ $case->p_name }}"
-                                        class="form-control credit-card-mask" type="text"/>
-                                    <span class="input-group-text cursor-pointer p-1" id="modalAddCard2"><span
-                                            class="card-type"></span></span>
+                            @if ($case->case_type == 1)
+                            <form method="POST" class="row g-3" action="{{ route('cases.update') }}">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="case" value="{{ $case->id }}">
+                                <div class="col-12">
+                                    <label class="switch">
+                                        <span class="switch-label">Layman Or Institution Plaintiff</span>
+                                    </label>
                                 </div>
-                            </div>
-                            <div class="col-6 col-md-6">
-                                <label class="form-label" for="modalAddCardExpiryDate">Email</label>
-                                <input type="email" id="modalAddCardExpiryDate" name="email" required
-                                    value="{{ $case->p_email }}" class="form-control expiry-date-mask"/>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <label class="form-label" for="modalAddCardName">Mobile Number</label>
-                                <input name="phone" pattern="[0-9]{10}" required maxlength="10" value="{{ $case->p_phone }}"
-                                    class="form-control"/>
-                            </div>
+                                <div class="col-12">
+                                    <label class="form-label w-100" for="modalAddCard">Name</label>
+                                    <div class="input-group input-group-merge">
+                                        <input pattern="[A-Za-z0-9 ]{6,}" title="Name Must have at least 6 characters"
+                                            required name="name" value="{{ $case->p_name }}"
+                                            class="form-control credit-card-mask" type="text" />
+                                        <span class="input-group-text cursor-pointer p-1" id="modalAddCard2"><span
+                                                class="card-type"></span></span>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-6">
+                                    <label class="form-label" for="modalAddCardExpiryDate">Email</label>
+                                    <input type="email" id="modalAddCardExpiryDate" name="email" required
+                                        value="{{ $case->p_email }}" class="form-control expiry-date-mask" />
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="modalAddCardName">Mobile Number</label>
+                                    <input name="phone" pattern="[0-9]{10}" required maxlength="10"
+                                        value="{{ $case->p_phone }}" class="form-control" />
+                                </div>
 
-                            <div class="col-12">
-                                <label class="switch">
-                                    <span class="switch-label">Advocate defendant</span>
-                                </label>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label w-100" for="modalAddCard">Name</label>
-                                <div class="input-group input-group-merge">
-                                    <select required name="advocate" class="form-select">
-                                        <option value="{{ $case->d_advocate }}" selected>{{ $case->d_name }}</option>
-                                        @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name}}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="col-12">
+                                    <label class="switch">
+                                        <span class="switch-label">Advocate defendant</span>
+                                    </label>
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label" for="modalAddCardName">complaint</label>
-                                <input pattern="[A-Za-z0-9 ]{10,}" title="complaint must have at least 10 characters" required type="text" value="{{ $case->complaint }}" name="complaint" class="form-control" placeholder="Subject here" />
-                                <input type="hidden" name="case_type" value="1" />
-                            </div>
-                            <div class="col-12">
-                                <label for="exampleFormControlTextarea1" class="form-label">Case Sammary</label>
-                                <textarea required name="sammary" class="form-control" id="exampleFormControlTextarea1"
-                                    rows="3">
+                                <div class="col-12">
+                                    <label class="form-label w-100" for="modalAddCard">Name</label>
+                                    <div class="input-group input-group-merge">
+                                        <select required name="advocate" class="form-select">
+                                            <option value="{{ $case->d_advocate }}" selected>{{ $case->d_name }}
+                                            </option>
+                                            @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="modalAddCardName">complaint</label>
+                                    <input pattern="[A-Za-z0-9 ]{10,}"
+                                        title="complaint must have at least 10 characters" required type="text"
+                                        value="{{ $case->complaint }}" name="complaint" class="form-control"
+                                        placeholder="Subject here" />
+                                    <input type="hidden" name="case_type" value="1" />
+                                </div>
+                                <div class="col-12">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Case Sammary</label>
+                                    <textarea required name="sammary" class="form-control"
+                                        id="exampleFormControlTextarea1" rows="3">
                                     {{ $case->sammary }}
                                 </textarea>
-                            </div>
-                            
-                            <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
-                                <button type="reset" class="btn btn-label-secondary btn-reset"
-                                    data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                            </div>
-                        </form>
-                         @endif
-                         @if ($case->case_type == 2)
-                         <form method="POST" class="row g-3" action="{{ route('cases.update') }}">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" name="case" value="{{ $case->id }}">
-                            <div class="col-12">
-                                <label class="switch">
-                                    <span class="switch-label">Advocate Plaintiff</span>
-                                </label>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label w-100" for="modalAddCard">Advocate name</label>
-                                <div class="input-group input-group-merge">
-                                    <select required name="advocate" class="form-select">
-                                        <option value="{{ $case->p_advocate }}" selected>{{ $case->p_name }} </option>
-                                        @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name}}</option>
-                                        @endforeach
-
-                                    </select>
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="switch">
-                                    <span class="switch-label"> Layman Or Institution defendant</span>
-                                </label>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label w-100" for="modalAddCard">Name</label>
-                                <div class="input-group input-group-merge">
-                                    <input pattern="[A-Za-z0-9 ]{6,}" title="Name Must have at least 6 characters" required name="name" value="{{ $case->d_name }}"
-                                        class="form-control credit-card-mask" type="text"/>
-                                    <span class="input-group-text cursor-pointer p-1" id="modalAddCard2"><span
-                                            class="card-type"></span></span>
+
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                                    <button type="reset" class="btn btn-label-secondary btn-reset"
+                                        data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                                 </div>
-                            </div>
-                            <div class="col-6 col-md-6">
-                                <label class="form-label" for="modalAddCardExpiryDate">Email</label>
-                                <input type="email" id="modalAddCardExpiryDate" name="email" required
-                                    value="{{ $case->d_email }}" class="form-control expiry-date-mask" />
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <label class="form-label" for="modalAddCardName">Mobile Number</label>
-                                <input  name="phone" pattern="[0-9]{10}" required maxlength="10" value="{{ $case->d_phone }}"
-                                    class="form-control" />
-                            </div>
-
-                            <div class="col-12">
-                                <label class="form-label" for="modalAddCardName">complaint</label>
-                                <input pattern="[A-Za-z0-9 ]{10,}" title="complaint must have at least 10 characters" required type="text" value="{{ $case->complaint }}" name="complaint" class="form-control" placeholder="Subject here" />
-                                <input type="hidden" name="case_type" value="2" />
-                            </div>
-                            <div class="col-12">
-                                <label for="exampleFormControlTextarea1" class="form-label">Case Sammary</label>
-                                <textarea required name="sammary" class="form-control" id="exampleFormControlTextarea1"
-                                    rows="3">{{ $case->sammary }}</textarea>
-                            </div>
-                            <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
-                                <button type="reset" class="btn btn-label-secondary btn-reset"
-                                    data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                            </div>
-                        </form>
-                         @endif
-                         @if ($case->case_type == 3)
-                         <form method="POST" class="row g-3" action="{{ route('cases.update') }}">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" name="case" value="{{ $case->id }}">
-                            <div class="col-12">
-                                <label class="switch">
-                                    <span class="switch-label">Advocate Plaintiff</span>
-                                </label>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label w-100" for="modalAddCard">Name</label>
-                                <div class="input-group input-group-merge">
-                                    <select required name="plaintiff" class="form-select">
-                                        <option value="{{ $case->p_advocate }}" selected>{{ $case->p_name }}</option>
-                                        @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name}}</option>
-                                        @endforeach
-
-                                    </select>
+                            </form>
+                            @endif
+                            @if ($case->case_type == 2)
+                            <form method="POST" class="row g-3" action="{{ route('cases.update') }}">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="case" value="{{ $case->id }}">
+                                <div class="col-12">
+                                    <label class="switch">
+                                        <span class="switch-label">Advocate Plaintiff</span>
+                                    </label>
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="switch">
-                                    <span class="switch-label">Advocate Defendant</span>
-                                </label>
-                            </div>
-                            <div class="col-12">
-                                <label class="switch">
-                                    <span class="switch-label">Civilian defendant</span>
-                                </label>
-                                <div class="input-group input-group-merge">
-                                    <select required name="defendant" class="form-select">
-                                        <option value="{{ $case->d_advocate }}" selected> {{ $case->d_name }}</option>
-                                        @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name}}</option>
-                                        @endforeach
+                                <div class="col-12">
+                                    <label class="form-label w-100" for="modalAddCard">Advocate name</label>
+                                    <div class="input-group input-group-merge">
+                                        <select required name="advocate" class="form-select">
+                                            <option value="{{ $case->p_advocate }}" selected>{{ $case->p_name }}
+                                            </option>
+                                            @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name}}</option>
+                                            @endforeach
 
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="col-12">
+                                    <label class="switch">
+                                        <span class="switch-label"> Layman Or Institution defendant</span>
+                                    </label>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label w-100" for="modalAddCard">Name</label>
+                                    <div class="input-group input-group-merge">
+                                        <input pattern="[A-Za-z0-9 ]{6,}" title="Name Must have at least 6 characters"
+                                            required name="name" value="{{ $case->d_name }}"
+                                            class="form-control credit-card-mask" type="text" />
+                                        <span class="input-group-text cursor-pointer p-1" id="modalAddCard2"><span
+                                                class="card-type"></span></span>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-6">
+                                    <label class="form-label" for="modalAddCardExpiryDate">Email</label>
+                                    <input type="email" id="modalAddCardExpiryDate" name="email" required
+                                        value="{{ $case->d_email }}" class="form-control expiry-date-mask" />
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="modalAddCardName">Mobile Number</label>
+                                    <input name="phone" pattern="[0-9]{10}" required maxlength="10"
+                                        value="{{ $case->d_phone }}" class="form-control" />
+                                </div>
 
-                            <div class="col-12">
-                                <label class="form-label" for="modalAddCardName">complaint</label>
-                                <input pattern="[A-Za-z0-9 ]{10,}" title="complaint must have at least 10 characters" required type="text" value="{{ $case->complaint }}" name="complaint" class="form-control" placeholder="Subject here" />
-                                <input type="hidden" name="case_type" value="3" />
-                            </div>
-                            <div class="col-12">
-                                <label for="exampleFormControlTextarea1" class="form-label">Case Sammary</label>
-                                <textarea required name="sammary" class="form-control" id="exampleFormControlTextarea1"
-                                    rows="3">{{ $case->sammary }}   </textarea>
-                            </div>
-                            <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
-                                <button type="reset" class="btn btn-label-secondary btn-reset"
-                                    data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                            </div>
-                        </form>
-                         @endif
+                                <div class="col-12">
+                                    <label class="form-label" for="modalAddCardName">complaint</label>
+                                    <input pattern="[A-Za-z0-9 ]{10,}"
+                                        title="complaint must have at least 10 characters" required type="text"
+                                        value="{{ $case->complaint }}" name="complaint" class="form-control"
+                                        placeholder="Subject here" />
+                                    <input type="hidden" name="case_type" value="2" />
+                                </div>
+                                <div class="col-12">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Case Sammary</label>
+                                    <textarea required name="sammary" class="form-control"
+                                        id="exampleFormControlTextarea1" rows="3">{{ $case->sammary }}</textarea>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                                    <button type="reset" class="btn btn-label-secondary btn-reset"
+                                        data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                </div>
+                            </form>
+                            @endif
+                            @if ($case->case_type == 3)
+                            <form method="POST" class="row g-3" action="{{ route('cases.update') }}">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="case" value="{{ $case->id }}">
+                                <div class="col-12">
+                                    <label class="switch">
+                                        <span class="switch-label">Advocate Plaintiff</span>
+                                    </label>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label w-100" for="modalAddCard">Name</label>
+                                    <div class="input-group input-group-merge">
+                                        <select required name="plaintiff" class="form-select">
+                                            <option value="{{ $case->p_advocate }}" selected>{{ $case->p_name }}
+                                            </option>
+                                            @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="switch">
+                                        <span class="switch-label">Advocate Defendant</span>
+                                    </label>
+                                </div>
+                                <div class="col-12">
+                                    <label class="switch">
+                                        <span class="switch-label">Civilian defendant</span>
+                                    </label>
+                                    <div class="input-group input-group-merge">
+                                        <select required name="defendant" class="form-select">
+                                            <option value="{{ $case->d_advocate }}" selected> {{ $case->d_name }}
+                                            </option>
+                                            @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name}}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label" for="modalAddCardName">complaint</label>
+                                    <input pattern="[A-Za-z0-9 ]{10,}"
+                                        title="complaint must have at least 10 characters" required type="text"
+                                        value="{{ $case->complaint }}" name="complaint" class="form-control"
+                                        placeholder="Subject here" />
+                                    <input type="hidden" name="case_type" value="3" />
+                                </div>
+                                <div class="col-12">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Case Sammary</label>
+                                    <textarea required name="sammary" class="form-control"
+                                        id="exampleFormControlTextarea1" rows="3">{{ $case->sammary }}   </textarea>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                                    <button type="reset" class="btn btn-label-secondary btn-reset"
+                                        data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                </div>
+                            </form>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -377,11 +462,11 @@ Discipline Details
                     <h5 class="card-action-title mb-0">Participant</h5>
                     @if ($case->case_status =='OPEN')
                     <a class="btn btn-primary btn-sm text-white pull-left float-end" data-bs-toggle="modal"
-                    data-bs-target="#partipant">
-                    <i class="ti ti-plus me-0 me-sm-1 ti-xs"></i>
-                    <span class="d-none d-sm-inline-block">New Case</span></a>
+                        data-bs-target="#partipant">
+                        <i class="ti ti-plus me-0 me-sm-1 ti-xs"></i>
+                        <span class="d-none d-sm-inline-block">New Case</span></a>
                     @endif
-                  
+
                 </div>
                 <div class="card-body">
 
@@ -404,32 +489,39 @@ Discipline Details
                                     <td>{{ $count }}</td>
                                     <td>{{ $member->user->name }}</td>
                                     <td>{{ $member->role }}</td>
-                                    <td> 
+                                    <td>
                                         @if ($case->case_status =='OPEN')
                                         <a href="javascript:" data-bs-toggle="modal"
-                                        data-bs-target="#deleteStatus{{ $member->table_id }}" class="text-danger"><i
-                                            class="ti ti-trash"></i></a> 
+                                            data-bs-target="#deleteStatus{{ $member->table_id }}" class="text-danger"><i
+                                                class="ti ti-trash"></i></a>
                                         @endif
-                                        <div class="modal modal-top fade" id="deleteStatus{{ $member->table_id }}" tabindex="-1" aria-hidden="true">
+                                        <div class="modal modal-top fade" id="deleteStatus{{ $member->table_id }}"
+                                            tabindex="-1" aria-hidden="true">
                                             <div class="modal-dialog modal-md" role="document">
-                                              <div class="modal-content">
-                                                <form action="{{ route('participant.delete') }}" method="POST">
-                                                  @csrf
-                                                  @method('DELETE')
-                                                  <input type="hidden" name="id" value="{{ $member->table_id  }}" />
-                                                  <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel2">Are you sure to delete <strong>{{ $member->user->name }}</strong></h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                  </div>
-                                                  <div class="modal-footer">
-                                                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
-                                                  </div>
-                                                </form>
-                                              </div>
+                                                <div class="modal-content">
+                                                    <form action="{{ route('participant.delete') }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="hidden" name="id"
+                                                            value="{{ $member->table_id  }}" />
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel2">Are you sure
+                                                                to delete <strong>{{ $member->user->name }}</strong>
+                                                            </h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-label-secondary"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-danger">Yes,
+                                                                Delete</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
-                                          </div>
-                                          
+                                        </div>
+
                                     </td>
 
                                 </tr>
@@ -507,10 +599,10 @@ Discipline Details
                                     <td>
                                         @if ($case->case_status =='OPEN')
                                         <a href="" data-bs-toggle="modal"
-                                        data-bs-target="#decision{{ $sitting->sitting_id }}"
-                                        class="btn btn-primary btn-sm"> <i class="ti ti-plus"> Decision</i></a> 
+                                            data-bs-target="#decision{{ $sitting->sitting_id }}"
+                                            class="btn btn-primary btn-sm"> <i class="ti ti-plus"> Decision</i></a>
                                         @endif
-                                  
+
                                     </td>
 
                                 </tr>

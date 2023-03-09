@@ -93,6 +93,17 @@ class TrainingController extends Controller
         $bookings_count = $bookings->count();
         return view('training.manage' ,compact('training','bookings','users','bookings_count'));
     }
+    public function EditBulk(Request $request)
+    {
+        $formDate = $request->validate([
+            'user' => 'required',
+            'price' => 'required',
+            'credits' => 'required',
+            'status' => 'required',
+        ]);
+        Booking::findorfail($request->id)->update($formDate);
+        return back()->with('message','Edited Bulk');
+    }
     public function update(Request $request)
     {
         $this->validate($request,[

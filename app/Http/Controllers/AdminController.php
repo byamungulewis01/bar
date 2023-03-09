@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Meeting;
 use App\Models\Probono;
 use App\Models\Discipline;
+use App\Models\Phonenumber;
+use App\Models\Contribution;
 use Illuminate\Http\Request;
 use App\Models\DisciplineMember;
 use App\Models\DisciplineSitting;
@@ -86,6 +89,15 @@ class AdminController extends Controller
         $user_id = $user->id;
         return view('profile.training',compact('probonos','user_id'));
     }
+      public function compliance($user)
+    {
+        $currentYear = Carbon::now()->year;
+        $probonos = Probono::where('advocate',$user)->get();
+        $user = User::findorfail($user);
+        $user_id = $user->id;
+        $contribution = Contribution::where('yearInBar', $currentYear)->first();
+        return view('profile.compliance',compact('probonos','user','user_id','contribution'));
+    }
 
     public function notify()
     {
@@ -94,13 +106,36 @@ class AdminController extends Controller
     }
     public function send_notify(Request $request)
     {
-        dd($request->response);
-        // $recipient = [];
-        //     foreach ($request->recipient as $value) {
-        //         $recipient[] = $value;
+        $formField = $request->validate([
+            'user' => 'required',
+            'message' => 'required',
+            'sent' => 'required',
+        ]);
 
-        //         echo "<br>".$value;
-        //     }
+        $recipient = [];
+            foreach ($request->user as $value) {
+                $recipient[] = $value;
+            }
+         $users = User::whereIn('id', $recipient)->get();
+        
+        foreach ($request->sent as $value) {
+            if ($value == 'EMAIL') {
+                foreach ($users as $user) {
+                    // echo '<br> '.$user->name;
+                    (new NotifyController)->notify($user->email,$request->subject,$request->message);
+                  }         
+            }elseif ($value == 'SMS') {
+                foreach ($users as $user) {
+                 (new NotifyController)->notify_sms($request->message,$user->phone);
+                }
+            } else{
+            foreach ($users as $user) {
+                (new NotifyController)->notify($user->email,$request->subject,$request->message);
+                (new NotifyController)->notify_sms($request->message,$user->phone);
+                }
+            }
+       }
+       return back()->with('message', 'Notified Successfully');
     }
 
 }

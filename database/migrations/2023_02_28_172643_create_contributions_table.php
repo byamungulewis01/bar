@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('amount');
             $table->decimal('percentage');
             $table->string('concern');
+            $table->integer('yearInBar');
             $table->UnsignedBigInteger('createdBy');
             $table->UnsignedBigInteger('updateby')->nullable();
             $table->foreign('createdBy')->references('id')->on('admins')->constrained()->onDelete('cascade');

@@ -38,7 +38,7 @@ Meetings
                                     
                             </div>
                             <br>
-                            <div id="results"></div>
+                            <div id="results" style="overflow: hidden; height:70px;"></div>
                         </div>
 
 
@@ -61,6 +61,7 @@ Meetings
                                 <tr>
                                     <th>#</th>
                                     <th>Names</th>
+                                    <th>Reg No</th>
                                     <th>Attended</th>
                                     <th style="width: 40ch">Setting</th>
                                 </tr>
@@ -70,7 +71,8 @@ Meetings
                                 @forelse ($invitations as $key => $invitation)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $invitation->user->name }}</td>
+                                    <td>{{ $invitation->name }}</td>
+                                    <td>{{ $invitation->regNumber }}</td>
                                     <td>
                                         @if ($invitation->status == 1)
 
@@ -79,9 +81,10 @@ Meetings
                                         <span class="badge bg-label-info"><i class="fa-solid fa-check"></i></span>
                                         @endif
                                     </td>
-                                    <td><a href="#" class="btn btn-success btn-sm text-white"><i
+                                    <td>
+                                        {{-- <a href="#" class="btn btn-success btn-sm text-white"><i
                                                 class="ti ti-check me-0 me-sm-1 ti-xs"></i><span
-                                                class="d-none d-sm-inline-block">Accept power of Attomey</span></a>
+                                                class="d-none d-sm-inline-block">Accept power of Attomey</span></a> --}}
                                         <a data-bs-toggle="modal" data-bs-target="#delete{{ $invitation->id }}" href=""
                                             class="btn btn-danger btn-sm text-white"><i
                                                 class="ti ti-trash me-0 me-sm-1 ti-xs"></i></a>

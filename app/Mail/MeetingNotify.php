@@ -69,7 +69,7 @@ class MeetingNotify extends Mailable
     {
 
         $message = $this->markdown('emails.meetingNotify')
-        ->subject("testing");
+        ->subject($this->subject);
         foreach ($this->attachmentsPaths as $path) {
         $message->attach(storage_path('app/' . $path));
         }

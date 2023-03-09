@@ -13,11 +13,12 @@ Notify
 
             <!-- Current Plan -->
             <div class="card mb-4">
-                <h5 class="card-header">Current Plan</h5>
+                <h5 class="card-header">Send Notifications</h5>
                 <div class="card-body">
+                 <form action="{{ route('send_notify') }}" method="post">
+                    @csrf
                     <div class="row">
                         <div class="col-12 mb-3">
-                            <input type="hidden" name="meeting" value="">
                             <select row="6" required name="user[]" multiple class="form-select"
                                 id="exampleFormControlSelect2" aria-label="Multiple select example">
                                 @foreach ($users as $user)
@@ -27,21 +28,21 @@ Notify
 
 
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 mb-2">
                             <label class="switch">
                                 <span class="switch-label">Subject <span class="text-danger">include in Email
                                         only</span></span>
                             </label>
-                            <input required type="text" name="subject" class="form-control" id="subject" value=" ">
+                            <input type="text" name="subject" class="form-control" id="subject">
 
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 mb-4">
                             <label for="exampleFormControlTextarea1" class="form-label">Message</label>
                             <textarea required name="message" class="form-control" id="exampleFormControlTextarea1"
-                                 rows="3">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake.
+                                 rows="5">
                              </textarea>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-check">
                                 <input class="form-check-input" name="sent[]" type="checkbox" value="SMS"
                                     id="defaultCheck3" />
@@ -49,7 +50,7 @@ Notify
                                 </label>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-check">
                                 <input class="form-check-input" checked name="sent[]" type="checkbox" value="EMAIL"
                                     id="defaultCheck4" />
@@ -57,8 +58,11 @@ Notify
                                 </label>
                             </div>
                         </div>
+                        <div class="col-12 d-flex justify-content-center mt-3">
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Send notify</button>
+                        </div>
                     </div>
-                    </div>
+                 </form>
                 </div>
                 <!-- /Current Plan -->
 
