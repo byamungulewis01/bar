@@ -69,7 +69,6 @@ Trainings
                                                         class="ti ti-edit me-0 me-sm-1 ti-xs"></i></a>
                                                     <a href="" data-bs-toggle="modal" data-bs-target="#delete" class="text-danger"><i
                                                         class="ti ti-trash me-0 me-sm-1 ti-xs"></i></a>
-
                                                     <div class="modal fade" id="edit{{ $booking->id}}" tabindex="-1" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
                                                             <div class="modal-content p-3 p-md-5">
@@ -117,8 +116,6 @@ Trainings
                                                         </div>
                                                     </div>
                                                 </td>
-
-
                                             </tr>
                                             @php
                                             $count++;
