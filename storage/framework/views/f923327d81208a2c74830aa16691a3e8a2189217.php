@@ -50,6 +50,38 @@ Meetings
                 <label for="venue" class="form-label">Credit</label>
                 <input required type="text" name="credits" id="credit" class="form-control">
               </div>
+              <div class="col-6">
+                <div class="form-check mb-2">
+                    <input class="form-check-input" name="concern[]" type="checkbox" value="1"
+                        id="Advocate" />
+                    <label class="form-check-label" for="Advocate">
+                        Concerns Advocate
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" name="concern[]" type="checkbox" value="3"
+                        id="Support" />
+                    <label class="form-check-label" for="Support">
+                        Concerns Support Staff
+                    </label>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-check mb-2">
+                    <input class="form-check-input" name="concern[]" type="checkbox" value="2"
+                        id="interns" />
+                    <label class="form-check-label" for="interns">
+                        Concerns interns
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" name="concern[]" type="checkbox" value="4"
+                        id="Technical" />
+                    <label class="form-check-label" for="Technical">
+                        Technical Staff
+                    </label>
+                </div>
+            </div>
               <div class="col-md mb-md-0 mb-2">
                 <div class="form-check custom-option custom-option-basic checked">
                   <label class="form-check-label custom-option-content" for="published1">
@@ -105,7 +137,7 @@ Meetings
           <?php
           $count = 1;
           ?>
-          <?php $__currentLoopData = $meetings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $meeting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+          <?php $__empty_1 = true; $__currentLoopData = $meetings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $meeting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
 
           <tr>
             <td><?php echo e($count); ?></td>
@@ -141,7 +173,7 @@ Meetings
                   <a class="dropdown-item" href="<?php echo e(route('meetings.show',$meeting->id)); ?>">Invite</a>
                   <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#notify-me<?php echo e($meeting->id); ?>"
                     href="">Notify</a>
-
+                  <a class="dropdown-item" href="<?php echo e(route('meetings.attendance',$meeting->id)); ?>">Data</a>
                   
                   <div class="dropdown-divider"></div>
                   <a data-bs-toggle="modal" data-bs-target="#edit<?php echo e($meeting->id); ?>" class="dropdown-item"
@@ -368,8 +400,12 @@ Meetings
               </div>
             </div>
           </div>
-
-          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+          <tr>
+            <td></td>
+            <td>No Record Accours</td>
+          </tr>
+          <?php endif; ?>
 
 
         </tbody>

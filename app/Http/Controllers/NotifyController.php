@@ -7,6 +7,7 @@ use App\Mail\NewAccount;
 use App\Mail\NotifyUser;
 use App\Mail\ChangedEmail;
 use App\Mail\MeetingNotify;
+use App\Mail\Quicky_notify;
 use App\Mail\resetPassword;
 use App\Mail\TrainingNotify;
 use Illuminate\Http\Request;
@@ -60,6 +61,9 @@ class NotifyController extends Controller
     
     public function notify($email,$subject,$message){
         Mail::to($email)->send(new NotifyUser($email,$subject,$message));
+    }
+    public function quicky_notify($email,$name){
+        Mail::to($email)->send(new Quicky_notify($email,$name));
     }
     public function notify_sms($message,$phone){
  

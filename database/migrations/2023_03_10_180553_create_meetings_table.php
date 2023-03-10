@@ -21,6 +21,7 @@ return new class extends Migration
             $table->time('end');
             $table->string('venue');
             $table->string('credits');
+            $table->string('concern')->nullable();
             $table->boolean('published')->defaul(false);
             $table->timestamps();
         });
