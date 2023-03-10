@@ -36,20 +36,19 @@
                         <?php echo e($training->title); ?></strong></p>
                 <?php if(Request::routeIs('trainings.manage')): ?>
                 <a href="" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#generate"><i class="ti ti-settings ti-sm me-2"></i>Generate</a>
+                     <?php if($bookings_count == 0): ?>
+                     <?php else: ?>
                         <?php if($booking->voucherNumber != null): ?>
-                            <a href="<?php echo e(route('trainings.printpdf')); ?>" class="btn btn-sm btn-primary"><i class="ti ti-prints ti-sm me-2"></i>Print list</a>
-                        <?php endif; ?>
+                        <a href="<?php echo e(route('trainings.voucher', $booking->training)); ?>" class="btn btn-sm btn-primary" target="_blank"><i class="ti ti-prints ti-sm me-2"></i>Create list</a>
+                        <?php endif; ?>       
+                     <?php endif; ?>
                 <?php endif; ?>
 
             </div>
 
         </div>
-
-
     </div>
     <hr class="my-0" />
-
-
 </div>
 
 <div class="modal fade" id="generate" tabindex="-1" aria-hidden="true">

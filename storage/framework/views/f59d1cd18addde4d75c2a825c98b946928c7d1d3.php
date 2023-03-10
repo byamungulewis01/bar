@@ -179,7 +179,7 @@ Meetings
                             <label class="form-check-label custom-option-content" for="published3">
                               <input name="recipients" class="form-check-input" type="radio" checked="" value="1"
                                 id="published3">
-                              <span class="custom-option-header">
+                              <span class="custom-option-header" id="published3">
                                 <span class="h6 mb-0">Invited</span>
                                 <span class="text-muted"></span>
                               </span>
@@ -191,7 +191,7 @@ Meetings
                           <div class="form-check custom-option custom-option-basic">
                             <label class="form-check-label custom-option-content" for="published4">
                               <input name="recipients" class="form-check-input" type="radio" value="2" id="published4">
-                              <span class="custom-option-header">
+                              <span class="custom-option-header" id="published4">
                                 <span class="h6 mb-0">Attended</span>
                                 <span class="text-muted"></span>
                               </span>
@@ -212,7 +212,7 @@ Meetings
                         <div class="col-12">
                           <label for="exampleFormControlTextarea1" class="form-label">Message</label>
                           <textarea required name="message" class="form-control" id="exampleFormControlTextarea1"
-                            rows="3">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake.
+                            rows="3">
                           </textarea>
                         </div>
                         <div class="col-6">
@@ -236,7 +236,8 @@ Meetings
                             <span class="switch-label text-warning">Attache files (5 Max):</span>
                           </label>
 
-                          <input type="file" name="attachments[]" class="form-control" placeholder="Files" multiple max="5">
+                          <input type="file" name="attachments[]" class="form-control" placeholder="Files" multiple
+                            max="5">
                         </div>
                         <div class="col-12 text-center">
                           <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
@@ -463,8 +464,8 @@ Meetings
     });
   });
 
-  <?php if($errors -> any()): ?>
-  <?php $__currentLoopData = $errors -> all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+  <?php if($errors->any()): ?>
+  <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
   <?php

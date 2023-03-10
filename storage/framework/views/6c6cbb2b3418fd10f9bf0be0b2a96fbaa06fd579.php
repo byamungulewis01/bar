@@ -17,7 +17,6 @@ Suspended user
                 <table class="datatables-users table border-top">
                   <thead>
                     <tr>
-                      <th></th>
                       <th>User</th>
                       <th>Roll Number</th>
                       <th>Phone</th>
@@ -272,7 +271,6 @@ $(function(){
     n.length&&(e=n.DataTable({
         ajax:"/api/users/suspendedApi",
         columns:[
-            {data:""},
             {data:"name"},
             {data:"regNumber"},
             {data:"phone"},
@@ -282,55 +280,46 @@ $(function(){
             {data:"action"}
         ],
         columnDefs:[
-            {
-                className:"control",
-                searchable:!1,
-                orderable:!1,
-                responsivePriority:2,
-                targets:0,
-                render:function(e,t,a,s){
-                    return""
-                }
-            },
-            {
-                targets:1,
-                responsivePriority:4,
-                render:function(e,t,a,s){
-                    var n=a.name, i=a.email, o=a.photo, j=a.id;
-                    return'<div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3">'+(o?'<img src="'+assetsPath+"img/avatars/"+o+'" alt="Avatar" class="rounded-circle">':'<span class="avatar-initial rounded-circle bg-label-'+["success","danger","warning","info","primary","secondary"][Math.floor(6*Math.random())]+'">'+(o=(((o=(n=a.name).match(/\b\w/g)||[]).shift()||"")+(o.pop()||"")).toUpperCase())+"</span>")+'</div></div><div class="d-flex flex-column"><a href="'+r+j+'" class="text-body text-truncate"><span class="fw-semibold">'+n+'</span></a><small class="text-muted">'+i+"</small></div></div>"
-                }
-            },
-            {
-                targets:3,
-                render:function(e,t,a,s){
-                    a=a.phone;
-                    return'<span class="fw-semibold">'+a[0].phone+"</span>"
-                    }
-                },
-                {
-                    targets:4,
-                    render:function(e,t,a,s){
-                        return'<span class="fw-semibold">'+a.district+"</span>"
-                    }
-                },
-                {
-                    targets:6,
-                    render:function(e,t,a,s){
-                        a=a.practicing;
-                        return'<span class="badge '+o[a].class+'" text-capitalized>'+o[a].title+"</span>"
-                    }
-                },
-                {
-                    targets:-1,
-                    title:"Actions",
-                    searchable:!1,
-                    orderable:!1,
-                    render:function(e,t,a,s){
-                        return'<div class="d-flex align-items-center"><a href="javascript:;" class="text-body edit-record "><i class="ti ti-edit ti-sm me-2" data-id="'+a.id+'" data-name="'+a.name+'" data-photo="'+a.photo+'" data-diplome="'+a.diplome+'" data-phone="'+a.phone[0].phone+'" data-email="'+a.email+'" data-district="'+a.district+'" data-gender="'+a.gender+'" data-marital="'+a.marital+'" data-regNumber="'+a.regNumber+'" data-status="'+a.status+'" data-practicing="'+a.practicing+'" data-category="'+a.category+'"  data-date="'+a.date+'"></i></a><a href="'+r+a.id+'" class="text-body"><i class="ti ti-eye ti-sm mx-2"></i></a><a href="javascript:;" class="text-body delete-record '+a.id+'"><i class="ti ti-trash ti-sm mx-2"></i></a></div></div>'
-                    }
-                }
-            ],
-            order:[
+          
+          {
+              targets:0,
+              responsivePriority:4,
+              render:function(e,t,a,s){
+                  var n=a.name, i=a.email, o=a.photo, j=a.id;
+                  return'<div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3">'+(o?'<img src="'+assetsPath+"img/avatars/"+o+'" alt="Avatar" class="rounded-circle">':'<span class="avatar-initial rounded-circle bg-label-'+["success","danger","warning","info","primary","secondary"][Math.floor(6*Math.random())]+'">'+(o=(((o=(n=a.name).match(/\b\w/g)||[]).shift()||"")+(o.pop()||"")).toUpperCase())+"</span>")+'</div></div><div class="d-flex flex-column"><a href="'+r+j+'" class="text-body text-truncate"><span class="fw-semibold">'+n+'</span></a><small class="text-muted">'+i+"</small></div></div>"
+              }
+          },
+          {
+              targets:2,
+              render:function(e,t,a,s){
+                  a=a.phone;
+                  return'<span class="fw-semibold">'+a[0].phone+"</span>"
+                  }
+              },
+              {
+                  targets:3,
+                  render:function(e,t,a,s){
+                      return'<span class="fw-semibold">'+a.district+"</span>"
+                  }
+              },
+              {
+                  targets:5,
+                  render:function(e,t,a,s){
+                      a=a.practicing;
+                      return'<span class="badge '+o[a].class+'" text-capitalized>'+o[a].title+"</span>"
+                  }
+              },
+              {
+                  targets:6,
+                  title:"Actions",
+                  searchable:!1,
+                  orderable:!1,
+                  render:function(e,t,a,s){
+                      return'<div class="d-flex align-items-center"><a href="javascript:;" class="text-body edit-record "><i class="ti ti-edit ti-sm me-2" data-id="'+a.id+'" data-name="'+a.name+'" data-photo="'+a.photo+'" data-diplome="'+a.diplome+'" data-phone="'+a.phone[0].phone+'" data-email="'+a.email+'" data-district="'+a.district+'" data-gender="'+a.gender+'" data-marital="'+a.marital+'" data-regNumber="'+a.regNumber+'" data-status="'+a.status+'" data-practicing="'+a.practicing+'" data-category="'+a.category+'"  data-date="'+a.date+'"></i></a><a href="'+r+a.id+'" class="text-body"><i class="ti ti-eye ti-sm mx-2"></i></a><a href="javascript:;" class="text-body delete-record '+a.id+'"><i class="ti ti-trash ti-sm mx-2"></i></a></div></div>'
+                  }
+              }
+          ],
+        order:[
                 [1,"desc"]
             ],
             dom:'<"row me-2"<"col-md-2"<"me-3"l>><"col-md-10"<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"fB>>>t<"row mx-2"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
