@@ -15,7 +15,7 @@ class MeetingController extends Controller
     public function index()
     {
 
-        $meetings = Meeting::orderby('date')->get();
+        $meetings = Meeting::orderby('created_at','desc')->get();
         return view('meetings.index', compact('meetings'));
     }
     public function show($meeting)
@@ -28,12 +28,22 @@ class MeetingController extends Controller
         $users = User::all();
         return view('meetings.detail', compact('meeting','invitations','users'));
     }
+    public function attendance($meeting)
+    {
+        // $invitations = Invitations::where('meeting_id', $meeting)->paginate(8);
+        $invitations = DB::table('users')->join('invitation','users.id','=','invitation.user_id')
+        ->where('invitation.meeting_id',$meeting)->orderby('users.name')
+        ->paginate(8);
+        $meeting = Meeting::findorfail($meeting);
+        $users = User::all();
+        return view('meetings.attendance', compact('meeting','invitations','users'));
+    }
     public function search(Request $request)
     {
         $query = $request->input('query');
 
         $users = User::Where('regNumber', 'LIKE', "%{$query}%")
-        ->get();
+        ->take(1)->get();
         return response()->json($users);
     }
     public function create()
@@ -80,6 +90,21 @@ class MeetingController extends Controller
         $datetime = $request->date;
         $date = date("Y-m-d", strtotime($datetime));
         $time = date("H:i:s", strtotime($datetime));
+
+        $concern = implode(',', $request->concern);
+
+        $this->validate($request,[
+            'title' => 'required', 'date' => 'required', 'end' => 'required',
+            'venue' => 'required','credits' => 'required', 'concern' => 'required',
+        ]);
+
+        $concerns = [];
+        foreach ($request->concern as $value) {
+            $concerns[] = $value;
+        }
+
+   
+
         if ($request->published == 1) {
         $meeting = Meeting::create([
             'title' => $request->title,
@@ -88,9 +113,10 @@ class MeetingController extends Controller
             'end' => $request->end,
             'venue' => $request->venue,
             'credits' => $request->credits,
+            'concern' =>  $concern,
             'published' => 1,
         ]);
-        $users = User::all();
+        $users = User::whereIn('status',$concerns)->where('practicing',2)->get();
         foreach ($users as $user) {
             Invitations::create([
                     'user_id' => $user->id,
@@ -107,6 +133,7 @@ class MeetingController extends Controller
             'end' => $request->end,
             'venue' => $request->venue,
             'credits' => $request->credits,
+            'concern' =>  $concern,
             'published' => 0,
         ]);
         }

@@ -182,6 +182,7 @@ Route::group(['middleware' => 'adminauth'], function(){
 
     Route::get('/meetings', [MeetingController::class, 'index'])->name('meetings.index');
     Route::get('/meetings/{meeting}', [MeetingController::class, 'show'])->name('meetings.show');
+    Route::get('/meetings/attendance/{meeting}', [MeetingController::class, 'attendance'])->name('meetings.attendance');
     Route::get('/meetings/create', [MeetingController::class, 'create'])->name('meetings.create');
     Route::post('/meetings/create', [MeetingController::class, 'store'])->name('meetings.store');
     Route::put('/meetings/update', [MeetingController::class, 'update'])->name('meetings.update');
@@ -229,5 +230,6 @@ Route::group(['middleware' => 'adminauth'], function(){
 
    Route::get('/notify-users', [AdminController::class, 'notify'])->name('notify-users');
    Route::post('/notify-users-send', [AdminController::class, 'send_notify'])->name('send_notify');
+   Route::post('/notify-users-quicky', [AdminController::class, 'quicky_notify'])->name('quicky_notify');
 
 });

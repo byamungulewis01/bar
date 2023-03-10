@@ -9,7 +9,7 @@ Notify
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="row">
         <!-- User Content -->
-        <div class="col-xl-12 col-lg-7 col-md-7 order-0 order-md-1">
+        <div class="col-xl-7 col-lg-7 col-md-7 order-0 order-md-1">
 
             <!-- Current Plan -->
             <div class="card mb-4">
@@ -58,6 +58,38 @@ Notify
                                 </label>
                             </div>
                         </div>
+                        <div class="col-12 d-flex justify-content-center mt-3">
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Send notify</button>
+                        </div>
+                    </div>
+                 </form>
+                </div>
+                <!-- /Current Plan -->
+
+            </div>
+            <!--/ User Content -->
+        </div>
+        <div class="col-xl-5 col-lg-7 col-md-7 order-0 order-md-1">
+
+            <!-- Current Plan -->
+            <div class="card mb-4">
+                <h5 class="card-header">Send Notifications To Active Users</h5>
+                <div class="card-body">
+                 <form action="{{ route('quicky_notify') }}" method="post">
+                    @csrf
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label for="" class="mb-3">Select Multiple Users</label>
+                            <select row="10" required name="user[]" multiple class="form-select"
+                                id="exampleFormControlSelect2" aria-label="Multiple select example">
+                                @foreach ($Actives as $active)
+                                <option value="{{ $active->id }}">{{ $active->name }}</option>
+                                @endforeach
+                            </select>
+
+
+                        </div>
+                   
                         <div class="col-12 d-flex justify-content-center mt-3">
                             <button type="submit" class="btn btn-primary waves-effect waves-light">Send notify</button>
                         </div>
