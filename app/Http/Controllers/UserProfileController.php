@@ -86,14 +86,90 @@ class UserProfileController extends Controller
     public function probono()
     {   
         $user = auth()->user()->id;
-        $probonos = Probono::where('advocate',$user)->get();
+        $probonos = Probono::where('advocate',$user)->orderBy('created_at','desc')->get();
         return view('myprofile.probono',compact('probonos'));
     }
- 
+    public function probono_store(Request $request)
+    {
+        $this->validate($request,[
+            'fname' => 'required',
+            'lname' => 'required',
+            'gender' => 'required',
+            'age' => 'required|numeric',
+            'phone' => 'required|numeric',
+            'referral_case_no' => 'required',
+            'jurisdiction' => 'required',
+            'court' => 'required',
+            'case_nature' => 'required',
+            'hearing_date' => 'required|date|after:'.Carbon::today()->toDateString(),
+            'category' => 'required',
+            'referrel' => 'required',
+        ]);
+         Probono::create([
+            'fname' => $request->fname,
+            'lname' => $request->lname,
+            'gender' => $request->gender,
+            'age' => $request->age,
+            'phone' => $request->phone,
+            'referral_case_no' => $request->referral_case_no,
+            'jurisdiction' => $request->jurisdiction,
+            'court' => $request->court,
+            'case_nature' => $request->case_nature,
+            'hearing_date' => $request->hearing_date,
+            'category' => $request->category,
+            'referrel' => $request->referrel,
+            'advocate' => auth()->user()->id,
+        ]);
+
+         return back()->with('message','Probono registered!');
+    }
+    public function probono_update(Request $request)
+    {
+        $this->validate($request,[
+            'fname' => 'required',
+            'lname' => 'required',
+            'gender' => 'required',
+            'age' => 'required|numeric',
+            'phone' => 'required|numeric',
+            'referral_case_no' => 'required',
+            'jurisdiction' => 'required',
+            'court' => 'required',
+            'case_nature' => 'required',
+            'hearing_date' => 'required|date',
+            'category' => 'required',
+            'referrel' => 'required',
+        ]);
+            $probono = Probono::findorfail($request->id);
+            $probono->fname = $request->fname;
+            $probono->lname = $request->lname;
+            $probono->gender = $request->gender;
+            $probono->age = $request->age;
+            $probono->phone = $request->phone;
+            $probono->referral_case_no = $request->referral_case_no;
+            $probono->jurisdiction = $request->jurisdiction;
+            $probono->court = $request->court;
+            $probono->case_nature = $request->case_nature;
+            $probono->hearing_date = $request->hearing_date;
+            $probono->category = $request->category;
+            $probono->referrel = $request->referrel;
+            $probono->save();
+
+            return back()->with('message','Probono update Successfully');
+
+    }
+    public function probono_delete(Request $request)
+    {
+        Probono::findorfail($request->probono)->delete();
+        Probono_dev::where('probono_id', $request->probono)->delete();
+        ProbonoFile::where('probono_id', $request->probono)->delete();
+
+        return back()->with('message', 'Probono removed successfully');
+    }
+
     public function probono_details($case)
     {   
         $probono = Probono::findorfail($case);
-        $probono_devs = Probono_dev::where('probono_id' , $case)->get();
+        $probono_devs = Probono_dev::where('probono_id' , $case)->orderBy('created_at','desc')->get();
         $files = ProbonoFile::where('probono_id' , $case)->get();
         return view('myprofile.probono_delails',compact('probono','probono_devs','files'));
     }
@@ -105,6 +181,16 @@ class UserProfileController extends Controller
             'narration' => 'required',
         ]);
 
+        if ($request->hasFile('attach_file')) {
+            $file      = $request->file('attach_file');
+            $filename  = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $case_file   = date('His').'-'.$filename;
+            $file->move(public_path('assets/img/files'), $case_file);
+        } else {
+            $case_file = NULL;
+        }
+
         $probono = Probono::findorfail($request->probono);
         $probono->status = $request->status;
         $probono->save();
@@ -113,6 +199,7 @@ class UserProfileController extends Controller
             'status' => $request->status,
             'title' => $request->title,
             'narration' => $request->narration,
+            'attach_file' => $case_file,
             'probono_id' => $request->probono,
        ]);
 
@@ -134,16 +221,31 @@ class UserProfileController extends Controller
     public function training_book(Request $request)
     {   
         $advocate = auth()->user()->id;
-        $training = Training::findorfail($request->training);
-        $booked = $training->booking;
-        $training->booking = $booked + 1;
-        $training->save();
+       
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
         $yearInBar = ($currentMonth == 1) ? $currentYear - 1 : $currentYear;
+        if ($request->price == 0.00) {
+            $training = Training::findorfail($request->training);
+            $booked = $training->booking;
+            $confirmed = $training->confirm;
+            $training->booking = $booked + 1;
+            $training->confirm = $confirmed + 1;
+            $training->save();
 
-        Booking::create(['training' => $request->training, 'advocate' => $advocate,
-                        'yearInBar' => $yearInBar , 'booked' => true, 'status' => 1]);
+            Booking::create(['training' => $request->training, 'advocate' => $advocate,
+                        'yearInBar' => $yearInBar , 'booked' => true, 'confirm' => true, 'status' => 2]);
+        } else {
+            $training = Training::findorfail($request->training);
+            $booked = $training->booking;
+            $training->booking = $booked + 1;
+            $training->save();
+            Booking::create(['training' => $request->training, 'advocate' => $advocate,
+            'yearInBar' => $yearInBar , 'booked' => true, 'status' => 1]);
+        }
+        
+
+       
 
         return back()->with('message',$training->title .'Booked');
     }
@@ -151,29 +253,24 @@ class UserProfileController extends Controller
     {   
         $booking = Booking::findorfail($request->id);
         $train = $booking->training;
-
-        $training = Training::findorfail($train);
-        $booked = $training->booking;
-        $training->booking = $booked - 1;
-        $training->save();
-
+            if ($booking->price == 0.00) {
+                $training = Training::findorfail($train);
+                $booked = $training->booking;
+                $confirmed = $training->confirm;
+                $training->booking = $booked - 1;
+                $training->confirm = $confirmed - 1;
+                $training->save();  
+        
+            } else {
+                $training = Training::findorfail($train);
+                $booked = $training->booking;
+                $training->booking = $booked - 1;
+                $training->save();
+            }
+            
+       
         $booking->delete();
         return back()->with('warning', 'Training Removed on List');
-    }
-    public function paytraining(Request $request)
-    {   
-        $booking = Booking::findorfail($request->id);
-        $booking->confirm = true;
-        $booking->status = 2;
-        $train = $booking->training;
-        $booking->save();
-
-        $training = Training::findorfail($train);
-        $confirm = $training->confirm;
-        $training->confirm = $confirm + 1;
-        $training->save();
-
-        return back()->with('message', 'Training Payeed Successfully');
     }
 
     public function mytraings_detail($id)
@@ -185,11 +282,12 @@ class UserProfileController extends Controller
         $advocate = auth()->user()->id;
         $trainings = Training::where('publish' , 2)->get();
         $bookings = Booking::where('advocate' , $advocate)->get();
+        $attendances = Booking::where('advocate' , $advocate)->where('attendanceDay', '<>', null)->whereIn('status',[1,2,3])->get();
         $booked = Booking::where('advocate',$advocate)->pluck('training')->toArray();
 
         
 
-        return view('myprofile.trainings-details',compact('trainings','bookings','booked','training','topics','materials'));
+        return view('myprofile.trainings-details',compact('trainings','bookings','booked','training','topics','materials','attendances'));
     }
     public function makeAttendence(Request $request)
     {

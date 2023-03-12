@@ -134,6 +134,7 @@ Trainings
                                     </div>
                                 </div>
                             </div>
+
                             <p>It has Credit: <?php echo e($training->credits); ?>. Venue: <strong><?php echo e($training->venue); ?></strong>,
                                 Starting on <u class="text-danger"><?php echo e($training->starton); ?> </u> to End on <u
                                     class="text-danger"><?php echo e($training->endon); ?> </u></p>
@@ -446,11 +447,7 @@ Trainings
 
 </div>
 
-
-
 <?php $__env->stopSection(); ?>
-
-
 
 <?php $__env->startSection('css'); ?>
 <link rel="stylesheet" href="<?php echo e(asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')); ?>">
@@ -479,25 +476,13 @@ Trainings
     "use strict";
     $(function () {
         var dtt = document.querySelector("#starton");
-        var startAt = document.querySelector("#startAt");
-        var endAt = document.querySelector("#endAt");
-
-        startAt.flatpickr({
-                enableTime: !0,
-                noCalendar: !0
-            }),
-            endAt.flatpickr({
-                enableTime: !0,
-                noCalendar: !0
-            }),
-
-            dtt && dtt.flatpickr({
-                enableTime: false,
-                altInput: !0,
-                altFormat: "F j, Y",
-                dateFormat: "Y-m-d",
-                minDate: 'today'
-            })
+        dtt && dtt.flatpickr({
+            enableTime: false,
+            altInput: !0,
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
+            minDate: 'today'
+        })
     });
     $(function () {
         var dtt = document.querySelector("#endon");
@@ -566,6 +551,7 @@ Trainings
             }
         });
     });
+    console.log('lewis Byamungu');
 </script>
 
 <?php $__env->stopSection(); ?>

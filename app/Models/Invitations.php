@@ -12,6 +12,7 @@ class Invitations extends Model
     protected $fillable = [
         'user_id',
         'meeting_id',
+        'credit',
         'status'
     ];
 

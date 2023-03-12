@@ -44,7 +44,7 @@ Trainings
                                                 <td><?php echo e($count); ?></td>
                                                 <td><?php echo e($booking->user->name); ?></td>
                                                 <td><?php echo e($booking->trains->price); ?></td>
-                                                <td><?php echo e($booking->trains->credits); ?></td>
+                                                <td><?php echo e($booking->cumulatedCredit); ?></td>
                                                 <td>
                                                     <?php switch($booking->status):
                                                         case (1): ?>

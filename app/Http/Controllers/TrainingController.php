@@ -215,7 +215,7 @@ class TrainingController extends Controller
     {
        $users = Booking::where('training', $request->id)->get();
         foreach ($users as $user) {
-            Booking::where('advocate',$user->advocate)
+            Booking::where('advocate',$user->advocate)->where('training', $request->id)
             ->update(['attendanceDay' => $request->attendanceDay,
             'cumulatedCredit' => 2.0,
             'voucherNumber' => rand(1000000, 9999999),
@@ -266,6 +266,21 @@ class TrainingController extends Controller
 
      return back()->with('message', 'Notified Successfully');
        
+    }
+    public function paytraining(Request $request)
+    {   
+        $booking = Booking::findorfail($request->id);
+        $booking->confirm = true;
+        $booking->status = 2;
+        $train = $booking->training;
+        $booking->save();
+
+        $training = Training::findorfail($train);
+        $confirm = $training->confirm;
+        $training->confirm = $confirm + 1;
+        $training->save();
+
+        return back()->with('message', 'Training Payeed Successfully');
     }
 
 

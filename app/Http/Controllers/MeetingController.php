@@ -240,10 +240,12 @@ class MeetingController extends Controller
 
     public function attends($meeting,$user)
     {
+        $meet = Meeting::findorfail($meeting);
         $check = Invitations::where('meeting_id', $meeting)->where('user_id', $user)->count();;
         if ($check == 1) {
             Invitations::where('meeting_id', $meeting)->where('user_id', $user)
             ->take(1)->update([
+            'credit' => $meet->credits,
             'status' => 2,
             'updated_at' => date('Y-m-d H:i:s'),
         ]);

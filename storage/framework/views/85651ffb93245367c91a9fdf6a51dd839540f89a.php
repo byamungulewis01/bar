@@ -7,13 +7,14 @@
                     <tr>
                         <th style="width: 3px;">#</th>
                         <th>Trainings</th>
+                        <th>Status</th>
                         <th></th>
                     </tr>
                 </thead>
                 <?php
                 $count = 1;
                 ?>
-                <?php $__currentLoopData = $bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php $__empty_1 = true; $__currentLoopData = $bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                 <tbody>
                     <tr>
                         <td><?php echo e($count); ?></td>
@@ -23,42 +24,31 @@
                             Rwf
                         </td>
                         <td>
-                            <?php if(in_array($booking->status, [2,3,4])): ?>
-                            
+                            <?php switch($booking->status):
+                                case (1): ?>
+                                     <span class="badge bg-label-primary me-2">Booking</span>
+                                    <?php break; ?>
+                                <?php case (2): ?>
+                                     <span class="badge bg-label-secondary me-2">Confirm</span>
+                                    <?php break; ?>
+                                <?php case (3): ?>
+                                     <span class="badge bg-label-warning me-2">Attending</span>
+                                    <?php break; ?>
+                                <?php case (4): ?>
+                                    <span class="badge bg-label-info me-2">Attended</span>
+                                    <?php break; ?>
+                                <?php default: ?>
+                                    <span class="badge bg-label-warning me-2">N/A</span>
+                            <?php endswitch; ?>
+
+                        </td>
+                        <td>
+                            <?php if(in_array($booking->status, [3,4])): ?>
+                            <a href="<?php echo e(route('mytraings_detail' , $booking->training)); ?>"
+                                class="btn btn-sm btn-primary"><i class='ti-xs ti ti-list me-1'></i></a>
 
                             <?php else: ?>
-                            <a href="" data-bs-toggle="modal" data-bs-target="#payee<?php echo e($booking->id); ?>"
-                                class="text-info">payee</a>
-                            <div class="modal fade" id="payee<?php echo e($booking->id); ?>" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
-                                    <div class="modal-content p-3 p-md-5">
-                                        <div class="modal-body">
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                            <div class="text-center mb-4">
-                                                <h3 class="mb-2">Pay <span
-                                                        class="text-danger"><?php echo e($booking->trains->price); ?>
-
-                                                        Rwf </span> To be Enrolled in
-                                                    <span class="text-primary"><?php echo e($booking->trains->title); ?></span>
-                                                </h3>
-                                            </div>
-                                            <form method="POST" class="row g-3" action="<?php echo e(route('paytraining')); ?>">
-
-                                                <?php echo csrf_field(); ?>
-                                                <?php echo method_field('PUT'); ?>
-                                                <input type="hidden" name="id" value="<?php echo e($booking->id); ?>">
-                                                <div class="col-12 d-flex justify-content-center">
-                                                    <button type="submit"
-                                                        class="btn btn-primary waves-effect waves-light">Make
-                                                        payment</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
+                          
                             <a href="" class="text-danger" data-bs-toggle="modal"
                                 data-bs-target="#removetraion<?php echo e($booking->id); ?>"><i
                                     class='ti-xs ti ti-trash me-1'></i></a>
@@ -70,6 +60,7 @@
                                             <?php echo csrf_field(); ?>
                                             <?php echo method_field('DELETE'); ?>
                                             <input type="hidden" name="id" value="<?php echo e($booking->id); ?>" />
+                                            <input type="hidden" name="price" value="<?php echo e($booking->price); ?>" />
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel2">Are you
                                                     sure you want Remove this ?</h5>
@@ -94,7 +85,9 @@
                 <?php
                 $count++
                 ?>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                <tr><td></td><td>No Active Enrollement Available</td></tr>
+                <?php endif; ?>
 
             </table>
         </div>

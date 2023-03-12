@@ -33,7 +33,7 @@ Disciplene info
                             <?php
                             $count = 1;
                             ?>
-                            <?php $__currentLoopData = $trainings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $training): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php $__empty_1 = true; $__currentLoopData = $trainings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $training): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tbody>
                                 <tr>
                                     <td><span class="badge bg-label-danger me-2"><?php echo e($count); ?></span></td>
@@ -72,6 +72,10 @@ Disciplene info
                                             <a class="btn btn-sm btn-dark text-white pull-left float-end"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#book<?php echo e($training->id); ?>">Book</a>
+                                                <?php if($training->price == 0.00): ?>
+                                                <span class="badge bg-label-danger me-2 pull-left float-end">Free</span>
+                                                <?php endif; ?>
+                                                
                                             <?php else: ?>
 
                                             <?php endif; ?>
@@ -86,6 +90,8 @@ Disciplene info
                                                             <?php echo csrf_field(); ?>
                                                             <input type="hidden" name="training"
                                                                 value="<?php echo e($training->id); ?>" />
+                                                            <input type="hidden" name="price"
+                                                                value="<?php echo e($training->price); ?>" />
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalLabel2">
                                                                     Do you want to Go with <b
@@ -115,8 +121,12 @@ Disciplene info
                             <?php
                             $count++
                             ?>
-
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                            <tr>
+                                <td></td>
+                                <td>There is no Any Training Available now</td>
+                            </tr>
+                            <?php endif; ?>
 
                         </table>
                     </div>

@@ -44,7 +44,7 @@ Trainings
                                                 <td>{{ $count }}</td>
                                                 <td>{{ $booking->user->name}}</td>
                                                 <td>{{ $booking->trains->price }}</td>
-                                                <td>{{ $booking->trains->credits }}</td>
+                                                <td>{{ $booking->cumulatedCredit }}</td>
                                                 <td>
                                                     @switch($booking->status)
                                                         @case(1)

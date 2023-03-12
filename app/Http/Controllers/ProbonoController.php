@@ -16,11 +16,19 @@ class ProbonoController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::where('practicing',2)->get();
 
-        $probonos = Probono::all();
+        $probonos = Probono::OrderBy('created_at','desc')->get();
 
         return view('probono.index', compact('users','probonos'));
+    }
+    public function report_data()
+    {
+        $users = User::all();
+
+        $probonos = Probono::OrderBy('created_at','desc')->get();
+
+        return view('probono.report', compact('users','probonos'));
     }
     public function store(Request $request)
     {
@@ -42,25 +50,29 @@ class ProbonoController extends Controller
            
             $ActiveAdv = Probono::latest()->first();
             if ($ActiveAdv == null) {
-                $user = User::latest('created_at')->first();
+                $user = User::where('practicing',2)->latest('created_at')->first();
              $advocate = $user->id;
+             $email = $user->email;
             }
             else {
                  if ($ActiveAdv->advocate == NULL) {
                     $count = Probono::count();
                     if ($count == 1) {
-                        $user = User::latest('created_at')->first();
+                        $user = User::where('practicing',2)->latest('created_at')->first();
                         $advocate = $user->id;
+                        $email = $user->email;
                     } else {
                         $ids = Probono::where('advocate','!=',NULL)->pluck('advocate')->toArray();
-                    $user = User::whereNotIn('id', $ids)->latest('created_at')->first();
+                    $user = User::whereNotIn('id', $ids)->where('practicing',2)->latest('created_at')->first();
                     $advocate = $user->id;
+                    $email = $user->email;
                     }
                 
                  } else {
                     $ids = Probono::where('advocate','!=',NULL)->pluck('advocate')->toArray();
-                    $user = User::whereNotIn('id', $ids)->latest('created_at')->first();
+                    $user = User::whereNotIn('id', $ids)->where('practicing',2)->latest('created_at')->first();
                     $advocate = $user->id;
+                    $email = $user->email;
                  }            
                
             } 
@@ -84,6 +96,14 @@ class ProbonoController extends Controller
             'advocate' => $advocate,
             'register' => auth()->guard('admin')->user()->id,
         ]);
+        if ($advocate != null) {
+            $message = 'We are Inform you That you have New Probono
+                Check in BAR MIS to Make follow up.';
+            $subject = 'New Probono Case Created';
+            $attachmentsPaths = [];
+                (new NotifyController)->notify_probono($email,$message,$subject,$attachmentsPaths);
+        }
+        
 
          return back()->with('message','Probono registered!');
     }
@@ -97,9 +117,17 @@ class ProbonoController extends Controller
     public function show_devs($id)
     {
         $probono = Probono::findorfail($id);
-        $probono_devs = Probono_dev::where('probono_id' , $id)->get();
+        $probono_devs = Probono_dev::where('probono_id' , $id)->orderBy('created_at','desc')->get();
 
         return view('probono.devs', compact('probono','probono_devs'));
+    }
+    public function probono_delete(Request $request)
+    {
+        Probono::findorfail($request->probono)->delete();
+        Probono_dev::where('probono_id', $request->probono)->delete();
+        ProbonoFile::where('probono_id', $request->probono)->delete();
+
+        return back()->with('message', 'Probono removed successfully');
     }
     public function download($file)
     { 
@@ -191,6 +219,17 @@ class ProbonoController extends Controller
             $probono->advocate = $advocate;
             $probono->register = auth()->guard('admin')->user()->id;
             $probono->save();
+        
+            if ($advocate != null) {
+                $user = User::find($advocate);
+                $email = $user->email;
+                $message = 'We are Inform you That you have New Probono
+                Check in BAR MIS to Make follow up.';
+                $subject = 'New Probono Case Created';
+                $attachmentsPaths = [];
+                (new NotifyController)->notify_probono($email,$message,$subject,$attachmentsPaths);
+            }
+            
 
             return back()->with('message','Probono update Successfully');
     }
@@ -208,4 +247,82 @@ class ProbonoController extends Controller
           ]);
       }
     }
+
+    public function probono_dev(Request $request)
+    {   
+        $this->validate($request,[
+            'status' => 'required',
+            'title' => 'required',
+            'narration' => 'required',
+        ]);
+
+        if ($request->hasFile('attach_file')) {
+            $file      = $request->file('attach_file');
+            $filename  = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $case_file   = date('His').'-'.$filename;
+            $file->move(public_path('assets/img/files'), $case_file);
+        } else {
+            $case_file = NULL;
+        }
+        $probono = Probono::findorfail($request->probono);
+        $probono->status = $request->status;
+        $probono->save();
+
+        Probono_dev::create([
+            'status' => $request->status,
+            'title' => $request->title,
+            'narration' => $request->narration,
+            'attach_file' => $case_file,
+            'probono_id' => $request->probono,
+       ]);
+
+       $probono = Probono::findorfail($request->probono);
+       $probono->probono_devs = $probono->probono_devs + 1;
+       $probono->save();
+
+        return back()->with('message','New Development');
+    } 
+    public function followup_notify(Request $request)
+    {
+        $formField = $request->validate([
+            'subject' => 'required',
+            'message' => 'required|min:10',
+            'sent' => 'required',
+            'attachments.*' => 'max:10240', // Maximum file size of 10 MB
+            'attachments' => 'max:5' // Maximum of 5 files
+        ]);
+
+
+        if ($request->refferal == 1) {
+
+            (new NotifyController)->sms($request->message, $request->phone);
+        }
+
+        $attachments = $request->file('attachments');
+        $attachmentsPaths = [];
+        if ($attachments) {
+            foreach ($attachments as $attachment) {
+                $path = $attachment->store('attachments');
+                $attachmentsPaths[] = $path;
+            }
+        }
+
+        $user = User::findorfail($request->advocate);
+
+
+        foreach ($request->sent as $value) {
+            if ($value == 'EMAIL') {
+              (new NotifyController)->notify_probono($user->email,$request->message,$request->subject,$attachmentsPaths);     
+            }elseif ($value == 'SMS') {
+                (new NotifyController)->notify_sms($request->message,$user->phone);
+            } else{
+                (new NotifyController)->notify_probono($user->email,$request->message,$request->subject,$attachmentsPaths);
+                (new NotifyController)->notify_sms($request->message,$user->phone);
+            }
+       }
+
+     return back()->with('message', 'Notified Successfully');
+       
+    }  
 }

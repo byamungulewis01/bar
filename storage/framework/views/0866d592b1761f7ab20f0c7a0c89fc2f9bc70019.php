@@ -13,9 +13,13 @@ Pro Bono Cases
   <div class="card">
     <div class="card-header border-bottom">
       <h5 class="card-title mb-0">Pro Bono Cases
+        <a class="btn btn-dark text-white pull-left float-end" href="<?php echo e(route('probono.report')); ?>"><span
+            class="d-none d-sm-inline-block">Data</span></a>
+
         <a class="btn btn-dark text-white pull-left float-end" data-bs-toggle="modal" data-bs-target="#newCase"><i
             class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">New case</span></a><a
-          class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editmeetings"></a></h5>
+          class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editmeetings"></a>
+      </h5>
 
     </div>
 
@@ -71,8 +75,30 @@ Pro Bono Cases
               <?php echo e(\Carbon\Carbon::parse($probono->hearing_date)->locale('fr')->format('F j, Y')); ?>
 
             </td>
-            <td><a href="javascript:" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+            <td>
+              <a href="javascript:" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                 data-bs-target="#addNewAddress<?php echo e($probono->id); ?>">Edit </a>
+              <a href="javascript:" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                data-bs-target="#delete<?php echo e($probono->id); ?>">Delete</a>
+              <div class="modal modal-top fade" id="delete<?php echo e($probono->id); ?>" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <form action="<?php echo e(route('probono.delete')); ?>" method="POST">
+                      <?php echo csrf_field(); ?>
+                      <?php echo method_field('DELETE'); ?>
+                      <input type="hidden" name="probono" value="<?php echo e($probono->id); ?>" />
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel2">Are you sure to delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
               <!-- Add New Address Modal -->
               <div class="modal fade" id="addNewAddress<?php echo e($probono->id); ?>" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-simple modal-add-new-address">
@@ -343,8 +369,92 @@ unset($__errorArgs, $__bag); ?>
               <h6 class="text-primary">
                 Case assigned to <a href="<?php echo e(route('profile',$probono->advocate)); ?>"
                   class="text-dark"><?php echo e($probono->user->name); ?></a>
-                
-                
+                <a href="javascript:" class="btn btn-dark btn-sm" data-bs-toggle="modal"
+                  data-bs-target="#notify<?php echo e($probono->advocate); ?>"> Notify </a>
+
+                  <div class="modal fade" id="notify<?php echo e($probono->advocate); ?>" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                      <div class="modal-content p-3 p-md-5">
+                        <div class="modal-body">
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <div class="text-center mb-4">
+                            <h3 class="mb-2">Send Notification Messages</h3>
+                            <?php if($errors->any()): ?>
+                            <div class="alert alert-danger">
+                              <p><strong>Opps Something went wrong</strong></p>
+                              <ul>
+                                <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <li>* <?php echo e($error); ?></li>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                              </ul>
+                            </div>
+                            <?php endif; ?>
+                          </div>
+                          <form method="POST" class="row g-3" action="<?php echo e(route('probono.followup_notify')); ?>"
+                            enctype="multipart/form-data">
+                            <?php echo csrf_field(); ?>
+                            <input type="hidden" name="phone" value="<?php echo e($probono->phone); ?>">
+                            <input type="hidden" name="advocate" value="<?php echo e($probono->advocate); ?>">
+
+                            <div class="col-12">
+                              <div class="form-check">
+                                <input class="form-check-input" name="refferal" type="checkbox" value="1"
+                                  id="defaultCheck3" />
+                                <label class="form-check-label" for="defaultCheck3">Include Refferal (Only for SMS)
+                                </label>
+                              </div>
+                            </div>
+    
+                            <div class="col-12">
+                              <label class="switch">
+                                <span class="switch-label">Subject <span class="text-danger">include in Email
+                                    only</span></span>
+                              </label>
+                              <input required type="text" name="subject" class="form-control" id="subject"
+                                value="">
+    
+                            </div>
+                            <div class="col-12">
+                              <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+                              <textarea required name="message" class="form-control" id="exampleFormControlTextarea1"
+                                rows="3">
+                              </textarea>
+                            </div>
+                            <div class="col-6">
+                              <div class="form-check">
+                                <input class="form-check-input" name="sent[]" type="checkbox" value="SMS"
+                                  id="defaultCheck3" />
+                                <label class="form-check-label" for="defaultCheck3">SMS (Uncheck if "NO")
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="form-check">
+                                <input class="form-check-input" checked name="sent[]" type="checkbox" value="EMAIL"
+                                  id="defaultCheck4" />
+                                <label class="form-check-label" for="defaultCheck4">EMAIL (Uncheck if "NO")
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <label class="switch mb-2">
+                                <span class="switch-label text-warning">Attache files (5 Max):</span>
+                              </label>
+    
+                              <input type="file" name="attachments[]" class="form-control" placeholder="Files" multiple
+                                max="5">
+                            </div>
+                            <div class="col-12 text-center">
+                              <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                              <button type="reset" class="btn btn-label-secondary btn-reset" data-bs-dismiss="modal"
+                                aria-label="Close">Cancel</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            
               </h6>
               <?php endif; ?>
 

@@ -7,6 +7,7 @@ use App\Mail\NewAccount;
 use App\Mail\NotifyUser;
 use App\Mail\ChangedEmail;
 use App\Mail\MeetingNotify;
+use App\Mail\ProboniNotify;
 use App\Mail\Quicky_notify;
 use App\Mail\resetPassword;
 use App\Mail\TrainingNotify;
@@ -65,6 +66,9 @@ class NotifyController extends Controller
     public function quicky_notify($email,$name){
         Mail::to($email)->send(new Quicky_notify($email,$name));
     }
+    public function notify_probono($email,$message,$subject,$attachments){
+        Mail::to($email)->send(new ProboniNotify($email,$message,$subject,$attachments));
+    }
     public function notify_sms($message,$phone){
  
        $curl = curl_init();
@@ -79,6 +83,28 @@ class NotifyController extends Controller
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_POSTFIELDS => array('to' => '25'.$phone[0]['phone'],'from' => 'RWANDA BAR','unicode' => '0','sms' => $message,'action' => 'send-sms'),
+        CURLOPT_HTTPHEADER => array(
+          'x-api-key: 65|yI4G8Qv23bpd3QRSou2tsr4PXVr4t4BvRYv7nryz'
+        ),
+       ));
+       
+       $response = curl_exec($curl);
+       curl_close($curl);
+    }
+    public function sms($message,$phone){
+ 
+       $curl = curl_init();
+
+       curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.mista.io/sms',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => array('to' => '25'.$phone,'from' => 'RWANDA BAR','unicode' => '0','sms' => $message,'action' => 'send-sms'),
         CURLOPT_HTTPHEADER => array(
           'x-api-key: 65|yI4G8Qv23bpd3QRSou2tsr4PXVr4t4BvRYv7nryz'
         ),

@@ -12,6 +12,7 @@ class Probono_dev extends Model
         'status',
         'title',
         'narration',
+        'attach_file',
         'probono_id',
     ];
 }

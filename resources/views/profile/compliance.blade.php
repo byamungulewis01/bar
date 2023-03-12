@@ -214,7 +214,12 @@ User Profile
                             <tbody>
                                 <tr>
                                     <td class="text-truncate">C.L.E</td>
-                                    <td class="text-truncate"></td>
+                                    <td class="text-truncate">
+                                        @php
+                                            $cle = App\Models\Booking::where('advocate',$user_id)->sum('cumulatedCredit');
+                                        @endphp
+                                        {{ $cle }}
+                                    </td>
                                     <td class="text-truncate"></td>
                                 </tr>
                                 <tr>
@@ -229,7 +234,12 @@ User Profile
                                 </tr>
                                 <tr>
                                     <td class="text-truncate">Meetings</td>
-                                    <td class="text-truncate"></td>
+                                    <td class="text-truncate">
+                                        @php
+                                        $meeting = App\Models\Invitations::where('user_id',$user_id)->sum('credit');
+                                        @endphp
+                                     {{ $meeting }}
+                                    </td>
                                     <td class="text-truncate"></td>
                                 </tr>
                                 <tr>

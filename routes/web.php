@@ -88,11 +88,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/meeting-me', [UserProfileController::class, 'mymeeting'])->name('mymeetings');
     Route::get('/probono-me', [UserProfileController::class, 'probono'])->name('myprobono');
     Route::get('/probono-me/{case}', [UserProfileController::class, 'probono_details'])->name('probono-details');
+    Route::post('/probono-me/store', [UserProfileController::class, 'probono_store'])->name('probono-store');
+    Route::put('/probono-me/update', [UserProfileController::class, 'probono_update'])->name('probono-update');
+    Route::delete('/probono-me/delete', [UserProfileController::class, 'probono_delete'])->name('probono-delete');
     Route::post('/probono-dev', [UserProfileController::class, 'probono_dev'])->name('probono_dev');
     Route::get('/mytraings', [UserProfileController::class, 'mytraings'])->name('mytraings');
     Route::post('/booking-training', [UserProfileController::class, 'training_book'])->name('training_book');
     Route::delete('/booking-remove', [UserProfileController::class, 'book_remove'])->name('book_remove');
-    Route::put('/booking-pay', [UserProfileController::class, 'paytraining'])->name('paytraining');
     Route::get('/mytraings-detail/{training}', [UserProfileController::class, 'mytraings_detail'])->name('mytraings_detail');
     Route::put('/makeAttendence', [UserProfileController::class, 'makeAttendence'])->name('makeAttendence');
     Route::get('/Download/{file}', [TrainingController::class, 'download'])->name('userDownload');
@@ -168,15 +170,22 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::post('/scheduleDecision', [SchedulerController::class, 'add_schedule_decision'])->name('cases.scheduleDecion');
     Route::post('/disciplinary/notify', [SchedulerController::class, 'notify'])->name('case.notify');
 
+
+    Route::get('/probono/report/', [ProbonoController::class, 'report_data'])->name('probono.report');
     Route::get('/probono', [ProbonoController::class, 'index'])->name('probono.index');
     Route::post('/probono', [ProbonoController::class, 'store'])->name('probono.store');
     Route::put('/probono-update', [ProbonoController::class, 'update'])->name('probono.update');
     Route::post('/probono-file', [ProbonoController::class, 'file_store'])->name('probono.file_store');
+    Route::delete('/probono-delete', [ProbonoController::class, 'probono_delete'])->name('probono.delete');
     Route::delete('/probono-file-delete', [ProbonoController::class, 'file_delete'])->name('probono.DeleteFile');
     Route::get('/probono/{id}', [ProbonoController::class, 'show'])->name('probono.show');
     Route::get('/probono-devs/{id}', [ProbonoController::class, 'show_devs'])->name('probono.show_devs');
     Route::get('/Download-files/{file}', [ProbonoController::class, 'download'])->name('Download-files');
     Route::post('/probonomember', [ProbonoController::class, 'addmember'])->name('probono.addmember');
+
+    Route::post('/probono-devs-report', [ProbonoController::class, 'probono_dev'])->name('probono.probono_dev');
+    Route::post('/probono/followup_notify', [ProbonoController::class, 'followup_notify'])->name('probono.followup_notify');
+
 
 
 
@@ -214,6 +223,7 @@ Route::group(['middleware' => 'adminauth'], function(){
     Route::get('/Vouchers/{id}', [TrainingController::class, 'voucher'])->name('trainings.voucher');
     Route::post('/trainings/notify', [TrainingController::class, 'notify'])->name('trainings.notify');
     Route::post('/trainings/EditBulk', [TrainingController::class, 'EditBulk'])->name('trainings.EditBulk');
+    Route::put('/booking-pay', [TrainingController::class, 'paytraining'])->name('paytraining');
 
     
     Route::get('/contribution' , [ContributionController::class , 'index'])->name('contribution.index');

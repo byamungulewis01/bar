@@ -19,8 +19,9 @@ Trainings
 
                         <div>
                             <div class="card-header border-bottom">
-                                <h5 class="card-title mb-0">Booked<span
-                                        class="pull-left float-end"><span class="badge bg-label-info me-2">Training</span> {{ $training->title }}</span>   
+                                <h5 class="card-title mb-0">Booked<span class="pull-left float-end"><span
+                                            class="badge bg-label-info me-2">Training</span>
+                                        {{ $training->title }}</span>
                                 </h5>
 
                             </div>
@@ -34,6 +35,7 @@ Trainings
                                                 <th>Price</th>
                                                 <th>Credit</th>
                                                 <th>Status</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         @php
@@ -49,10 +51,55 @@ Trainings
                                                 <td>{{ $booking->trains->credits }}</td>
                                                 <td> @if ($booking->booked)
                                                     <span class="badge bg-label-info me-2">Booked</span>
-                                                @else
-                                                <span class="badge bg-label-warning me-2">Not booked</span>
-                                                @endif </td>
-                                             
+                                                    @else
+                                                    <span class="badge bg-label-warning me-2">Not booked</span>
+                                                    @endif </td>
+                                                <td>
+                                                    @unless ($booking->trains->price == 0.00)
+                                                    @if (!$booking->confirm)
+                                                    <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#payee{{ $booking->id }}"
+                                                    class="text-info">payee</a>
+                                                    @endif
+                                                <div class="modal fade" id="payee{{ $booking->id }}" tabindex="-1"
+                                                    aria-hidden="true">
+                                                    <div
+                                                        class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                                                        <div class="modal-content p-3 p-md-5">
+                                                            <div class="modal-body">
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                                <div class="text-center mb-4">
+                                                                    <h3 class="mb-2">Pay <span
+                                                                            class="text-danger">{{ $booking->trains->price }}
+                                                                            Rwf </span> To be Enrolled in
+                                                                        <span
+                                                                            class="text-primary">{{ $booking->trains->title }}</span>
+                                                                    </h3>
+                                                                </div>
+                                                                <form method="POST" class="row g-3"
+                                                                    action="{{ route('paytraining') }}">
+
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $booking->id }}">
+                                                                    <div
+                                                                        class="col-12 d-flex justify-content-center">
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary waves-effect waves-light">Make
+                                                                            payment</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    @endunless
+                                                
+                                                </td>
+
                                             </tr>
                                             @php
                                             $count++;
@@ -60,7 +107,8 @@ Trainings
                                             @empty
                                             <tr>
                                                 <td></td>
-                                                <td colspan="4"><span class="text-warning">No data Found or Not yet Book</span></td>
+                                                <td colspan="4"><span class="text-warning">No data Found or Not yet
+                                                        Book</span></td>
 
                                             </tr>
                                             @endforelse

@@ -7,13 +7,14 @@
                     <tr>
                         <th style="width: 3px;">#</th>
                         <th>Trainings</th>
+                        <th>Status</th>
                         <th></th>
                     </tr>
                 </thead>
                 @php
                 $count = 1;
                 @endphp
-                @foreach ($bookings as $booking)
+                @forelse ($bookings as $booking)
                 <tbody>
                     <tr>
                         <td>{{ $count }}</td>
@@ -22,42 +23,31 @@
                             Rwf
                         </td>
                         <td>
-                            @if (in_array($booking->status, [2,3,4]))
-                            {{-- <a href="{{ route('mytraings_detail' , $booking->training) }}"
-                                class="btn btn-sm btn-primary"><i class='ti-xs ti ti-list me-1'></i></a> --}}
+                            @switch($booking->status)
+                                @case(1)
+                                     <span class="badge bg-label-primary me-2">Booking</span>
+                                    @break
+                                @case(2)
+                                     <span class="badge bg-label-secondary me-2">Confirm</span>
+                                    @break
+                                @case(3)
+                                     <span class="badge bg-label-warning me-2">Attending</span>
+                                    @break
+                                @case(4)
+                                    <span class="badge bg-label-info me-2">Attended</span>
+                                    @break
+                                @default
+                                    <span class="badge bg-label-warning me-2">N/A</span>
+                            @endswitch
+
+                        </td>
+                        <td>
+                            @if (in_array($booking->status, [3,4]))
+                            <a href="{{ route('mytraings_detail' , $booking->training) }}"
+                                class="btn btn-sm btn-primary"><i class='ti-xs ti ti-list me-1'></i></a>
 
                             @else
-                            <a href="" data-bs-toggle="modal" data-bs-target="#payee{{ $booking->id }}"
-                                class="text-info">payee</a>
-                            <div class="modal fade" id="payee{{ $booking->id }}" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
-                                    <div class="modal-content p-3 p-md-5">
-                                        <div class="modal-body">
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                            <div class="text-center mb-4">
-                                                <h3 class="mb-2">Pay <span
-                                                        class="text-danger">{{ $booking->trains->price }}
-                                                        Rwf </span> To be Enrolled in
-                                                    <span class="text-primary">{{ $booking->trains->title }}</span>
-                                                </h3>
-                                            </div>
-                                            <form method="POST" class="row g-3" action="{{ route('paytraining') }}">
-
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="id" value="{{ $booking->id }}">
-                                                <div class="col-12 d-flex justify-content-center">
-                                                    <button type="submit"
-                                                        class="btn btn-primary waves-effect waves-light">Make
-                                                        payment</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
+                          
                             <a href="" class="text-danger" data-bs-toggle="modal"
                                 data-bs-target="#removetraion{{ $booking->id }}"><i
                                     class='ti-xs ti ti-trash me-1'></i></a>
@@ -69,6 +59,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" name="id" value="{{ $booking->id }}" />
+                                            <input type="hidden" name="price" value="{{ $booking->price }}" />
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel2">Are you
                                                     sure you want Remove this ?</h5>
@@ -93,7 +84,9 @@
                 @php
                 $count++
                 @endphp
-                @endforeach
+                @empty
+                <tr><td></td><td>No Active Enrollement Available</td></tr>
+                @endforelse
 
             </table>
         </div>

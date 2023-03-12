@@ -33,7 +33,7 @@ Disciplene info
                             @php
                             $count = 1;
                             @endphp
-                            @foreach ($trainings as $training)
+                            @forelse ($trainings as $training)
                             <tbody>
                                 <tr>
                                     <td><span class="badge bg-label-danger me-2">{{ $count }}</span></td>
@@ -71,6 +71,10 @@ Disciplene info
                                             <a class="btn btn-sm btn-dark text-white pull-left float-end"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#book{{ $training->id }}">Book</a>
+                                                @if ($training->price == 0.00)
+                                                <span class="badge bg-label-danger me-2 pull-left float-end">Free</span>
+                                                @endif
+                                                
                                             @else
 
                                             @endif
@@ -85,6 +89,8 @@ Disciplene info
                                                             @csrf
                                                             <input type="hidden" name="training"
                                                                 value="{{ $training->id }}" />
+                                                            <input type="hidden" name="price"
+                                                                value="{{ $training->price }}" />
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalLabel2">
                                                                     Do you want to Go with <b
@@ -114,8 +120,12 @@ Disciplene info
                             @php
                             $count++
                             @endphp
-
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td></td>
+                                <td>There is no Any Training Available now</td>
+                            </tr>
+                            @endforelse
 
                         </table>
                     </div>

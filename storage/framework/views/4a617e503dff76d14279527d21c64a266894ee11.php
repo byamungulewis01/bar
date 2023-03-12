@@ -16,97 +16,119 @@ Disciplene info
 
     <?php echo $__env->make('myprofile.navigation', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-     <!-- User Profile Content -->
-     <div class="row">
+    <!-- User Profile Content -->
+    <div class="row">
         <div class="col-xl-7 col-lg-5 col-md-5">
-                <div class="alert alert-info">
-                    <h5>Case : <?php echo e($probono->referral_case_no); ?> Status :   <?php switch($probono->status):
-                        case ('OPEN'): ?>
-                        <span class="badge bg-label-primary me-2"><?php echo e($probono->status); ?></span>
-                            <?php break; ?>
-                        <?php case ('WON'): ?>
-                        <span class="badge bg-label-success me-2"><?php echo e($probono->status); ?></span>
-                            <?php break; ?>
-                        <?php case ('LOST'): ?>
-                        <span class="badge bg-label-warning me-2"><?php echo e($probono->status); ?></span>
-                            <?php break; ?>
-                        <?php default: ?>
-                        <span class="badge bg-label-danger me-2"><?php echo e($probono->status); ?></span>
+            <div class="alert alert-info">
+                <h5>Case : <?php echo e($probono->referral_case_no); ?> Status : <?php switch($probono->status):
+                    case ('OPEN'): ?>
+                    <span class="badge bg-label-primary me-2"><?php echo e($probono->status); ?></span>
+                    <?php break; ?>
+                    <?php case ('WON'): ?>
+                    <span class="badge bg-label-success me-2"><?php echo e($probono->status); ?></span>
+                    <?php break; ?>
+                    <?php case ('LOST'): ?>
+                    <span class="badge bg-label-warning me-2"><?php echo e($probono->status); ?></span>
+                    <?php break; ?>
+                    <?php default: ?>
+                    <span class="badge bg-label-danger me-2"><?php echo e($probono->status); ?></span>
                     <?php endswitch; ?>
-                        <a href="" data-bs-toggle="modal" data-bs-target="#development"
+                    <a href="" data-bs-toggle="modal" data-bs-target="#development"
                         class="btn btn-success text-white pull-left float-end"><span
-                          class="d-none d-sm-inline-block">Report case development</span></a>
-                    </h5>
-                    <div class="modal fade" id="development" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
-                          <div class="modal-content p-3 p-md-5">
+                            class="d-none d-sm-inline-block">Report case development</span></a>
+                </h5>
+                <div class="modal fade" id="development" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                        <div class="modal-content p-3 p-md-5">
                             <div class="modal-body">
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              <div class="text-center mb-4">
-                                <h3 class="mb-2">New Devolopment</h3>
-                              </div>
-                              <form method="POST" class="row g-3" action="<?php echo e(route('probono_dev')); ?>">
-                                <?php echo csrf_field(); ?>
-                                <div class="col-12">
-                                    <label class="form-label w-100" for="modalAddCard">New case Status</label>
-                                    <input type="hidden" name="probono" value="<?php echo e($probono->id); ?>">
-                                    <div class="input-group input-group-merge">
-                                        <select required name="status" class="form-select">
-                                            <option <?php if(old('status')=="OPEN"): ?> selected <?php endif; ?> value="OPEN" selected>OPEN</option>
-                                            <option  <?php if(old('status')=="WON"): ?> selected <?php endif; ?> value="WON" >WON</option>
-                                            <option  <?php if(old('status')=="LOST"): ?> selected <?php endif; ?> value="LOST" >LOST</option>
-                                            <option  <?php if(old('status')=="TRANSACTED"): ?> selected <?php endif; ?> value="TRANSACTED" >TRANSACTED</option>
-                                        </select>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                                <div class="text-center mb-4">
+                                    <h3 class="mb-2">New Devolopment</h3>
+                                </div>
+                                <form method="POST" class="row g-3" action="<?php echo e(route('probono_dev')); ?>"
+                                    enctype="multipart/form-data">
+                                    <?php echo csrf_field(); ?>
+                                    <div class="col-12">
+                                        <label class="form-label w-100" for="modalAddCard">New case Status</label>
+                                        <input type="hidden" name="probono" value="<?php echo e($probono->id); ?>">
+                                        <div class="input-group input-group-merge">
+                                            <select required name="status" class="form-select">
+                                                <option <?php if(old('status')=="OPEN" ): ?> selected <?php endif; ?> value="OPEN"
+                                                    selected>OPEN</option>
+                                                <option <?php if(old('status')=="WON" ): ?> selected <?php endif; ?> value="WON">WON
+                                                </option>
+                                                <option <?php if(old('status')=="LOST" ): ?> selected <?php endif; ?> value="LOST">LOST
+                                                </option>
+                                                <option <?php if(old('status')=="TRANSACTED" ): ?> selected <?php endif; ?>
+                                                    value="TRANSACTED">TRANSACTED</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label" for="modalAddCardName">Event title</label>
-                                    <input required type="text" value="<?php echo e(old('title')); ?>" name="title" class="form-control" placeholder="Event title" />
+                                    <div class="col-12">
+                                        <label class="form-label" for="modalAddCardName">Event title</label>
+                                        <input required type="text" value="<?php echo e(old('title')); ?>" name="title"
+                                            class="form-control" placeholder="Event title" />
 
-                                </div>
-                                <div class="col-12">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Event Narration</label>
-                                    <textarea required name="narration" class="form-control" id="exampleFormControlTextarea1"
-                                        rows="5">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Event
+                                            Narration</label>
+                                        <textarea required name="narration" class="form-control"
+                                            id="exampleFormControlTextarea1" rows="5">Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
                                     </textarea>
-                                </div>
-                                
-                                <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary me-sm-3 me-1">Add</button>
-                                    <button type="reset" class="btn btn-label-secondary btn-reset"
-                                        data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                                </div>
-                            </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                </div>
-          <div class="row">
-            <?php $__currentLoopData = $probono_devs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $probono_dev): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="col-md-12">
-                <div class="card">
-                    <h6 class="card-header">
-                        <span class="badge bg-label-dark">Title:</span>
-                             <?php echo e($probono_dev->title); ?> 
-                        <span class="badge bg-label-dark pull-left float-end">date: <span>  <?php echo e(\Carbon\Carbon::parse($probono_dev->created_at )->locale('fr')->format('F j, Y')); ?></span></span>
-                      
-                        </h6>
-        
-                    <div class="cord-body bg-light" style="padding: 2%">
-                        <p>
-                            <?php echo e($probono_dev->narration); ?>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label w-100" for="title">Attach File </label>
+                                        <div class="input-group input-group-merge">
+                                            <input accept=".pdf" name="attach_file" class="form-control" type="file" />
 
-                        </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn btn-primary me-sm-3 me-1">Add</button>
+                                        <button type="reset" class="btn btn-label-secondary btn-reset"
+                                            data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-    
                 </div>
             </div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-           
-         
-          </div>
-           
+            <div class="row">
+                <?php $__currentLoopData = $probono_devs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $probono_dev): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="col-md-12 mb-2">
+                    <div class="card">
+                        <h6 class="card-header">
+                            <span class="badge bg-label-dark">Title:</span>
+                            <?php echo e($probono_dev->title); ?>
+
+                            <span class="badge bg-label-dark pull-left float-end">date: <span>
+                                    <?php echo e(\Carbon\Carbon::parse($probono_dev->created_at )->locale('fr')->format('F j, Y')); ?></span></span>
+
+                        </h6>
+                        <div class="card-body bg-light" style="padding: 2%">
+                            <p>
+                                <?php echo e($probono_dev->narration); ?>
+
+                            </p>
+                            <?php if (! ($probono_dev->attach_file == NULL)): ?>
+                            <p><strong>Attachement file : <a
+                                        href="<?php echo e(route('userDownload-files',$probono_dev->attach_file)); ?>">Download</a></strong>
+                            </p>
+                            <?php endif; ?>
+                        </div>
+
+
+                    </div>
+                </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+            </div>
+
         </div>
         <div class="col-xl-5 col-lg-5 col-md-5">
             <div class="card card-action mb-4">
@@ -136,14 +158,16 @@ Disciplene info
                                     <td><?php echo e($file->case_title); ?></td>
                                     <td><?php echo e($file->case_type); ?></td>
                                     <td><a href="<?php echo e(route('userDownload-files',$file->case_file)); ?>">Download</a></td>
-                                </tr> 
+                                </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                                <tr><td>No file uploaded</td></tr> 
+                                <tr>
+                                    <td>No file uploaded</td>
+                                </tr>
                                 <?php
                                 $count++
                                 ?>
                                 <?php endif; ?>
-                           
+
                             </tbody>
                         </table>
                     </div>
@@ -152,7 +176,7 @@ Disciplene info
                 <!--/ Teams -->
             </div>
         </div>
-       
+
     </div>
 
 

@@ -13,9 +13,13 @@ Pro Bono Cases
   <div class="card">
     <div class="card-header border-bottom">
       <h5 class="card-title mb-0">Pro Bono Cases
+        <a class="btn btn-dark text-white pull-left float-end" href="{{ route('probono.report') }}"><span
+            class="d-none d-sm-inline-block">Data</span></a>
+
         <a class="btn btn-dark text-white pull-left float-end" data-bs-toggle="modal" data-bs-target="#newCase"><i
             class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">New case</span></a><a
-          class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editmeetings"></a></h5>
+          class="d-none" id="edit" data-bs-toggle="modal" data-bs-target="#editmeetings"></a>
+      </h5>
 
     </div>
 
@@ -68,8 +72,30 @@ Pro Bono Cases
             <td>
               {{ \Carbon\Carbon::parse($probono->hearing_date)->locale('fr')->format('F j, Y') }}
             </td>
-            <td><a href="javascript:" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+            <td>
+              <a href="javascript:" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                 data-bs-target="#addNewAddress{{ $probono->id }}">Edit </a>
+              <a href="javascript:" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                data-bs-target="#delete{{ $probono->id }}">Delete</a>
+              <div class="modal modal-top fade" id="delete{{ $probono->id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content">
+                    <form action="{{ route('probono.delete') }}" method="POST">
+                      @csrf
+                      @method('DELETE')
+                      <input type="hidden" name="probono" value="{{ $probono->id }}" />
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel2">Are you sure to delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
               <!-- Add New Address Modal -->
               <div class="modal fade" id="addNewAddress{{ $probono->id }}" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-simple modal-add-new-address">
@@ -316,67 +342,92 @@ Pro Bono Cases
               <h6 class="text-primary">
                 Case assigned to <a href="{{ route('profile',$probono->advocate) }}"
                   class="text-dark">{{ $probono->user->name }}</a>
-                {{-- <a href="javascript:" class="btn btn-dark btn-sm" data-bs-toggle="modal"
+                <a href="javascript:" class="btn btn-dark btn-sm" data-bs-toggle="modal"
                   data-bs-target="#notify{{ $probono->advocate }}"> Notify </a>
 
-                <div class="modal fade" id="notify{{ $probono->advocate }}" tabindex="-1" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
-                    <div class="modal-content p-3 p-md-5">
-                      <div class="modal-body">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <div class="text-center mb-4">
-                          <h3 class="mb-2">Send Notification Messages</h3>
+                  <div class="modal fade" id="notify{{ $probono->advocate }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered1 modal-simple modal-add-new-cc">
+                      <div class="modal-content p-3 p-md-5">
+                        <div class="modal-body">
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <div class="text-center mb-4">
+                            <h3 class="mb-2">Send Notification Messages</h3>
+                            @if($errors->any())
+                            <div class="alert alert-danger">
+                              <p><strong>Opps Something went wrong</strong></p>
+                              <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>* {{ $error }}</li>
+                                @endforeach
+                              </ul>
+                            </div>
+                            @endif
+                          </div>
+                          <form method="POST" class="row g-3" action="{{ route('probono.followup_notify') }}"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="phone" value="{{ $probono->phone }}">
+                            <input type="hidden" name="advocate" value="{{ $probono->advocate }}">
 
+                            <div class="col-12">
+                              <div class="form-check">
+                                <input class="form-check-input" name="refferal" type="checkbox" value="1"
+                                  id="defaultCheck3" />
+                                <label class="form-check-label" for="defaultCheck3">Include Refferal (Only for SMS)
+                                </label>
+                              </div>
+                            </div>
+    
+                            <div class="col-12">
+                              <label class="switch">
+                                <span class="switch-label">Subject <span class="text-danger">include in Email
+                                    only</span></span>
+                              </label>
+                              <input required type="text" name="subject" class="form-control" id="subject"
+                                value="">
+    
+                            </div>
+                            <div class="col-12">
+                              <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+                              <textarea required name="message" class="form-control" id="exampleFormControlTextarea1"
+                                rows="3">
+                              </textarea>
+                            </div>
+                            <div class="col-6">
+                              <div class="form-check">
+                                <input class="form-check-input" name="sent[]" type="checkbox" value="SMS"
+                                  id="defaultCheck3" />
+                                <label class="form-check-label" for="defaultCheck3">SMS (Uncheck if "NO")
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="form-check">
+                                <input class="form-check-input" checked name="sent[]" type="checkbox" value="EMAIL"
+                                  id="defaultCheck4" />
+                                <label class="form-check-label" for="defaultCheck4">EMAIL (Uncheck if "NO")
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <label class="switch mb-2">
+                                <span class="switch-label text-warning">Attache files (5 Max):</span>
+                              </label>
+    
+                              <input type="file" name="attachments[]" class="form-control" placeholder="Files" multiple
+                                max="5">
+                            </div>
+                            <div class="col-12 text-center">
+                              <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                              <button type="reset" class="btn btn-label-secondary btn-reset" data-bs-dismiss="modal"
+                                aria-label="Close">Cancel</button>
+                            </div>
+                          </form>
                         </div>
-                        <form method="POST" class="row g-3" action="{{ route('case.notify') }}"
-                          enctype="multipart/form-data">
-                          @csrf
-                          <div class="col-12">
-                            <label class="switch">
-                              <span class="switch-label">Subject <span class="text-danger">include
-                                  in Email
-                                  only</span></span>
-                            </label>
-                            <input type="text" name="subject" class="form-control" id="subject">
-
-                          </div>
-                          <div class="col-12">
-                            <label for="exampleFormControlTextarea1" class="form-label">Message</label>
-                            <textarea required name="message" class="form-control" id="exampleFormControlTextarea1"
-                              rows="3">
-                                     </textarea>
-                          </div>
-                          <div class="col-6">
-                            <div class="form-check">
-                              <input class="form-check-input" name="sent[]" type="checkbox" value="SMS"
-                                id="defaultCheck3" />
-                              <label class="form-check-label" for="defaultCheck3">SMS (Uncheck if
-                                "NO")
-                              </label>
-                            </div>
-                          </div>
-                          <div class="col-6">
-                            <div class="form-check">
-                              <input class="form-check-input" checked name="sent[]" type="checkbox" value="EMAIL"
-                                id="defaultCheck4" />
-                              <label class="form-check-label" for="defaultCheck4">EMAIL (Uncheck
-                                if "NO")
-                              </label>
-                            </div>
-                          </div>
-
-                          <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
-                            <button type="reset" class="btn btn-label-secondary btn-reset" data-bs-dismiss="modal"
-                              aria-label="Close">Cancel</button>
-                          </div>
-                        </form>
                       </div>
                     </div>
                   </div>
-                </div> --}}
-                {{-- <span class="pull-left float-end">Reported Events <span class="badge bg-label-dark ">{{ $reportEvent }}</span></span>
-                --}}
+            
               </h6>
               @endif
 

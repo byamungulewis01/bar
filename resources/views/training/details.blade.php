@@ -134,6 +134,7 @@ Trainings
                                     </div>
                                 </div>
                             </div>
+
                             <p>It has Credit: {{ $training->credits }}. Venue: <strong>{{ $training->venue }}</strong>,
                                 Starting on <u class="text-danger">{{ $training->starton }} </u> to End on <u
                                     class="text-danger">{{ $training->endon }} </u></p>
@@ -446,11 +447,7 @@ Trainings
 
 </div>
 
-
-
 @endsection
-
-
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
@@ -479,25 +476,13 @@ Trainings
     "use strict";
     $(function () {
         var dtt = document.querySelector("#starton");
-        var startAt = document.querySelector("#startAt");
-        var endAt = document.querySelector("#endAt");
-
-        startAt.flatpickr({
-                enableTime: !0,
-                noCalendar: !0
-            }),
-            endAt.flatpickr({
-                enableTime: !0,
-                noCalendar: !0
-            }),
-
-            dtt && dtt.flatpickr({
-                enableTime: false,
-                altInput: !0,
-                altFormat: "F j, Y",
-                dateFormat: "Y-m-d",
-                minDate: 'today'
-            })
+        dtt && dtt.flatpickr({
+            enableTime: false,
+            altInput: !0,
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
+            minDate: 'today'
+        })
     });
     $(function () {
         var dtt = document.querySelector("#endon");
@@ -566,6 +551,7 @@ Trainings
             }
         });
     });
+    console.log('lewis Byamungu');
 </script>
 
 @endsection
