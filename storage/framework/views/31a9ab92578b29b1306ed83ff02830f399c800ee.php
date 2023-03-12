@@ -24,8 +24,7 @@
                         </td>
                         <td>
                             <?php if(in_array($booking->status, [2,3,4])): ?>
-                            <a href="<?php echo e(route('mytraings_detail' , $booking->training)); ?>"
-                                class="btn btn-sm btn-primary"><i class='ti-xs ti ti-list me-1'></i></a>
+                            
 
                             <?php else: ?>
                             <a href="" data-bs-toggle="modal" data-bs-target="#payee<?php echo e($booking->id); ?>"

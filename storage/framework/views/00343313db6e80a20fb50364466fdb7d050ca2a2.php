@@ -30,14 +30,15 @@ Meetings
 
                         <div>
                             <div class="input-group input-group-merge">
+                                
                                 <span class="input-group-text" id="basic-addon-search31"><i
                                         class="ti ti-search"></i></span>
-                                <input type="text" id="search" class="form-control" placeholder="Search..." aria-label="Search..."
+                                <input type="text" id="search" class="form-control" placeholder="Attendance checkin" aria-label="Search..."
                                     aria-describedby="basic-addon-search31" /> 
                                     
                             </div>
                             <br>
-                            <div id="results"></div>
+                            <div id="results" style="overflow: hidden; height:70px;"></div>
                         </div>
 
 
@@ -60,6 +61,7 @@ Meetings
                                 <tr>
                                     <th>#</th>
                                     <th>Names</th>
+                                    <th>Reg No</th>
                                     <th>Attended</th>
                                     <th style="width: 40ch">Setting</th>
                                 </tr>
@@ -69,7 +71,8 @@ Meetings
                                 <?php $__empty_1 = true; $__currentLoopData = $invitations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $invitation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <tr>
                                     <td><?php echo e($key + 1); ?></td>
-                                    <td><?php echo e($invitation->user->name); ?></td>
+                                    <td><?php echo e($invitation->name); ?></td>
+                                    <td><?php echo e($invitation->regNumber); ?></td>
                                     <td>
                                         <?php if($invitation->status == 1): ?>
 
@@ -78,9 +81,8 @@ Meetings
                                         <span class="badge bg-label-info"><i class="fa-solid fa-check"></i></span>
                                         <?php endif; ?>
                                     </td>
-                                    <td><a href="#" class="btn btn-success btn-sm text-white"><i
-                                                class="ti ti-check me-0 me-sm-1 ti-xs"></i><span
-                                                class="d-none d-sm-inline-block">Accept power of Attomey</span></a>
+                                    <td>
+                                        
                                         <a data-bs-toggle="modal" data-bs-target="#delete<?php echo e($invitation->id); ?>" href=""
                                             class="btn btn-danger btn-sm text-white"><i
                                                 class="ti ti-trash me-0 me-sm-1 ti-xs"></i></a>
