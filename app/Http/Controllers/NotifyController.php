@@ -66,8 +66,11 @@ class NotifyController extends Controller
     public function quicky_notify($email,$name){
         Mail::to($email)->send(new Quicky_notify($email,$name));
     }
-    public function notify_probono($email,$message,$subject,$attachments){
+    public function notify_discipline($email,$message,$subject,$attachments){
         Mail::to($email)->send(new ProboniNotify($email,$message,$subject,$attachments));
+    }
+    public function notify_probono($email,$subject,$message,$attachments){
+        Mail::to($email)->send(new ProboniNotify($email,$subject,$message,$attachments));
     }
     public function notify_sms($message,$phone){
  

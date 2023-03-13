@@ -310,7 +310,6 @@ class ProbonoController extends Controller
 
         $user = User::findorfail($request->advocate);
 
-
         foreach ($request->sent as $value) {
             if ($value == 'EMAIL') {
               (new NotifyController)->notify_probono($user->email,$request->message,$request->subject,$attachmentsPaths);     

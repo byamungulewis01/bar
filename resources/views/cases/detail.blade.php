@@ -115,16 +115,25 @@ Discipline Details
                                         <form method="POST" class="row g-3" action="{{ route('case.notify') }}"
                                             enctype="multipart/form-data">
                                             @csrf
-                                            <div class="col-12">
-                                                <select row="6" required name="user[]" multiple class="form-select"
-                                                    id="exampleFormControlSelect2" aria-label="Multiple select example">
-                                                    @foreach ($members as $member)
-                                                    <option value="{{ $member->user->id }}">{{ $member->user->name }} -
-                                                        {{ $member->role }}</option>
-                                                    @endforeach
-                                                </select>
-
-
+                                            <input type="hidden" name="case_type" value="{{ $case->case_type }}">
+                                            <input type="hidden" name="case_id" value="{{ $case->id }}">
+                                            <div class="col-2">
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" checked name="party[]" type="checkbox"
+                                                        value="Plaintiffs" id="partyOne" />
+                                                    <label class="form-check-label" for="partyOne">Plaintiffs
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="party[]"
+                                                        type="checkbox" value="Defendants" id="PartyTwo" />
+                                                    <label class="form-check-label" for="PartyTwo">Defendants
+                                                    </label>
+                                                </div>
                                             </div>
                                             <div class="col-12">
                                                 <label class="switch">
@@ -132,7 +141,7 @@ Discipline Details
                                                             in Email
                                                             only</span></span>
                                                 </label>
-                                                <input type="text" name="subject" class="form-control" id="subject">
+                                                <input type="text" name="subject" class="form-control" value="{{ $case->case_number }}" id="subject">
 
                                             </div>
                                             <div class="col-12">
@@ -140,8 +149,16 @@ Discipline Details
                                                     class="form-label">Message</label>
                                                 <textarea required name="message" class="form-control"
                                                     id="exampleFormControlTextarea1" rows="3">
-                                      </textarea>
+                                                </textarea>
                                             </div>
+                                            <div class="col-12">
+                                                <label class="switch mb-2">
+                                                  <span class="switch-label text-warning">Attache files (5 Max):</span>
+                                                </label>
+                      
+                                                <input type="file" name="attachments[]" class="form-control" multiple
+                                                  max="5">
+                                              </div>
                                             <div class="col-6">
                                                 <div class="form-check">
                                                     <input class="form-check-input" name="sent[]" type="checkbox"
